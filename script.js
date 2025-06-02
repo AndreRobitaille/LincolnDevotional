@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Data Loading ---
     async function loadDevotionals() {
         try {
-            const response = await fetch('lincoln_devotional_fixed.json');
+            const response = await fetch('lincoln_devotional.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -78,6 +78,17 @@ document.addEventListener('DOMContentLoaded', () => {
             devotionalContent.devotional.textContent = "There is no devotional entry for this day.";
             devotionalContent.poem.textContent = "";
         }
+
+         // After updating content, tell Reftagger to scan the new content
+    if (window.refTagger && typeof window.refTagger.tag === 'function') {
+        // console.log("Re-running Reftagger to tag new content..."); // Optional: for debugging
+        window.refTagger.tag();
+    } else {
+        // This else block is just for debugging in case refTagger or its tag method isn't found.
+        // console.log("Reftagger object or .tag() method not found. Reftagger might not have loaded yet or API changed.");
+    }
+    // --- END OF REFTAGGER SECTION ---
+
     }
 
     // --- Event Listeners ---

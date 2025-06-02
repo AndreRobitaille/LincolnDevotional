@@ -44,5 +44,36 @@
     </div>
 
     <script src="script.js"></script>
+
+    <!-- Logos Reftagger Script Start -->
+    <script>
+      var refTagger = {
+        settings: {
+          bibleReader: "bible.faithlife", // Opens in Faithlife's reader
+          bibleVersion: "ESV", // Default Bible version
+          roundCorners: true, // Style for the popup
+          socialSharing: ["google"], // Social sharing options
+          customStyle: {
+            heading: {
+              backgroundColor: "#005a9c", // Site's primary blue
+              color: "#FFFFFF", // White text for contrast
+            },
+            body: {
+              color: "#333333", // Dark grey for readability (verse text)
+            },
+          },
+        },
+      };
+      (function (d, t) {
+        var n = d.querySelector("[nonce]");
+        refTagger.settings.nonce = n && (n.nonce || n.getAttribute("nonce"));
+        var g = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+        g.src = "https://api.reftagger.com/v2/RefTagger.js";
+        g.nonce = refTagger.settings.nonce;
+        s.parentNode.insertBefore(g, s);
+      })(document, "script");
+    </script>
+    <!-- Logos Reftagger Script End -->
   </body>
 </html>
