@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lincoln's Devotional</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Lincoln's Devotional</h1>
+      </header>
+
+      <nav class="navigation">
+        <button id="prevDayBtn">&laquo; Previous Day</button>
+        <div id="currentDisplayDate" class="current-date-display">
+          Loading...
+        </div>
+        <button id="nextDayBtn">Next Day &raquo;</button>
+      </nav>
+      <div class="date-selector-area">
+        <label for="datePicker">Select a Date:</label>
+        <input type="date" id="datePicker" />
+        <button id="goToDateBtn">Go</button>
+      </div>
+
+      <main id="devotionalContent" class="devotional-entry">
+        <h2 id="entryTitle"></h2>
+        <h3 id="entryDisplayDate"></h3>
+        <div class="devotional-text">
+          <h4>Devotional</h4>
+          <p id="entryDevotional"></p>
+        </div>
+        <div class="poem-text">
+          <h4>Poem</h4>
+          <p id="entryPoem"></p>
+        </div>
+      </main>
+
+      <footer>
+        <p>Preserving Lincoln's Devotional for posterity.</p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
