@@ -24,7 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
             allEntries = await response.json();
             // Set date picker to today and load today's entry
             const today = new Date();
-            datePicker.value = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+            // Use locale-based formatting to avoid timezone issues when
+            // populating the date input. toISOString() uses UTC which can
+            // shift the day depending on the user's timezone.
+            datePicker.value = today.toLocaleDateString('en-CA'); // YYYY-MM-DD format
             currentDate = today; // Initialize currentDate
             displayEntryForDate(currentDate);
         } catch (error) {
@@ -62,8 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
         currentDate = date; // Update the global current date being viewed
 
         currentDisplayDateNav.textContent = formatNavDate(date);
-        // Update the date picker to reflect the currently viewed date
-        datePicker.value = date.toISOString().split('T')[0];
+        // Update the date picker to reflect the currently viewed date.
+        // Using locale formatting avoids off-by-one errors from UTC conversion.
+        datePicker.value = date.toLocaleDateString('en-CA');
 
 
         if (entry) {
