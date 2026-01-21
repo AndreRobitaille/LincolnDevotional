@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
         title: document.getElementById('entryTitle'),
         displayDateElement: document.getElementById('entryDisplayDate'), // For the MMMM D date below title
         devotional: document.getElementById('entryDevotional'),
+        verseRef: document.getElementById('entryVerseRef'),
         poem: document.getElementById('entryPoem')
     };
     const prevDayBtn = document.getElementById('prevDayBtn');
@@ -76,17 +77,15 @@ document.addEventListener('DOMContentLoaded', () => {
             devotionalContent.displayDateElement.textContent = entry.display_date || formatDisplayDate(date);
             
             // Combine bible_verse and verse_ref
-            let verseText = entry.bible_verse || "Verse not found.";
-            if (entry.verse_ref) {
-                verseText += ` ${entry.verse_ref}`;
-            }
-            devotionalContent.devotional.textContent = verseText;
+            devotionalContent.devotional.textContent = entry.bible_verse || "Verse not found.";
+            devotionalContent.verseRef.textContent = entry.verse_ref || "";
             
             devotionalContent.poem.textContent = entry.poem || "Poem not found.";
         } else {
             devotionalContent.title.textContent = "No Entry Available";
             devotionalContent.displayDateElement.textContent = formatDisplayDate(date);
             devotionalContent.devotional.textContent = "There is no devotional entry for this day.";
+            devotionalContent.verseRef.textContent = "";
             devotionalContent.poem.textContent = "";
         }
 
