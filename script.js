@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Data Loading ---
     async function loadDevotionals() {
         try {
-            const response = await fetch('lincoln_devotional.json');
+            const response = await fetch('data/entries.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function findEntry(date) {
         const mmdd = getMMDD(date);
-        return allEntries.find(entry => entry.url_date_code === mmdd);
+        return allEntries.find(entry => entry.mmdd === mmdd);
     }
 
     // --- Display Logic ---
@@ -74,7 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
             devotionalContent.title.textContent = entry.title || "Title not found";
             // Use entry.display_date if available, otherwise format from the JS Date object
             devotionalContent.displayDateElement.textContent = entry.display_date || formatDisplayDate(date);
-            devotionalContent.devotional.textContent = entry.devotional || "Devotional not found.";
+            
+            // Combine bible_verse and verse_ref
+            let verseText = entry.bible_verse || "Verse not found.";
+            if (entry.verse_ref) {
+                verseText += ` ${entry.verse_ref}`;
+            }
+            devotionalContent.devotional.textContent = verseText;
+            
             devotionalContent.poem.textContent = entry.poem || "Poem not found.";
         } else {
             devotionalContent.title.textContent = "No Entry Available";
