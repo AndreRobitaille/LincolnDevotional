@@ -61,6 +61,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Display Logic ---
+    function renderPoemLines(poemText) {
+        if (!poemText) {
+            devotionalContent.poem.textContent = '';
+            return;
+        }
+
+        const fragment = document.createDocumentFragment();
+        const lines = poemText.split(/\r?\n/);
+        lines.forEach((line) => {
+            const lineElement = document.createElement('div');
+            lineElement.classList.add('poem-line');
+            const cleanedLine = line.replace(/\r/g, '');
+            if (!cleanedLine.trim()) {
+                lineElement.classList.add('poem-line--blank');
+            }
+            lineElement.textContent = cleanedLine;
+            fragment.appendChild(lineElement);
+        });
+        devotionalContent.poem.replaceChildren(fragment);
+    }
+
     function displayEntryForDate(date) {
         const entry = findEntry(date);
         currentDate = date; // Update the global current date being viewed
@@ -80,7 +101,11 @@ document.addEventListener('DOMContentLoaded', () => {
             devotionalContent.devotional.textContent = entry.bible_verse || "Verse not found.";
             devotionalContent.verseRef.textContent = entry.verse_ref || "";
             
-            devotionalContent.poem.textContent = entry.poem || "Poem not found.";
+            if (entry.poem) {
+                renderPoemLines(entry.poem);
+            } else {
+                devotionalContent.poem.textContent = "Poem not found.";
+            }
         } else {
             devotionalContent.title.textContent = "No Entry Available";
             devotionalContent.displayDateElement.textContent = formatDisplayDate(date);
