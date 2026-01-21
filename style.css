@@ -244,6 +244,23 @@ a:focus-visible {
 
 .about-section .entry-text {
     white-space: normal;
+    margin: 0;
+}
+
+.about-section .entry-text + .entry-text {
+    margin-top: 18px;
+}
+
+.about-section ul.entry-text {
+    margin-top: 14px;
+    padding-left: 22px;
+    display: grid;
+    gap: 6px;
+}
+
+.about-section ul.entry-text li {
+    margin: 0;
+    line-height: 1.6;
 }
 
 .entry-text {
