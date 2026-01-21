@@ -1,171 +1,355 @@
+:root {
+    color-scheme: light dark;
+    --font-body: "Crimson Pro", "Georgia", serif;
+    --font-display: "Newsreader", "Georgia", serif;
+    --font-ui: "Newsreader", "Georgia", serif;
+    --bg: #f8f3ea;
+    --bg-accent: #f3e8da;
+    --surface: #f6f0e6;
+    --surface-elevated: #fbf6ee;
+    --text: #2b2520;
+    --muted: #6e6155;
+    --border: #d4c6b2;
+    --accent: #8b4c2a;
+    --accent-strong: #6a361e;
+    --shadow: 0 20px 45px rgba(56, 36, 22, 0.1);
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #1a1512;
+    --bg-accent: #241d18;
+    --surface: #201a15;
+    --surface-elevated: #2a221c;
+    --text: #f2e9dc;
+    --muted: #c7b7a5;
+    --border: #3a2d24;
+    --accent: #d5a679;
+    --accent-strong: #f0c694;
+    --shadow: 0 22px 50px rgba(0, 0, 0, 0.45);
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
     margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    min-height: 100vh;
+    font-family: var(--font-body);
+    line-height: 1.75;
+    background: radial-gradient(circle at top, var(--bg-accent), var(--bg));
+    color: var(--text);
 }
 
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
-header {
-    text-align: center;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #e7e7e7;
-    padding-bottom: 10px;
+a:hover,
+a:focus-visible {
+    color: var(--accent);
 }
 
-header h1 {
-    margin: 0;
-    color: #005a9c; /* A distinguished blue */
-}
-
-.navigation {
+.page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 56px 24px 72px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.site-header {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #e9ecef;
-    border-radius: 5px;
+    gap: 18px;
+    text-align: center;
 }
 
-.navigation button {
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
+.brand {
+    max-width: 560px;
+}
+
+.site-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+}
+
+.site-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 3.4vw, 3.3rem);
+    font-weight: 600;
+    margin: 0 0 10px;
+}
+
+.site-tagline {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--muted);
+}
+
+.site-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+}
+
+.site-nav {
+    display: flex;
+    gap: 18px;
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.site-nav a {
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.site-nav a[aria-current="page"] {
+    color: var(--accent);
+}
+
+.site-nav a[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: currentColor;
+}
+
+.theme-toggle {
+    border: 1px solid var(--border);
+    background: var(--surface-elevated);
+    color: var(--text);
+    font-family: var(--font-ui);
+    padding: 8px 14px;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
     cursor: pointer;
-    font-size: 0.9em;
 }
 
-.navigation button:hover {
-    background-color: #0056b3;
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent-strong);
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.entry-card,
+.about-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 40px;
+    box-shadow: var(--shadow);
+}
+
+.entry-header,
+.about-header {
+    text-align: center;
+    margin-bottom: 26px;
+}
+
+.entry-date {
+    font-family: var(--font-ui);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.74rem;
+    margin: 0 0 12px;
+    color: var(--muted);
+}
+
+.entry-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 2.8vw, 2.7rem);
+    margin: 0;
+}
+
+.entry-section,
+.about-section {
+    margin-top: 28px;
+}
+
+.entry-section-title {
+    font-family: var(--font-ui);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.74rem;
+    margin: 0 0 12px;
+    color: var(--accent);
+}
+
+.entry-text {
+    margin: 0;
+    font-size: 1.08rem;
+    white-space: pre-line;
+    color: var(--text);
+}
+
+.entry-poem .entry-text {
+    font-style: italic;
+    color: var(--muted);
+}
+
+.entry-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.entry-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 16px 20px;
+}
+
+.date-picker-wrap {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.date-picker-label {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
 }
 
 .current-date-display {
-    font-weight: bold;
-    font-size: 1.1em;
-    color: #333;
-}
-
-.date-selector-area {
+    font-family: var(--font-ui);
+    font-size: 0.92rem;
+    color: var(--muted);
     text-align: center;
-    margin-bottom: 25px;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
+    border-bottom: 1px dashed var(--border);
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
 }
 
-.date-selector-area label {
-    margin-right: 10px;
+.current-date-display:hover,
+.current-date-display:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
 }
 
-.date-selector-area input[type="date"] {
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ced4da;
+.nav-date-input {
+    position: absolute;
+    inset: -6px;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
 }
 
-.date-selector-area button {
-    padding: 6px 12px;
-    margin-left: 5px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
+.nav-button {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     cursor: pointer;
 }
 
-.date-selector-area button:hover {
-    background-color: #1e7e34;
+.nav-button:hover,
+.nav-button:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent-strong);
 }
 
-
-.devotional-entry {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #fff; /* White background for the entry itself */
+input[type="date"] {
+    font-family: var(--font-ui);
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
 }
 
-.devotional-entry h2 { /* Title */
-    margin-top: 0;
-    color: #333;
-    font-size: 1.8em;
+.site-footer {
     text-align: center;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--muted);
 }
 
-.devotional-entry h3 { /* Display Date (e.g., "June 2") */
-    text-align: center;
-    color: #555;
-    font-size: 1.2em;
-    margin-bottom: 20px;
-}
-
-.devotional-text h4, .poem-text h4 {
-    color: #005a9c;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 1.3em;
-}
-
-.devotional-text p, .poem-text p {
-    white-space: pre-line; /* This is important for respecting \n from JSON */
-    margin-bottom: 15px;
-    font-size: 1em;
-    color: #444;
-}
-
-footer {
-    text-align: center;
-    margin-top: 30px;
-    padding-top: 15px;
-    border-top: 1px solid #e7e7e7;
-    font-size: 0.9em;
-    color: #777;
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    .container {
-        margin: 10px;
-        padding: 15px;
+@media (max-width: 900px) {
+    .page {
+        padding: 44px 20px 60px;
     }
 
-    .navigation {
+    .site-actions {
         flex-direction: column;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .page {
+        padding: 32px 16px 48px;
+        gap: 32px;
     }
 
-    .navigation button {
+    .site-actions {
         width: 100%;
-        margin-bottom: 5px;
     }
-    .navigation button:last-child {
-        margin-bottom: 0;
+
+    .site-nav {
+        justify-content: center;
+    }
+
+    .entry-card,
+    .about-card {
+        padding: 28px 22px;
+    }
+
+    .entry-nav {
+        flex-direction: column;
+        align-items: stretch;
     }
 
     .current-date-display {
-        margin: 10px 0;
-    }
-
-    .devotional-entry h2 {
-        font-size: 1.5em;
-    }
-    .devotional-entry h3 {
-        font-size: 1.1em;
+        order: -1;
     }
 }

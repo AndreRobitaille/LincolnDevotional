@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextDayBtn = document.getElementById('nextDayBtn');
     const currentDisplayDateNav = document.getElementById('currentDisplayDate'); // For nav bar MMDD
     const datePicker = document.getElementById('datePicker');
-    const goToDateBtn = document.getElementById('goToDateBtn');
+    const datePickerWrap = document.getElementById('datePickerWrap');
 
     let allEntries = [];
     let currentDate = new Date(); // Holds the date currently being viewed
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Formats date for display in nav (e.g., "June 2, 2025")
     function formatNavDate(date) {
-        return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
     }
 
 
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayEntryForDate(newDate);
     });
 
-    goToDateBtn.addEventListener('click', () => {
+    datePicker.addEventListener('change', () => {
         const selectedDateValue = datePicker.value; // YYYY-MM-DD
         if (selectedDateValue) {
             // Date picker gives date in local timezone based on YYYY-MM-DD.
@@ -129,6 +129,16 @@ document.addEventListener('DOMContentLoaded', () => {
             displayEntryForDate(selectedDate);
         }
     });
+
+    if (datePickerWrap) {
+        datePickerWrap.addEventListener('click', () => {
+            if (typeof datePicker.showPicker === 'function') {
+                datePicker.showPicker();
+                return;
+            }
+            datePicker.focus();
+        });
+    }
 
     // Initial load
     loadDevotionals();

@@ -3,46 +3,81 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lincoln's Devotional</title>
+    <title>The Believer's Daily Treasure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <header>
-        <h1>Lincoln's Devotional</h1>
+    <div class="page">
+      <header class="site-header">
+        <div class="brand">
+          <p class="site-eyebrow">Abraham Lincoln's Daily Devotional</p>
+          <h1 class="site-title">The Believer's Daily Treasure</h1>
+          <p class="site-tagline">
+            Texts of scripture, arranged for every day in the year.
+          </p>
+        </div>
+        <div class="site-actions">
+          <nav class="site-nav" aria-label="Primary">
+            <a href="index.html" aria-current="page">Devotional</a>
+            <a href="about.html">About</a>
+          </nav>
+          <button class="theme-toggle" id="themeToggle" type="button">
+            Dark mode
+          </button>
+        </div>
       </header>
 
-      <nav class="navigation">
-        <button id="prevDayBtn">&laquo; Previous Day</button>
-        <div id="currentDisplayDate" class="current-date-display">
-          Loading...
-        </div>
-        <button id="nextDayBtn">Next Day &raquo;</button>
-      </nav>
-      <div class="date-selector-area">
-        <label for="datePicker">Select a Date:</label>
-        <input type="date" id="datePicker" />
-        <button id="goToDateBtn">Go</button>
-      </div>
+      <main class="main-content" id="devotionalContent">
+        <article class="entry-card" aria-live="polite">
+          <header class="entry-header">
+            <p id="entryDisplayDate" class="entry-date"></p>
+            <h2 id="entryTitle" class="entry-title"></h2>
+          </header>
+          <section class="entry-section">
+            <h3 class="entry-section-title">Scripture</h3>
+            <p id="entryDevotional" class="entry-text"></p>
+          </section>
+          <section class="entry-section entry-poem">
+            <h3 class="entry-section-title">Poem</h3>
+            <p id="entryPoem" class="entry-text"></p>
+          </section>
+        </article>
 
-      <main id="devotionalContent" class="devotional-entry">
-        <h2 id="entryTitle"></h2>
-        <h3 id="entryDisplayDate"></h3>
-        <div class="devotional-text">
-          <h4>Bible Verse</h4>
-          <p id="entryDevotional"></p>
-        </div>
-        <div class="poem-text">
-          <h4>Poem</h4>
-          <p id="entryPoem"></p>
-        </div>
+        <section class="entry-controls" aria-label="Devotional navigation">
+          <div class="entry-nav">
+            <button id="prevDayBtn" class="nav-button" type="button">
+              &larr; Previous
+            </button>
+            <div class="date-picker-wrap" id="datePickerWrap">
+              <span class="date-picker-label">Jump to</span>
+              <label
+                id="currentDisplayDate"
+                class="current-date-display"
+                for="datePicker"
+              >
+                Loading...
+              </label>
+              <input type="date" id="datePicker" class="nav-date-input" />
+            </div>
+            <button id="nextDayBtn" class="nav-button" type="button">
+              Next &rarr;
+            </button>
+          </div>
+        </section>
       </main>
 
-      <footer>
+      <footer class="site-footer">
         <p>Preserving Lincoln's Devotional for posterity.</p>
       </footer>
     </div>
 
+    <script src="theme.js"></script>
     <script src="script.js"></script>
 
     <!-- Logos Reftagger Script Start -->
