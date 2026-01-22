@@ -30,3 +30,4 @@ jobs:
             **/*.bak
             **/AGENTS.md
             **/README.md
+            **/LICENSE
