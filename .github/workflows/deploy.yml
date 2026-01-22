@@ -29,3 +29,4 @@ jobs:
             **/tools/**
             **/*.bak
             **/AGENTS.md
+            **/README.md
