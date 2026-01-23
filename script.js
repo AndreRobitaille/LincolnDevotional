@@ -1,39 +1,58 @@
 document.addEventListener('DOMContentLoaded', () => {
     const devotionalContent = {
         title: document.getElementById('entryTitle'),
-        displayDateElement: document.getElementById('entryDisplayDate'), // For the MMMM D date below title
-        devotional: document.getElementById('entryDevotional'),
+        displayDateElement: document.getElementById('entryDisplayDate'),
+        devotional: document.getElementById('entryDevotional'), // KJV
+        esv: document.getElementById('entryEsv'),
+        esvBlock: document.getElementById('esvBlock'),
         verseRef: document.getElementById('entryVerseRef'),
         poem: document.getElementById('entryPoem')
     };
+
     const prevDayBtn = document.getElementById('prevDayBtn');
     const nextDayBtn = document.getElementById('nextDayBtn');
-    const currentDisplayDateNav = document.getElementById('currentDisplayDate'); // For nav bar MMDD
+    const currentDisplayDateNav = document.getElementById('currentDisplayDate');
     const datePicker = document.getElementById('datePicker');
     const datePickerWrap = document.getElementById('datePickerWrap');
 
     let allEntries = [];
-    let currentDate = new Date(); // Holds the date currently being viewed
+    let esvCache = {};
+    let currentDate = new Date();
 
     // --- Data Loading ---
     async function loadDevotionals() {
         try {
-            const response = await fetch('data/entries.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            // Fetch both data files in parallel
+            const [entriesResponse, esvResponse] = await Promise.all([
+                fetch('data/entries.json'),
+                fetch('data/esv_cache.json').catch(e => {
+                    console.warn("Could not load ESV cache:", e);
+                    return null;
+                })
+            ]);
+
+            if (!entriesResponse.ok) {
+                throw new Error(`HTTP error loading entries! status: ${entriesResponse.status}`);
             }
-            allEntries = await response.json();
+            allEntries = await entriesResponse.json();
+
+            if (esvResponse && esvResponse.ok) {
+                try {
+                    esvCache = await esvResponse.json();
+                } catch (e) {
+                    console.error("Error parsing ESV cache:", e);
+                }
+            }
+
             // Set date picker to today and load today's entry
             const today = new Date();
-            // Use locale-based formatting to avoid timezone issues when
-            // populating the date input. toISOString() uses UTC which can
-            // shift the day depending on the user's timezone.
-            datePicker.value = today.toLocaleDateString('en-CA'); // YYYY-MM-DD format
-            currentDate = today; // Initialize currentDate
+            datePicker.value = today.toLocaleDateString('en-CA'); 
+            currentDate = today; 
             displayEntryForDate(currentDate);
         } catch (error) {
             console.error("Could not load devotional data:", error);
             devotionalContent.title.textContent = "Error loading data.";
+            devotionalContent.devotional.textContent = error.message; // Show specific error on screen
         }
     }
 
@@ -93,12 +112,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         if (entry) {
+            const mmdd = entry.mmdd;
+
             devotionalContent.title.textContent = entry.title || "Title not found";
-            // Use entry.display_date if available, otherwise format from the JS Date object
             devotionalContent.displayDateElement.textContent = entry.display_date || formatDisplayDate(date);
             
-            // Combine bible_verse and verse_ref
+            // KJV Verse (Always present)
             devotionalContent.devotional.textContent = entry.bible_verse || "Verse not found.";
+            
+            // ESV Verse (Check cache)
+            if (esvCache && esvCache[mmdd] && esvCache[mmdd].text) {
+                devotionalContent.esv.textContent = esvCache[mmdd].text;
+                devotionalContent.esvBlock.classList.remove('hidden');
+            } else {
+                devotionalContent.esv.textContent = "";
+                devotionalContent.esvBlock.classList.add('hidden');
+            }
+
             devotionalContent.verseRef.textContent = entry.verse_ref || "";
             
             if (entry.poem) {
@@ -111,19 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
             devotionalContent.displayDateElement.textContent = formatDisplayDate(date);
             devotionalContent.devotional.textContent = "There is no devotional entry for this day.";
             devotionalContent.verseRef.textContent = "";
+            devotionalContent.esvBlock.classList.add('hidden');
             devotionalContent.poem.textContent = "";
         }
 
-         // After updating content, tell Reftagger to scan the new content
-    if (window.refTagger && typeof window.refTagger.tag === 'function') {
-        // console.log("Re-running Reftagger to tag new content..."); // Optional: for debugging
-        window.refTagger.tag();
-    } else {
-        // This else block is just for debugging in case refTagger or its tag method isn't found.
-        // console.log("Reftagger object or .tag() method not found. Reftagger might not have loaded yet or API changed.");
-    }
-    // --- END OF REFTAGGER SECTION ---
-
+        // Removed Reftagger call since it is no longer used
     }
 
     // --- Event Listeners ---
