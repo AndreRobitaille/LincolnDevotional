@@ -59,8 +59,8 @@ One poem substitution present in later printings was removed in favor of the ori
 - **Static Architecture**  
   Fully static HTML, CSS, and JavaScript. No backend, database, or build tools required.
 
-- **Scripture Tooltips**  
-  Uses Logos RefTagger for inline scripture references to view the ESV translation.
+- **Parallel Translations**  
+  Includes the full King James Version (KJV) text and, where available, the English Standard Version (ESV) for comparison.
 
 ---
 
@@ -73,3 +73,41 @@ No build tools or package managers are required.
    ```bash
    git clone https://github.com/AndreRobitaille/LincolnDevotional.git
    cd LincolnDevotional
+   ```
+
+2. Open `index.html` in your browser.
+
+   Or run a local server:
+
+   ```bash
+   python3 -m http.server
+   ```
+
+   Then visit `http://localhost:8000`.
+
+---
+
+## Developer Tools
+
+The repository includes Python scripts in the `tools/` directory to manage data.
+
+### Setup
+
+To fetch ESV verses, you need an API key from [API.ESV.org](https://api.esv.org/).
+Create a `.env` file in the project root:
+
+```bash
+ESV_API_KEY=your_api_key_here
+```
+
+### Scripts
+
+- **Fetch ESV Verses**: `python3 tools/fetch_esv.py --all`  
+  Fetches verse text from the ESV API and caches it locally in `data/esv_cache.json`.
+  Use the --help switch for additional options.
+  
+- **Audit Data**: `python3 tools/audit_esv.py`  
+  Checks for reference mismatches, empty text, or suspicious formatting.
+  
+- **Clean Data**: `python3 tools/clean_esv.py`  
+  Normalizes punctuation and capitalization in cached verses.
