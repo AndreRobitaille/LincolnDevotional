@@ -430,6 +430,23 @@ input[type="date"] {
     color: var(--muted);
 }
 
+.footer-legal a {
+    font-weight: 600;
+    color: var(--accent-strong);
+    padding: 0 3px;
+    border-radius: 6px;
+    border-bottom: 1px solid var(--accent);
+    box-shadow: inset 0 -0.5em 0 var(--ornament);
+    transition: color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.footer-legal a:hover,
+.footer-legal a:focus-visible {
+    color: var(--accent);
+    border-bottom-color: var(--accent-strong);
+    box-shadow: inset 0 -0.6em 0 var(--ornament);
+}
+
 @media (max-width: 900px) {
     .page {
         padding: 44px 20px 60px;
