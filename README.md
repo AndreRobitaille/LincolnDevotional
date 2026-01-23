@@ -104,7 +104,7 @@ ESV_API_KEY=your_api_key_here
 
 - **Fetch ESV Verses**: `python3 tools/fetch_esv.py --all`  
   Fetches verse text from the ESV API and caches it locally in `data/esv_cache.json`.
-  Use the --help switch for additional options.
+  Use the `--help` switch for additional options.
   
 - **Audit Data**: `python3 tools/audit_esv.py`  
   Checks for reference mismatches, empty text, or suspicious formatting.
