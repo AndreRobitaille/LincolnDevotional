@@ -14,3 +14,8 @@
 
 # Log files created by default by the nohup command
 nohup.out
+
+# Local configuration and secrets
+.env
+__pycache__/
+*.pyc
