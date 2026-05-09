@@ -183,6 +183,13 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
 
 def write_sitemap(entries, output_root, site_url):
     root = ET.Element("urlset", attrib={"xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9"})
+    static_paths = ["/", "/about.html", "/copyright.html"]
+
+    for path in static_paths:
+        url = ET.SubElement(root, "url")
+        loc = ET.SubElement(url, "loc")
+        loc.text = f"{site_url}{path}"
+
     for entry in entries:
         url = ET.SubElement(root, "url")
         loc = ET.SubElement(url, "loc")

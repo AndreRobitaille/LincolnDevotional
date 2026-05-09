@@ -76,6 +76,11 @@ class GenerateEntryPagesTests(unittest.TestCase):
             self.assertLess(html.index('<nav class="entry-nav" aria-label="Entry navigation">'), html.index('<article class="entry-card" aria-live="polite">'))
             self.assertIn('href="/entries/january-2/"', html)
 
+            sitemap_xml = sitemap.read_text()
+            self.assertIn("https://lincolndevotional.com/", sitemap_xml)
+            self.assertIn("https://lincolndevotional.com/about.html", sitemap_xml)
+            self.assertIn("https://lincolndevotional.com/copyright.html", sitemap_xml)
+
     def test_generate_site_omits_esv_block_when_cache_missing(self):
         with TemporaryDirectory() as tmp_dir:
             output_root = Path(tmp_dir)
