@@ -468,10 +468,29 @@ input[type="date"] {
 }
 
 .site-footer {
-    text-align: center;
+    width: min(100%, 36rem);
+    margin: 0 auto;
+    text-align: left;
     font-family: var(--font-ui);
     font-size: 0.8rem;
     color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+.footer-sites {
+    line-height: 1.25;
+}
+
+.footer-sites a {
+    font-weight: 600;
+    color: var(--accent-strong);
 }
 
 .footer-legal a {
@@ -485,8 +504,18 @@ input[type="date"] {
 }
 
 .footer-legal a:hover,
-.footer-legal a:focus-visible {
+.footer-legal a:focus-visible,
+.footer-sites a:hover,
+.footer-sites a:focus-visible {
     color: var(--accent);
+}
+
+.footer-legal {
+    margin-top: 8px;
+}
+
+.footer-legal a:hover,
+.footer-legal a:focus-visible {
     border-bottom-color: var(--accent-strong);
     box-shadow: inset 0 -0.6em 0 var(--ornament);
 }
