@@ -377,15 +377,82 @@ a:focus-visible {
     gap: 20px;
 }
 
+.permalink-area {
+    display: flex;
+    justify-content: center;
+}
+
+.permalink-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface-elevated);
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    box-shadow: var(--shadow);
+}
+
+.permalink-link::before {
+    content: "↗";
+    font-size: 0.9em;
+    opacity: 0.75;
+}
+
+.permalink-link:hover,
+.permalink-link:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
 .entry-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
     background: var(--surface-elevated);
     border: 1px solid var(--border);
     border-radius: 18px;
     padding: 16px 20px;
+}
+
+.entry-nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 7rem;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+}
+
+.entry-nav a:hover,
+.entry-nav a:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.entry-nav:has(a:only-child) {
+    justify-content: center;
+}
+
+.entry-nav:has(a:only-child) a {
+    min-width: 10rem;
+}
+
+.entry-nav:has(a:only-child):not(:has(a + a)) {
+    justify-content: center;
 }
 
 .date-picker-wrap {
@@ -520,6 +587,10 @@ input[type="date"] {
     box-shadow: inset 0 -0.6em 0 var(--ornament);
 }
 
+.hidden {
+    display: none !important;
+}
+
 /* CTA Button */
 .about-cta {
     margin-top: 40px;
@@ -609,6 +680,10 @@ input[type="date"] {
     .entry-nav {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .entry-nav a {
+        width: 100%;
     }
 
     .current-date-display {

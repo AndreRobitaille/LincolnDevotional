@@ -14,10 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentDisplayDateNav = document.getElementById('currentDisplayDate');
     const datePicker = document.getElementById('datePicker');
     const datePickerWrap = document.getElementById('datePickerWrap');
+    const permalinkArea = document.getElementById('permalinkArea');
+    const permalinkLink = document.getElementById('permalinkLink');
 
     let allEntries = [];
     let esvCache = {};
+    let routeMap = {};
     let currentDate = new Date();
+    let currentYear = currentDate.getFullYear();
+    let currentEntry = null;
 
     // --- Data Loading ---
     async function loadDevotionals() {
@@ -30,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     return null;
                 })
             ]);
+            const routesResponse = await fetch('data/routes.json').catch(() => null);
 
             if (!entriesResponse.ok) {
                 throw new Error(`HTTP error loading entries! status: ${entriesResponse.status}`);
@@ -44,10 +50,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            if (routesResponse && routesResponse.ok) {
+                try {
+                    routeMap = await routesResponse.json();
+                } catch (e) {
+                    console.error("Error parsing routes manifest:", e);
+                }
+            }
+
             // Set date picker to today and load today's entry
             const today = new Date();
             datePicker.value = today.toLocaleDateString('en-CA'); 
-            currentDate = today; 
+            currentDate = today;
+            currentYear = today.getFullYear();
             displayEntryForDate(currentDate);
         } catch (error) {
             console.error("Could not load devotional data:", error);
@@ -79,6 +94,121 @@ document.addEventListener('DOMContentLoaded', () => {
         return allEntries.find(entry => entry.mmdd === mmdd);
     }
 
+    function findEntryIndex(entry) {
+        return allEntries.findIndex(item => item.mmdd === entry.mmdd);
+    }
+
+    function buildPermalinkHref(entry) {
+        return routeMap[entry.mmdd] || null;
+    }
+
+    function updatePermalink(entry) {
+        if (!permalinkArea || !permalinkLink) {
+            return;
+        }
+
+        if (!entry) {
+            permalinkArea.classList.add('hidden');
+            permalinkLink.removeAttribute('href');
+            return;
+        }
+
+        const href = buildPermalinkHref(entry);
+        if (!href) {
+            permalinkArea.classList.add('hidden');
+            permalinkLink.removeAttribute('href');
+            return;
+        }
+
+        permalinkLink.href = href;
+        permalinkArea.classList.remove('hidden');
+    }
+
+    function getAdjacentEntry(entry, direction) {
+        if (!entry || !allEntries.length) {
+            return null;
+        }
+
+        const currentIndex = findEntryIndex(entry);
+        if (currentIndex < 0) {
+            return null;
+        }
+
+        const nextIndex = (currentIndex + direction + allEntries.length) % allEntries.length;
+        return allEntries[nextIndex];
+    }
+
+    function buildPickerDate(entry, year) {
+        if (!entry) {
+            return null;
+        }
+
+        const pickerDate = new Date(year, entry.month - 1, entry.day);
+        if (pickerDate.getMonth() !== entry.month - 1 || pickerDate.getDate() !== entry.day) {
+            return null;
+        }
+
+        return pickerDate;
+    }
+
+    function syncDatePicker(entry, pickerDate) {
+        if (!datePicker || !currentDisplayDateNav) {
+            return;
+        }
+
+        if (entry) {
+            currentDisplayDateNav.textContent = entry.display_date || formatDisplayDate(pickerDate || currentDate);
+        } else if (pickerDate) {
+            currentDisplayDateNav.textContent = formatNavDate(pickerDate);
+        } else {
+            currentDisplayDateNav.textContent = 'Select a date';
+        }
+
+        datePicker.value = pickerDate ? pickerDate.toLocaleDateString('en-CA') : '';
+    }
+
+    function displayEntry(entry, pickerDate = null) {
+        currentEntry = entry;
+        currentDate = pickerDate || currentDate;
+
+        syncDatePicker(entry, pickerDate);
+
+        if (entry) {
+            const mmdd = entry.mmdd;
+
+            devotionalContent.title.textContent = entry.title || 'Title not found';
+            devotionalContent.displayDateElement.textContent = entry.display_date || formatDisplayDate(pickerDate || currentDate);
+            devotionalContent.devotional.textContent = entry.bible_verse || 'Verse not found.';
+
+            if (esvCache && esvCache[mmdd] && esvCache[mmdd].text) {
+                devotionalContent.esv.textContent = esvCache[mmdd].text;
+                devotionalContent.esvBlock.classList.remove('hidden');
+            } else {
+                devotionalContent.esv.textContent = '';
+                devotionalContent.esvBlock.classList.add('hidden');
+            }
+
+            devotionalContent.verseRef.textContent = entry.verse_ref || '';
+
+            if (entry.poem) {
+                renderPoemLines(entry.poem);
+            } else {
+                devotionalContent.poem.textContent = 'Poem not found.';
+            }
+
+            updatePermalink(entry);
+            return;
+        }
+
+        devotionalContent.title.textContent = 'No Entry Available';
+        devotionalContent.displayDateElement.textContent = pickerDate ? formatDisplayDate(pickerDate) : '';
+        devotionalContent.devotional.textContent = 'There is no devotional entry for this day.';
+        devotionalContent.verseRef.textContent = '';
+        devotionalContent.esvBlock.classList.add('hidden');
+        devotionalContent.poem.textContent = '';
+        updatePermalink(null);
+    }
+
     // --- Display Logic ---
     function renderPoemLines(poemText) {
         if (!poemText) {
@@ -103,62 +233,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayEntryForDate(date) {
         const entry = findEntry(date);
-        currentDate = date; // Update the global current date being viewed
-
-        currentDisplayDateNav.textContent = formatNavDate(date);
-        // Update the date picker to reflect the currently viewed date.
-        // Using locale formatting avoids off-by-one errors from UTC conversion.
-        datePicker.value = date.toLocaleDateString('en-CA');
-
-
-        if (entry) {
-            const mmdd = entry.mmdd;
-
-            devotionalContent.title.textContent = entry.title || "Title not found";
-            devotionalContent.displayDateElement.textContent = entry.display_date || formatDisplayDate(date);
-            
-            // KJV Verse (Always present)
-            devotionalContent.devotional.textContent = entry.bible_verse || "Verse not found.";
-            
-            // ESV Verse (Check cache)
-            if (esvCache && esvCache[mmdd] && esvCache[mmdd].text) {
-                devotionalContent.esv.textContent = esvCache[mmdd].text;
-                devotionalContent.esvBlock.classList.remove('hidden');
-            } else {
-                devotionalContent.esv.textContent = "";
-                devotionalContent.esvBlock.classList.add('hidden');
-            }
-
-            devotionalContent.verseRef.textContent = entry.verse_ref || "";
-            
-            if (entry.poem) {
-                renderPoemLines(entry.poem);
-            } else {
-                devotionalContent.poem.textContent = "Poem not found.";
-            }
-        } else {
-            devotionalContent.title.textContent = "No Entry Available";
-            devotionalContent.displayDateElement.textContent = formatDisplayDate(date);
-            devotionalContent.devotional.textContent = "There is no devotional entry for this day.";
-            devotionalContent.verseRef.textContent = "";
-            devotionalContent.esvBlock.classList.add('hidden');
-            devotionalContent.poem.textContent = "";
-        }
-
-        // Removed Reftagger call since it is no longer used
+        currentYear = date.getFullYear();
+        currentDate = date;
+        displayEntry(entry, date);
     }
 
     // --- Event Listeners ---
     prevDayBtn.addEventListener('click', () => {
-        const newDate = new Date(currentDate);
-        newDate.setDate(currentDate.getDate() - 1);
-        displayEntryForDate(newDate);
+        const previousEntry = getAdjacentEntry(currentEntry, -1);
+        if (previousEntry) {
+            displayEntry(previousEntry, buildPickerDate(previousEntry, currentYear));
+        }
     });
 
     nextDayBtn.addEventListener('click', () => {
-        const newDate = new Date(currentDate);
-        newDate.setDate(currentDate.getDate() + 1);
-        displayEntryForDate(newDate);
+        const nextEntry = getAdjacentEntry(currentEntry, 1);
+        if (nextEntry) {
+            displayEntry(nextEntry, buildPickerDate(nextEntry, currentYear));
+        }
     });
 
     datePicker.addEventListener('change', () => {
@@ -172,6 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed in JS Date
             const day = parseInt(parts[2], 10);
             const selectedDate = new Date(year, month, day);
+            currentYear = year;
             displayEntryForDate(selectedDate);
         }
     });
