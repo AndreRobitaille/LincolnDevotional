@@ -106,6 +106,7 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
 
     esv_block = render_esv_block(esv_text)
     poem_html = render_poem_html(entry["poem"])
+    share_title = f"The Believer's Daily Treasure — {entry['display_date']}: {entry['title']}"
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -125,7 +126,8 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
       href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../style.css?v=20260509" />
+    <link rel="stylesheet" href="../../style.css?v=20260509e" />
+    <script src="../../analytics.js?v=20260509e"></script>
   </head>
   <body>
     <div class="page">
@@ -169,6 +171,14 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
         </article>
       </main>
 
+      <aside class="entry-share" id="permalinkArea" aria-label="Share this devotion">
+        <a id="permalinkLink" class="entry-share-link" href="{href}" data-share-title="{escape(share_title)}">
+          <span class="entry-share-flourish entry-share-flourish--left" aria-hidden="true">&#10086;</span>
+          <span class="entry-share-text">Share this devotion</span>
+          <span class="entry-share-flourish entry-share-flourish--right" aria-hidden="true">&#10086;</span>
+        </a>
+      </aside>
+
       <footer class="site-footer">
         <p class="footer-sites"><a href="https://lincolndevotional.com/">LincolnDevotional.com</a>, the daily devotional Abraham Lincoln carried.</p>
         <p class="footer-sites"><a href="https://tworiversmatters.com/">TwoRiversMatters.com</a>, covering Two Rivers, Wisconsin city government, meetings, and civic news.</p>
@@ -176,6 +186,7 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
       </footer>
     </div>
     <script src="../../theme.js?v=20260123"></script>
+    <script src="../../share.js?v=20260509e"></script>
   </body>
 </html>
 """

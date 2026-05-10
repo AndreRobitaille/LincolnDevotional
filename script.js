@@ -121,6 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         permalinkLink.href = href;
+        const datePart = entry.display_date ? ` — ${entry.display_date}` : '';
+        const titlePart = entry.title ? `: ${entry.title}` : '';
+        permalinkLink.dataset.shareTitle = `The Believer's Daily Treasure${datePart}${titlePart}`;
         permalinkArea.classList.remove('hidden');
     }
 
