@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentDisplayDateNav = document.getElementById('currentDisplayDate');
     const datePicker = document.getElementById('datePicker');
     const datePickerWrap = document.getElementById('datePickerWrap');
-    const permalinkArea = document.getElementById('permalinkArea');
-    const permalinkLink = document.getElementById('permalinkLink');
+    const permalinkArea = document.getElementById('devotionLinkArea');
+    const permalinkLink = document.getElementById('devotionLink');
 
     let allEntries = [];
     let esvCache = {};
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         permalinkLink.href = href;
         const datePart = entry.display_date ? ` — ${entry.display_date}` : '';
         const titlePart = entry.title ? `: ${entry.title}` : '';
-        permalinkLink.dataset.shareTitle = `The Believer's Daily Treasure${datePart}${titlePart}`;
+        permalinkLink.dataset.linkTitle = `The Believer's Daily Treasure${datePart}${titlePart}`;
         permalinkArea.classList.remove('hidden');
     }
 

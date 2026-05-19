@@ -1,6 +1,6 @@
 (function () {
     document.addEventListener('DOMContentLoaded', () => {
-        const link = document.getElementById('permalinkLink');
+        const link = document.getElementById('devotionLink');
         if (!link) {
             return;
         }
@@ -21,27 +21,27 @@
                 return;
             }
 
-            const shareUrl = new URL(href, window.location.href).toString();
-            const shareTitle =
-                link.dataset.shareTitle ||
+            const permalinkUrl = new URL(href, window.location.href).toString();
+            const linkTitle =
+                link.dataset.linkTitle ||
                 document.title ||
                 "The Believer's Daily Treasure";
 
             if (typeof navigator.share === 'function') {
                 event.preventDefault();
                 try {
-                    await navigator.share({ title: shareTitle, url: shareUrl });
+                    await navigator.share({ title: linkTitle, url: permalinkUrl });
                 } catch (err) {
                     if (err && err.name !== 'AbortError') {
-                        const ok = await copyToClipboard(shareUrl);
-                        showToast(ok ? 'Link copied' : "Couldn’t share");
+                        const ok = await copyToClipboard(permalinkUrl);
+                        showToast(ok ? 'Link copied' : "Couldn’t open link tool");
                     }
                 }
                 return;
             }
 
             event.preventDefault();
-            const ok = await copyToClipboard(shareUrl);
+            const ok = await copyToClipboard(permalinkUrl);
             showToast(ok ? 'Link copied' : "Couldn’t copy link");
         });
     });
@@ -80,24 +80,24 @@
 
     let toastTimer = null;
     function showToast(message) {
-        let toast = document.getElementById('shareToast');
+        let toast = document.getElementById('permalinkToast');
         if (!toast) {
             toast = document.createElement('div');
-            toast.id = 'shareToast';
-            toast.className = 'share-toast';
+            toast.id = 'permalinkToast';
+            toast.className = 'permalink-toast';
             toast.setAttribute('role', 'status');
             toast.setAttribute('aria-live', 'polite');
-            const host = document.getElementById('permalinkArea') || document.body;
+            const host = document.getElementById('devotionLinkArea') || document.body;
             host.appendChild(toast);
         }
         toast.textContent = message;
         void toast.offsetWidth;
-        toast.classList.add('share-toast--visible');
+        toast.classList.add('permalink-toast--visible');
         if (toastTimer) {
             clearTimeout(toastTimer);
         }
         toastTimer = setTimeout(() => {
-            toast.classList.remove('share-toast--visible');
+            toast.classList.remove('permalink-toast--visible');
         }, 2200);
     }
 })();

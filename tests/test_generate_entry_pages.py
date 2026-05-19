@@ -122,6 +122,21 @@ class GenerateEntryPagesTests(unittest.TestCase):
             self.assertIn('data-routes-path="../../data/routes.json"', html)
             self.assertIn('<script src="../../static-entry-nav.js?v=20260519a"></script>', html)
 
+    def test_static_entry_permalink_avoids_share_filter_terms(self):
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+            generate_site(self.entries, self.esv_cache, output_root, "https://lincolndevotional.com")
+
+            html = (output_root / "entries" / "january-1" / "index.html").read_text()
+
+            self.assertIn('class="entry-permalink"', html)
+            self.assertIn('id="devotionLinkArea"', html)
+            self.assertIn('id="devotionLink"', html)
+            self.assertIn('Share this devotion', html)
+            self.assertIn('<script src="../../permalink.js?v=20260519a"></script>', html)
+            self.assertNotIn('entry-share', html)
+            self.assertNotIn('share.js', html)
+
     def test_static_entry_nav_uses_canonical_leap_year_and_display_title(self):
         script = Path("static-entry-nav.js").read_text()
         self.assertIn("const year = 2024;", script)

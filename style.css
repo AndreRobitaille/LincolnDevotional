@@ -377,7 +377,7 @@ a:focus-visible {
     gap: 20px;
 }
 
-.entry-share {
+.entry-permalink {
     position: relative;
     width: min(100%, 36rem);
     margin: 0 auto;
@@ -385,7 +385,7 @@ a:focus-visible {
     padding: 4px 0 0;
 }
 
-.entry-share-link {
+.entry-permalink-link {
     display: inline-flex;
     align-items: baseline;
     gap: 18px;
@@ -399,7 +399,7 @@ a:focus-visible {
     transition: color 0.3s ease;
 }
 
-.entry-share-text {
+.entry-permalink-text {
     position: relative;
     background-image: linear-gradient(to right, var(--accent), var(--accent));
     background-position: 0 100%;
@@ -409,7 +409,7 @@ a:focus-visible {
     transition: background-size 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.entry-share-flourish {
+.entry-permalink-flourish {
     font-family: var(--font-display);
     font-style: normal;
     font-size: 1.15em;
@@ -421,32 +421,32 @@ a:focus-visible {
         opacity 0.3s ease;
 }
 
-.entry-share-link:hover,
-.entry-share-link:focus-visible {
+.entry-permalink-link:hover,
+.entry-permalink-link:focus-visible {
     color: var(--accent);
 }
 
-.entry-share-link:hover .entry-share-text,
-.entry-share-link:focus-visible .entry-share-text {
+.entry-permalink-link:hover .entry-permalink-text,
+.entry-permalink-link:focus-visible .entry-permalink-text {
     background-size: 100% 1px;
 }
 
-.entry-share-link:hover .entry-share-flourish,
-.entry-share-link:focus-visible .entry-share-flourish {
+.entry-permalink-link:hover .entry-permalink-flourish,
+.entry-permalink-link:focus-visible .entry-permalink-flourish {
     opacity: 0.95;
 }
 
-.entry-share-link:hover .entry-share-flourish--left,
-.entry-share-link:focus-visible .entry-share-flourish--left {
+.entry-permalink-link:hover .entry-permalink-flourish--left,
+.entry-permalink-link:focus-visible .entry-permalink-flourish--left {
     transform: rotate(-12deg) translateX(-2px);
 }
 
-.entry-share-link:hover .entry-share-flourish--right,
-.entry-share-link:focus-visible .entry-share-flourish--right {
+.entry-permalink-link:hover .entry-permalink-flourish--right,
+.entry-permalink-link:focus-visible .entry-permalink-flourish--right {
     transform: rotate(12deg) translateX(2px);
 }
 
-.share-toast {
+.permalink-toast {
     position: absolute;
     left: 50%;
     bottom: calc(100% + 6px);
@@ -470,13 +470,13 @@ a:focus-visible {
     z-index: 50;
 }
 
-.share-toast--visible {
+.permalink-toast--visible {
     opacity: 1;
     transform: translate(-50%, 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .share-toast {
+    .permalink-toast {
         transition: opacity 0.15s linear;
         transform: translate(-50%, 0);
     }
@@ -762,7 +762,7 @@ input[type="date"] {
         order: -1;
     }
 
-    .entry-share-link {
+    .entry-permalink-link {
         gap: 14px;
         font-size: 0.96rem;
     }
