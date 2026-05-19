@@ -53,6 +53,23 @@ def build_description(entry):
     return f"{date_text}: {title}. {verse_ref}. {excerpt}"
 
 
+def build_static_asset_version():
+    return "20260519a"
+
+
+def render_static_date_picker(entry):
+    return f"""
+            <div
+              class="date-picker-wrap"
+              data-entry-mmdd="{entry['mmdd']}"
+              data-routes-path="../../data/routes.json"
+            >
+              <span class="date-picker-label">Jump to</span>
+              <span class="current-date-display">{escape(entry['display_date'])}</span>
+              <input type="date" class="nav-date-input" aria-label="Jump to another date" />
+            </div>"""
+
+
 def normalize_poem_lines(poem_text):
     return [line.replace("\r", "") for line in poem_text.splitlines()]
 
@@ -93,11 +110,13 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
     canonical_url = f"{site_url}{href}"
     title = f"{entry['display_date']} - {entry['title']}"
     description = build_description(entry)
-    prev_link = f'<a href="../{slugify_entry(previous_entry)}/">Previous</a>'
-    next_link = f'<a href="../{slugify_entry(next_entry)}/">Next</a>'
+    prev_link = f'<a href="../{slugify_entry(previous_entry)}/">&larr; Previous</a>'
+    next_link = f'<a href="../{slugify_entry(next_entry)}/">Next &rarr;</a>'
+    date_picker = render_static_date_picker(entry)
     navigation = f"""
           <nav class="entry-nav" aria-label="Entry navigation">
             {prev_link}
+            {date_picker}
             {next_link}
           </nav>"""
 
@@ -185,6 +204,7 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
         <p class="footer-legal"><a href="../../copyright.html">Copyright</a></p>
       </footer>
     </div>
+    <script src="../../static-entry-nav.js?v={build_static_asset_version()}"></script>
     <script src="../../theme.js?v=20260123"></script>
     <script src="../../share.js?v=20260509e"></script>
   </body>

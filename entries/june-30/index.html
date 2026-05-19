@@ -40,8 +40,18 @@
       <main class="main-content">
         
           <nav class="entry-nav" aria-label="Entry navigation">
-            <a href="../june-29/">Previous</a>
-            <a href="../july-1/">Next</a>
+            <a href="../june-29/">&larr; Previous</a>
+            
+            <div
+              class="date-picker-wrap"
+              data-entry-mmdd="0630"
+              data-routes-path="../../data/routes.json"
+            >
+              <span class="date-picker-label">Jump to</span>
+              <span class="current-date-display">June 30</span>
+              <input type="date" class="nav-date-input" aria-label="Jump to another date" />
+            </div>
+            <a href="../july-1/">Next &rarr;</a>
           </nav>
         <article class="entry-card" aria-live="polite">
           <header class="entry-header">
@@ -87,6 +97,7 @@
         <p class="footer-legal"><a href="../../copyright.html">Copyright</a></p>
       </footer>
     </div>
+    <script src="../../static-entry-nav.js?v=20260519a"></script>
     <script src="../../theme.js?v=20260123"></script>
     <script src="../../share.js?v=20260509e"></script>
   </body>

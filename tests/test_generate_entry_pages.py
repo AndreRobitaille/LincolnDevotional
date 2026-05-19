@@ -10,6 +10,14 @@ from tools.generate_entry_pages import (
 )
 
 
+def assert_in_order(test_case, html, fragments):
+    current_index = -1
+    for fragment in fragments:
+        next_index = html.index(fragment)
+        test_case.assertGreater(next_index, current_index)
+        current_index = next_index
+
+
 class GenerateEntryPagesTests(unittest.TestCase):
     def setUp(self):
         self.entries = [
@@ -75,6 +83,15 @@ class GenerateEntryPagesTests(unittest.TestCase):
             self.assertIn('<nav class="entry-nav" aria-label="Entry navigation">', html)
             self.assertLess(html.index('<nav class="entry-nav" aria-label="Entry navigation">'), html.index('<article class="entry-card" aria-live="polite">'))
             self.assertIn('href="/entries/january-2/"', html)
+            assert_in_order(
+                self,
+                html,
+                [
+                    '&larr; Previous</a>',
+                    'class="date-picker-wrap"',
+                    'Next &rarr;</a>',
+                ],
+            )
 
             sitemap_xml = sitemap.read_text()
             self.assertIn("https://lincolndevotional.com/", sitemap_xml)
@@ -88,6 +105,27 @@ class GenerateEntryPagesTests(unittest.TestCase):
 
             html = (output_root / "entries" / "january-2" / "index.html").read_text()
             self.assertNotIn("<span class=\"version-label\">ESV</span>", html)
+
+    def test_generate_site_adds_date_picker_to_static_navigation(self):
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+            generate_site(self.entries, self.esv_cache, output_root, "https://lincolndevotional.com")
+
+            html = (output_root / "entries" / "january-1" / "index.html").read_text()
+
+            self.assertIn('<nav class="entry-nav" aria-label="Entry navigation">', html)
+            self.assertIn('class="date-picker-wrap"', html)
+            self.assertIn('class="date-picker-label">Jump to</span>', html)
+            self.assertIn('class="current-date-display">January 1</span>', html)
+            self.assertIn('type="date"', html)
+            self.assertIn('data-entry-mmdd="0101"', html)
+            self.assertIn('data-routes-path="../../data/routes.json"', html)
+            self.assertIn('<script src="../../static-entry-nav.js?v=20260519a"></script>', html)
+
+    def test_static_entry_nav_uses_canonical_leap_year_and_display_title(self):
+        script = Path("static-entry-nav.js").read_text()
+        self.assertIn("const year = 2024;", script)
+        self.assertIn('currentDateDisplay.title = `Current page date: ${currentDateDisplay.textContent}`;', script)
 
     def test_generate_site_raises_for_duplicate_slug(self):
         duplicate_entries = [
