@@ -116,7 +116,7 @@ def render_esv_block(esv_text):
 def render_primary_nav(prefix, current_page=None):
     links = [
         ("Devotional", f"{prefix}index.html", current_page == "devotional"),
-        ("Explore", f"{prefix}explore/", current_page == "explore"),
+        ("By Topic", f"{prefix}explore/", current_page == "explore"),
         ("About", f"{prefix}about.html", current_page == "about"),
     ]
     items = []
@@ -277,10 +277,9 @@ def render_explore_page(topic_taxonomy, payload, site_url):
       <main class="main-content explore-main">
         <article class="entry-card explore-hero" aria-live="polite">
           <header class="entry-header">
-            <p class="entry-date">Explore</p>
+            <p class="entry-date">By Topic</p>
             <h2 class="entry-title">Find a devotion for today’s need</h2>
           </header>
-          <p class="explore-lede">Three hundred and sixty-six devotions from the volume Abraham Lincoln carried, browsable by theme and by what your heart is asking for today.</p>
         </article>
 
         <section class="explore-filters" aria-label="Filter devotions">
