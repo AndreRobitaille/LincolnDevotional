@@ -20,3 +20,4 @@ nohup.out
 __pycache__/
 *.pyc
 .worktrees/
+tmp/
