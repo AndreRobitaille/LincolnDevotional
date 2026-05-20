@@ -44,6 +44,14 @@ def build_entry_href(entry):
     return f"/entries/{slugify_entry(entry)}/"
 
 
+def build_topic_href(topic_slug):
+    return f"/explore/?topic={topic_slug}"
+
+
+def build_topic_map(topic_taxonomy):
+    return {topic["slug"]: topic for topic in topic_taxonomy.get("topics", [])}
+
+
 def build_description(entry):
     title = entry["title"].strip()
     date_text = entry["display_date"].strip()
@@ -105,7 +113,212 @@ def render_esv_block(esv_text):
               </div>"""
 
 
-def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
+def render_primary_nav(prefix, current_page=None):
+    links = [
+        ("Devotional", f"{prefix}index.html", current_page == "devotional"),
+        ("By Topic", f"{prefix}explore/", current_page == "explore"),
+        ("About", f"{prefix}about.html", current_page == "about"),
+    ]
+    items = []
+    for label, href, active in links:
+        active_attr = ' aria-current="page"' if active else ""
+        items.append(f'<a{active_attr} href="{href}">{label}</a>')
+    return f'<nav class="site-nav" aria-label="Primary">{"".join(items)}</nav>'
+
+
+def render_topic_chips(assignment, topic_map):
+    if not assignment:
+        return ""
+    primary_slug = assignment.get("primary_topic")
+    ordered_slugs = []
+    if primary_slug:
+        ordered_slugs.append(primary_slug)
+    for topic_slug in assignment.get("topics", []):
+        if topic_slug not in ordered_slugs:
+            ordered_slugs.append(topic_slug)
+    chips = []
+    for topic_slug in ordered_slugs:
+        topic = topic_map.get(topic_slug)
+        if not topic:
+            continue
+        is_primary = topic_slug == primary_slug
+        cls = "topic-chip topic-chip--primary" if is_primary else "topic-chip"
+        chips.append(f'<a class="{cls}" href="{build_topic_href(topic_slug)}">{escape(topic["name"])}</a>')
+    if not chips:
+        return ""
+    return f'<div class="entry-topic-chips">{"".join(chips)}</div>'
+
+
+def build_explore_payload(entries, entry_topics, topic_taxonomy):
+    topic_list = topic_taxonomy.get("topics", [])
+    need_list = topic_taxonomy.get("reader_needs", [])
+
+    topic_counts = {topic["slug"]: 0 for topic in topic_list}
+    primary_counts = {topic["slug"]: 0 for topic in topic_list}
+    need_counts = {need["slug"]: 0 for need in need_list}
+
+    entry_records = []
+    for entry in entries:
+        assignment = entry_topics.get(entry["mmdd"], {})
+        primary = assignment.get("primary_topic") or ""
+        topics = list(assignment.get("topics", []))
+        needs = list(assignment.get("reader_needs", []))
+        if primary and primary in primary_counts:
+            primary_counts[primary] += 1
+        for slug in topics:
+            if slug in topic_counts:
+                topic_counts[slug] += 1
+        for slug in needs:
+            if slug in need_counts:
+                need_counts[slug] += 1
+        entry_records.append({
+            "mmdd": entry["mmdd"],
+            "month": entry["month"],
+            "display_date": entry["display_date"],
+            "title": entry["title"],
+            "href": build_entry_href(entry),
+            "primary": primary,
+            "topics": topics,
+            "needs": needs,
+        })
+
+    topics_payload = [
+        {
+            "slug": topic["slug"],
+            "name": topic["name"],
+            "description": topic.get("description", ""),
+            "count": topic_counts.get(topic["slug"], 0),
+            "primary_count": primary_counts.get(topic["slug"], 0),
+        }
+        for topic in topic_list
+    ]
+    needs_payload = [
+        {
+            "slug": need["slug"],
+            "name": need["name"],
+            "description": need.get("description", ""),
+            "count": need_counts.get(need["slug"], 0),
+        }
+        for need in need_list
+    ]
+    months_payload = [
+        {"number": number, "name": name.capitalize()}
+        for number, name in MONTH_NAMES.items()
+    ]
+    return {
+        "entries": entry_records,
+        "topics": topics_payload,
+        "needs": needs_payload,
+        "months": months_payload,
+        "total": len(entry_records),
+    }
+
+
+def render_facet_chip(slug, label, count, facet):
+    disabled = ' data-disabled="true"' if count == 0 else ""
+    count_html = f'<span class="facet-chip-count">{count}</span>' if count else '<span class="facet-chip-count facet-chip-count--zero">0</span>'
+    return (
+        f'<button class="facet-chip" type="button" data-facet="{facet}" '
+        f'data-slug="{escape(slug)}"{disabled} aria-pressed="false">'
+        f'<span class="facet-chip-label">{escape(label)}</span>{count_html}</button>'
+    )
+
+
+def render_explore_page(topic_taxonomy, payload, site_url):
+    topic_chips = "".join(
+        render_facet_chip(topic["slug"], topic["name"], topic["count"], "topic")
+        for topic in payload["topics"]
+    )
+    need_chips_html = "".join(
+        render_facet_chip(need["slug"], need["name"], need["count"], "need")
+        for need in payload["needs"]
+    )
+
+    needs_have_any = any(need["count"] > 0 for need in payload["needs"])
+    needs_note = "" if needs_have_any else (
+        '<p class="facet-empty-note">Reader-need tagging is in progress — these filters will populate as entries are tagged.</p>'
+    )
+
+    inline_payload = escape(json.dumps(payload, ensure_ascii=False), quote=False)
+
+    return f"""<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="canonical" href="{site_url}/explore/" />
+    <title>Explore - The Believer's Daily Treasure</title>
+    <meta name="description" content="Browse 366 devotions by topic and by today’s need." />
+    <meta property="og:title" content="Explore - The Believer's Daily Treasure" />
+    <meta property="og:description" content="Browse 366 devotions by topic and by today’s need." />
+    <meta property="og:url" content="{site_url}/explore/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../style.css?v=20260519c" />
+    <script src="../analytics.js?v=20260509e"></script>
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <div class="brand">
+          <p class="site-eyebrow">Abraham Lincoln's Daily Devotional</p>
+          <h1 class="site-title">The Believer's Daily Treasure</h1>
+          <p class="site-tagline">Texts of scripture, arranged for every day in the year.</p>
+        </div>
+        <div class="site-actions">
+          {render_primary_nav("../", current_page="explore")}
+          <button class="theme-toggle" id="themeToggle" type="button">Dark mode</button>
+        </div>
+      </header>
+      <main class="main-content explore-main">
+        <article class="entry-card explore-hero" aria-live="polite">
+          <header class="entry-header">
+            <p class="entry-date">By Topic</p>
+            <h2 class="entry-title">Find a devotion for today’s need</h2>
+          </header>
+        </article>
+
+        <section class="explore-filters" aria-label="Filter devotions">
+          <fieldset class="facet-group" data-facet-group="topic">
+            <legend class="facet-legend">By topic</legend>
+            <div class="facet-chips" role="group" aria-label="Topic filters">{topic_chips}</div>
+          </fieldset>
+          <fieldset class="facet-group" data-facet-group="need">
+            <legend class="facet-legend">By need</legend>
+            <div class="facet-chips" role="group" aria-label="Reader-need filters">{need_chips_html}</div>
+            {needs_note}
+          </fieldset>
+          <div class="explore-summary">
+            <span class="explore-count" data-result-count>{payload['total']} devotions</span>
+            <button class="explore-clear" type="button" hidden>Clear filters</button>
+          </div>
+        </section>
+
+        <section class="explore-results" data-explore-results aria-live="polite" aria-label="Devotions">
+          <p class="explore-loading">Loading devotions…</p>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p class="footer-sites"><a href="https://lincolndevotional.com/">LincolnDevotional.com</a>, the daily devotional Abraham Lincoln carried.</p>
+        <p class="footer-sites"><a href="https://tworiversmatters.com/">TwoRiversMatters.com</a>, covering Two Rivers, Wisconsin city government, meetings, and civic news.</p>
+        <p class="footer-legal"><a href="../copyright.html">Copyright</a></p>
+      </footer>
+    </div>
+    <script type="application/json" id="explore-data">{inline_payload}</script>
+    <script src="../theme.js?v=20260123"></script>
+    <script src="../explore.js?v=20260520a"></script>
+  </body>
+</html>"""
+
+
+
+
+def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url, topic_map=None, assignment=None):
     href = build_entry_href(entry)
     canonical_url = f"{site_url}{href}"
     title = f"{entry['display_date']} - {entry['title']}"
@@ -125,6 +338,7 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
 
     esv_block = render_esv_block(esv_text)
     poem_html = render_poem_html(entry["poem"])
+    topic_chips = render_topic_chips(assignment, topic_map or {})
     link_title = f"The Believer's Daily Treasure — {entry['display_date']}: {entry['title']}"
     return f"""<!doctype html>
 <html lang="en">
@@ -145,7 +359,7 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
       href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../style.css?v=20260519b" />
+    <link rel="stylesheet" href="../../style.css?v=20260519c" />
     <script src="../../analytics.js?v=20260509e"></script>
   </head>
   <body>
@@ -157,10 +371,7 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
           <p class="site-tagline">Texts of scripture, arranged for every day in the year.</p>
         </div>
         <div class="site-actions">
-          <nav class="site-nav" aria-label="Primary">
-            <a href="../../index.html">Devotional</a>
-            <a href="../../about.html">About</a>
-          </nav>
+          {render_primary_nav("../../", current_page="devotional")}
           <button class="theme-toggle" id="themeToggle" type="button">Dark mode</button>
         </div>
       </header>
@@ -187,6 +398,7 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
             <h3 class="entry-section-title">Poem</h3>
             <div class="entry-text">{poem_html}</div>
           </section>
+          {topic_chips}
         </article>
       </main>
 
@@ -212,9 +424,9 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url):
 """
 
 
-def write_sitemap(entries, output_root, site_url):
+def write_sitemap(entries, output_root, site_url, topic_taxonomy=None):
     root = ET.Element("urlset", attrib={"xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9"})
-    static_paths = ["/", "/about.html", "/copyright.html"]
+    static_paths = ["/", "/about.html", "/copyright.html", "/explore/"]
 
     for path in static_paths:
         url = ET.SubElement(root, "url")
@@ -244,11 +456,14 @@ def write_routes_manifest(entries, output_root):
     routes_path.write_text(json.dumps(routes, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def generate_site(entries, esv_cache, output_root, site_url):
+def generate_site(entries, esv_cache, output_root, site_url, topic_taxonomy=None, entry_topics=None):
     validate_entries(entries)
     output_root.mkdir(parents=True, exist_ok=True)
     entries_dir = output_root / "entries"
     entries_dir.mkdir(parents=True, exist_ok=True)
+    topic_taxonomy = topic_taxonomy or {"topics": []}
+    entry_topics = entry_topics or {}
+    topic_map = build_topic_map(topic_taxonomy)
 
     for index, entry in enumerate(entries):
         slug = slugify_entry(entry)
@@ -257,10 +472,15 @@ def generate_site(entries, esv_cache, output_root, site_url):
         previous_entry = entries[index - 1] if index > 0 else entries[-1]
         next_entry = entries[index + 1] if index + 1 < len(entries) else entries[0]
         esv_text = esv_cache.get(entry["mmdd"], {}).get("text", "")
-        html = render_entry_page(entry, previous_entry, next_entry, esv_text, site_url)
+        html = render_entry_page(entry, previous_entry, next_entry, esv_text, site_url, topic_map=topic_map, assignment=entry_topics.get(entry["mmdd"]))
         (entry_dir / "index.html").write_text(html, encoding="utf-8")
 
-    write_sitemap(entries, output_root, site_url)
+    explore_dir = output_root / "explore"
+    explore_dir.mkdir(parents=True, exist_ok=True)
+    payload = build_explore_payload(entries, entry_topics, topic_taxonomy)
+    (explore_dir / "index.html").write_text(render_explore_page(topic_taxonomy, payload, site_url), encoding="utf-8")
+
+    write_sitemap(entries, output_root, site_url, topic_taxonomy=topic_taxonomy)
     write_robots_txt(output_root, site_url)
     write_routes_manifest(entries, output_root)
 
@@ -268,7 +488,9 @@ def generate_site(entries, esv_cache, output_root, site_url):
 def main():
     entries = load_json(ENTRIES_PATH)
     esv_cache = load_json(ESV_CACHE_PATH)
-    generate_site(entries, esv_cache, OUTPUT_ROOT, SITE_URL)
+    topic_taxonomy = load_json(ROOT / "data" / "topic_taxonomy.json")
+    entry_topics = load_json(ROOT / "data" / "entry_topics.json")
+    generate_site(entries, esv_cache, OUTPUT_ROOT, SITE_URL, topic_taxonomy=topic_taxonomy, entry_topics=entry_topics)
 
 
 if __name__ == "__main__":

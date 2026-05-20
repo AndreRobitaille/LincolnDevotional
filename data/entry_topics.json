@@ -1,0 +1,3484 @@
+{
+  "0101": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "gratitude"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0102": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0103": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0104": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace",
+      "good-works"
+    ]
+  },
+  "0105": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith",
+      "grace"
+    ]
+  },
+  "0106": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0107": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0108": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0109": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0110": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0111": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0112": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "peace",
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0113": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0114": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance",
+      "comfort"
+    ],
+    "topics": [
+      "obedience",
+      "prayer"
+    ]
+  },
+  "0115": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0116": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "strength",
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0117": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0118": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "comfort",
+      "strength"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0119": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0120": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "guidance",
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0121": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0122": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith",
+      "grace"
+    ]
+  },
+  "0123": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0124": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0125": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0126": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0127": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0128": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0129": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0130": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0131": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0201": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "obedience",
+      "thanksgiving"
+    ]
+  },
+  "0202": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "0203": {
+    "primary_topic": "obedience",
+    "reader_needs": [],
+    "topics": [
+      "obedience",
+      "grace"
+    ]
+  },
+  "0204": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "obedience",
+      "faith"
+    ]
+  },
+  "0205": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "repentance",
+      "assurance"
+    ],
+    "topics": [
+      "faith",
+      "grace"
+    ]
+  },
+  "0206": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0207": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0208": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0209": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0210": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "guidance"
+    ],
+    "topics": [
+      "obedience",
+      "grace"
+    ]
+  },
+  "0211": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "gratitude"
+    ],
+    "topics": [
+      "faith",
+      "obedience"
+    ]
+  },
+  "0212": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0213": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "guidance",
+      "assurance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0214": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0215": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0216": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0217": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength",
+      "hope"
+    ],
+    "topics": [
+      "obedience",
+      "prayer"
+    ]
+  },
+  "0218": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0219": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0220": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0221": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "repentance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0222": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0223": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance",
+      "gratitude"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0224": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance",
+      "guidance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0225": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0226": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "guidance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0227": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "love-of-neighbor",
+      "good-works"
+    ]
+  },
+  "0228": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0229": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0301": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0302": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "faith",
+      "grace"
+    ]
+  },
+  "0303": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0304": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "guidance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0305": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "comfort",
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0306": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0307": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "grace",
+      "thanksgiving"
+    ]
+  },
+  "0308": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0309": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace",
+      "faith"
+    ]
+  },
+  "0310": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0311": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace",
+      "faith"
+    ]
+  },
+  "0312": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "peace"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0313": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0314": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0315": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0316": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0317": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "peace"
+    ],
+    "topics": [
+      "faith",
+      "grace"
+    ]
+  },
+  "0318": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0319": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "grace",
+      "thanksgiving"
+    ]
+  },
+  "0320": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "gratitude"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0321": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "guidance",
+      "strength"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0322": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0323": {
+    "primary_topic": "good-works",
+    "reader_needs": [],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0324": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0325": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0326": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "strength",
+      "hope"
+    ],
+    "topics": [
+      "grace",
+      "faith"
+    ]
+  },
+  "0327": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "assurance",
+      "comfort"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0328": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0329": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0330": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "peace"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0331": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0401": {
+    "primary_topic": "good-works",
+    "reader_needs": [],
+    "topics": [
+      "good-works",
+      "love-of-neighbor"
+    ]
+  },
+  "0402": {
+    "primary_topic": "good-works",
+    "reader_needs": [],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0403": {
+    "primary_topic": "good-works",
+    "reader_needs": [],
+    "topics": [
+      "good-works",
+      "obedience"
+    ]
+  },
+  "0404": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "good-works",
+      "grace"
+    ]
+  },
+  "0405": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "good-works",
+      "thanksgiving"
+    ]
+  },
+  "0406": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0407": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience",
+      "grace"
+    ]
+  },
+  "0408": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0409": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength",
+      "hope"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0410": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance",
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0411": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0412": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0413": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0414": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0415": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "prayer",
+      "faith"
+    ]
+  },
+  "0416": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "0417": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "comfort",
+      "peace"
+    ],
+    "topics": [
+      "prayer",
+      "faith"
+    ]
+  },
+  "0418": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "repentance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0419": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience",
+      "grace"
+    ]
+  },
+  "0420": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0421": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0422": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "obedience",
+      "faith"
+    ]
+  },
+  "0423": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "peace"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0424": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "peace",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0425": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "strength",
+      "guidance"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0426": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance",
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0427": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0428": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience",
+      "prayer"
+    ]
+  },
+  "0429": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "guidance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0430": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "guidance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0501": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving",
+      "good-works"
+    ]
+  },
+  "0502": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance",
+      "assurance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0503": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "faith",
+      "grace"
+    ]
+  },
+  "0504": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0505": {
+    "primary_topic": "good-works",
+    "reader_needs": [],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0506": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0507": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "peace"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0508": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "peace"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0509": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0510": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance",
+      "assurance"
+    ],
+    "topics": [
+      "obedience",
+      "grace"
+    ]
+  },
+  "0511": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0512": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "peace"
+    ],
+    "topics": [
+      "love-of-neighbor",
+      "grace"
+    ]
+  },
+  "0513": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "grace",
+      "obedience"
+    ]
+  },
+  "0514": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "peace"
+    ],
+    "topics": [
+      "love-of-neighbor",
+      "grace"
+    ]
+  },
+  "0515": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "guidance"
+    ],
+    "topics": [
+      "love-of-neighbor",
+      "obedience"
+    ]
+  },
+  "0516": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "comfort",
+      "strength"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0517": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "comfort"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0518": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0519": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "peace"
+    ],
+    "topics": [
+      "obedience",
+      "love-of-neighbor"
+    ]
+  },
+  "0520": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0521": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "0522": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0523": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "comfort"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0524": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0525": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0526": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0527": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0528": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "peace"
+    ],
+    "topics": [
+      "love-of-neighbor",
+      "good-works"
+    ]
+  },
+  "0529": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0530": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0531": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0601": {
+    "primary_topic": "good-works",
+    "reader_needs": [],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0602": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0603": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "guidance"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0604": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "strength",
+      "repentance"
+    ],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0605": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0606": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0607": {
+    "primary_topic": "good-works",
+    "reader_needs": [],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0608": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "peace"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0609": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0610": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0611": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "strength",
+      "guidance"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0612": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0613": {
+    "primary_topic": "obedience",
+    "reader_needs": [],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0614": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "guidance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0615": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "guidance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0616": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "guidance"
+    ],
+    "topics": [
+      "good-works",
+      "love-of-neighbor"
+    ]
+  },
+  "0617": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0618": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0619": {
+    "primary_topic": "good-works",
+    "reader_needs": [],
+    "topics": [
+      "good-works",
+      "love-of-neighbor"
+    ]
+  },
+  "0620": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0621": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0622": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience",
+      "love-of-neighbor"
+    ]
+  },
+  "0623": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "peace"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0624": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [],
+    "topics": [
+      "love-of-neighbor",
+      "good-works"
+    ]
+  },
+  "0625": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0626": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "strength",
+      "hope"
+    ],
+    "topics": [
+      "good-works",
+      "faith"
+    ]
+  },
+  "0627": {
+    "primary_topic": "obedience",
+    "reader_needs": [],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0628": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0629": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience",
+      "grace"
+    ]
+  },
+  "0630": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "obedience",
+      "grace"
+    ]
+  },
+  "0701": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "peace"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0702": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0703": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "comfort"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0704": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "peace"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0705": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "gratitude"
+    ],
+    "topics": [
+      "grace",
+      "thanksgiving"
+    ]
+  },
+  "0706": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "0707": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude",
+      "peace"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "0708": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0709": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0710": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "faith",
+      "grace"
+    ]
+  },
+  "0711": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0712": {
+    "primary_topic": "obedience",
+    "reader_needs": [],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0713": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "peace",
+      "assurance"
+    ],
+    "topics": [
+      "prayer",
+      "thanksgiving"
+    ]
+  },
+  "0714": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving",
+      "prayer"
+    ]
+  },
+  "0715": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "comfort",
+      "strength"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0716": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "comfort",
+      "peace"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0717": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0718": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "peace"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0719": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "love-of-neighbor"
+    ]
+  },
+  "0720": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0721": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "0722": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "0723": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "0724": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0725": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0726": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "0727": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "comfort"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0728": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "0729": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0730": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "peace",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0731": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "0801": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "peace",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0802": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "repentance",
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0803": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "strength",
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0804": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "repentance",
+      "strength"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0805": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "comfort",
+      "assurance"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0806": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0807": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0808": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0809": {
+    "primary_topic": "love-of-neighbor",
+    "reader_needs": [
+      "comfort"
+    ],
+    "topics": [
+      "love-of-neighbor",
+      "prayer"
+    ]
+  },
+  "0810": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0811": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength",
+      "hope"
+    ],
+    "topics": [
+      "faith",
+      "obedience"
+    ]
+  },
+  "0812": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0813": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0814": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0815": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0816": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0817": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0818": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0819": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0820": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "repentance",
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0821": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0822": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0823": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "hope",
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0824": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0825": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0826": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0827": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0828": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0829": {
+    "primary_topic": "prayer",
+    "reader_needs": [],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0830": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "faith",
+      "thanksgiving"
+    ]
+  },
+  "0831": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0901": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0902": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0903": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0904": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "repentance",
+      "assurance"
+    ],
+    "topics": [
+      "grace",
+      "faith"
+    ]
+  },
+  "0905": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0906": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0907": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "good-works",
+      "obedience"
+    ]
+  },
+  "0908": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "repentance",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0909": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance",
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0910": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0911": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance",
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0912": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance",
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0913": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0914": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0915": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0916": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0917": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0918": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience",
+      "prayer"
+    ]
+  },
+  "0919": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "obedience",
+      "faith"
+    ]
+  },
+  "0920": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "prayer"
+    ]
+  },
+  "0921": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0922": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0923": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "strength"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0924": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "0925": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "0926": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0927": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "strength",
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "0928": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "assurance",
+      "strength"
+    ],
+    "topics": [
+      "prayer",
+      "faith"
+    ]
+  },
+  "0929": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "strength"
+    ],
+    "topics": [
+      "prayer",
+      "grace"
+    ]
+  },
+  "0930": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "1001": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving",
+      "obedience"
+    ]
+  },
+  "1002": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude",
+      "hope"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "1003": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "guidance",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1004": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving",
+      "faith"
+    ]
+  },
+  "1005": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1006": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "gratitude"
+    ],
+    "topics": [
+      "grace",
+      "thanksgiving"
+    ]
+  },
+  "1007": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "guidance",
+      "assurance"
+    ],
+    "topics": [
+      "prayer",
+      "thanksgiving"
+    ]
+  },
+  "1008": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1009": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "1010": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "strength",
+      "guidance"
+    ],
+    "topics": [
+      "obedience",
+      "grace"
+    ]
+  },
+  "1011": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1012": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "prayer",
+      "obedience"
+    ]
+  },
+  "1013": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "1014": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "gratitude"
+    ],
+    "topics": [
+      "faith",
+      "thanksgiving"
+    ]
+  },
+  "1015": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "comfort",
+      "peace"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1016": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "comfort",
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1017": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "comfort",
+      "assurance"
+    ],
+    "topics": [
+      "grace",
+      "obedience"
+    ]
+  },
+  "1018": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "prayer",
+      "faith"
+    ]
+  },
+  "1019": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "comfort",
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1020": {
+    "primary_topic": "prayer",
+    "reader_needs": [
+      "comfort",
+      "assurance"
+    ],
+    "topics": [
+      "prayer",
+      "faith"
+    ]
+  },
+  "1021": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "gratitude"
+    ],
+    "topics": [
+      "grace",
+      "thanksgiving"
+    ]
+  },
+  "1022": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1023": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1024": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith",
+      "thanksgiving"
+    ]
+  },
+  "1025": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "1026": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "1027": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1028": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "1029": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "1030": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "peace"
+    ],
+    "topics": [
+      "faith",
+      "thanksgiving"
+    ]
+  },
+  "1031": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "obedience",
+      "thanksgiving"
+    ]
+  },
+  "1101": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "peace"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1102": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1103": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1104": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1105": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "strength"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1106": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "1107": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1108": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1109": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "repentance",
+      "assurance"
+    ],
+    "topics": [
+      "grace",
+      "thanksgiving"
+    ]
+  },
+  "1110": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1111": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1112": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1113": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1114": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1115": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "1116": {
+    "primary_topic": "good-works",
+    "reader_needs": [
+      "repentance"
+    ],
+    "topics": [
+      "good-works"
+    ]
+  },
+  "1117": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1118": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1119": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1120": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1121": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1122": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1123": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1124": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1125": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1126": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1127": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "gratitude"
+    ],
+    "topics": [
+      "faith",
+      "thanksgiving"
+    ]
+  },
+  "1128": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1129": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1130": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "hope",
+      "peace"
+    ],
+    "topics": [
+      "obedience",
+      "good-works"
+    ]
+  },
+  "1201": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1202": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1203": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1204": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1205": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1206": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving",
+      "grace"
+    ]
+  },
+  "1207": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1208": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1209": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1210": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1211": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1212": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1213": {
+    "primary_topic": "obedience",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "obedience"
+    ]
+  },
+  "1214": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1215": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "comfort"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1216": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1217": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1218": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "gratitude"
+    ],
+    "topics": [
+      "thanksgiving"
+    ]
+  },
+  "1219": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1220": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1221": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1222": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1223": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1224": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1225": {
+    "primary_topic": "thanksgiving",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "thanksgiving",
+      "faith"
+    ]
+  },
+  "1226": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1227": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith",
+      "thanksgiving"
+    ]
+  },
+  "1228": {
+    "primary_topic": "grace",
+    "reader_needs": [
+      "comfort",
+      "hope"
+    ],
+    "topics": [
+      "grace"
+    ]
+  },
+  "1229": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "assurance"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1230": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "assurance",
+      "hope"
+    ],
+    "topics": [
+      "faith"
+    ]
+  },
+  "1231": {
+    "primary_topic": "faith",
+    "reader_needs": [
+      "hope",
+      "comfort"
+    ],
+    "topics": [
+      "faith"
+    ]
+  }
+}

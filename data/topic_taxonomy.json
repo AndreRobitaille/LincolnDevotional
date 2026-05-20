@@ -1,0 +1,95 @@
+{
+  "topics": [
+    {
+      "slug": "thanksgiving",
+      "name": "Thanksgiving",
+      "group": "christian-life",
+      "description": "For gratitude, praise, and remembering God’s goodness with a thankful heart.",
+      "related": ["prayer", "grace", "faith"]
+    },
+    {
+      "slug": "love-of-neighbor",
+      "name": "Love of Neighbor",
+      "group": "christian-life",
+      "description": "For charity, mercy, and practical love shown toward others.",
+      "related": ["good-works", "grace", "obedience"]
+    },
+    {
+      "slug": "prayer",
+      "name": "Prayer",
+      "group": "christian-life",
+      "description": "For communion with God through asking, thanksgiving, and dependence.",
+      "related": ["thanksgiving", "grace", "faith"]
+    },
+    {
+      "slug": "grace",
+      "name": "Grace",
+      "group": "doctrine",
+      "description": "For God’s undeserved favor, mercy, and sustaining help.",
+      "related": ["faith", "prayer", "thanksgiving"]
+    },
+    {
+      "slug": "faith",
+      "name": "Faith",
+      "group": "doctrine",
+      "description": "For trust in God’s promises, Christ’s work, and daily dependence.",
+      "related": ["grace", "prayer", "thanksgiving"]
+    },
+    {
+      "slug": "good-works",
+      "name": "Good Works",
+      "group": "christian-life",
+      "description": "For deeds of service, kindness, and obedience that bear fruit in life.",
+      "related": ["love-of-neighbor", "grace", "obedience"]
+    },
+    {
+      "slug": "obedience",
+      "name": "Obedience",
+      "group": "christian-life",
+      "description": "For yielding to God’s will in humble, faithful submission.",
+      "related": ["grace", "faith", "good-works"]
+    }
+  ],
+  "reader_needs": [
+    {
+      "slug": "comfort",
+      "name": "Comfort",
+      "description": "For grief, loss, sorrow, and the heaviness of affliction."
+    },
+    {
+      "slug": "hope",
+      "name": "Hope",
+      "description": "For discouragement and the longing for what is to come."
+    },
+    {
+      "slug": "strength",
+      "name": "Strength",
+      "description": "For weariness, weakness, and the trials of temptation."
+    },
+    {
+      "slug": "peace",
+      "name": "Peace",
+      "description": "For anxiety, restlessness, and a troubled mind."
+    },
+    {
+      "slug": "repentance",
+      "name": "Repentance",
+      "description": "For conviction of sin and the need to return to God."
+    },
+    {
+      "slug": "gratitude",
+      "name": "Gratitude",
+      "description": "For joy, recognition of mercy, and a thankful heart."
+    },
+    {
+      "slug": "guidance",
+      "name": "Guidance",
+      "description": "For confusion, hard decisions, and the search for God’s direction."
+    },
+    {
+      "slug": "assurance",
+      "name": "Assurance",
+      "description": "For doubt, fear, and questions about God’s love and faithfulness."
+    }
+  ]
+}
