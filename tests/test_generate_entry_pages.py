@@ -103,6 +103,48 @@ class GenerateEntryPagesTests(unittest.TestCase):
     def test_build_description_differs_between_entries(self):
         self.assertNotEqual(build_description(self.entries[0]), build_description(self.entries[1]))
 
+    def test_build_description_truncates_at_word_boundary(self):
+        entry = dict(self.entries[0])
+        entry["bible_verse"] = (
+            "This verse contains many carefully chosen words to push the excerpt "
+            "near the truncation point while preserving a word boundary stewardship "
+            "boundarybreakingword plus enough additional language to ensure "
+            "the full generated description exceeds the maximum length limit."
+        )
+
+        description = build_description(entry)
+
+        self.assertLessEqual(len(description), 160)
+        self.assertTrue(description.endswith("..."))
+        self.assertNotIn("....", description)
+        self.assertNotIn("boundarybreakingword", description)
+        self.assertEqual(description[:-3].split()[-1], "point")
+
+    def test_build_description_trims_trailing_punctuation_before_ellipsis(self):
+        entry = dict(self.entries[0])
+        entry["bible_verse"] = (
+            "This verse ends with punctuation that should not become awkward when the "
+            "description is truncated at the boundary before the generated ellipsis."
+        )
+
+        description = build_description(entry)
+
+        self.assertTrue(description.endswith("..."))
+        self.assertNotIn("....", description)
+        self.assertNotRegex(description, r"[.,;:-]\.{3}$")
+
+    def test_build_description_truncates_long_prefix_to_160_chars(self):
+        entry = dict(self.entries[0])
+        entry["title"] = "A" * 120
+        entry["verse_ref"] = "B" * 60
+        entry["bible_verse"] = "Short verse text."
+
+        description = build_description(entry)
+
+        self.assertLessEqual(len(description), 160)
+        self.assertTrue(description.endswith("..."))
+        self.assertNotIn("....", description)
+
     def test_generate_site_writes_entry_pages_sitemap_and_robots(self):
         with TemporaryDirectory() as tmp_dir:
             output_root = Path(tmp_dir)
@@ -192,6 +234,74 @@ class GenerateEntryPagesTests(unittest.TestCase):
             self.assertIn('href="/explore/?topic=peace"', entry_html)
             # Primary topic chip has the primary modifier
             self.assertIn('class="topic-chip topic-chip--primary" href="/explore/?topic=comfort"', entry_html)
+
+    def test_generate_site_adds_common_social_metadata_to_entries_and_explore(self):
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+            generate_site(
+                self.entries,
+                self.esv_cache,
+                output_root,
+                "https://lincolndevotional.com",
+                topic_taxonomy=self.topic_taxonomy,
+                entry_topics=self.entry_topics,
+            )
+
+            entry_html = (output_root / "entries" / "january-1" / "index.html").read_text()
+            explore_html = (output_root / "explore" / "index.html").read_text()
+
+            for html in (entry_html, explore_html):
+                self.assertIn('<meta property="og:type" content="website" />', html)
+                self.assertIn('<meta property="og:site_name" content="The Believer\'s Daily Treasure" />', html)
+                self.assertIn('<meta name="twitter:card" content="summary" />', html)
+                self.assertNotIn('twitter:site', html)
+
+    def test_generate_site_normalizes_trailing_slash_site_url_for_canonical_urls(self):
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+            custom_site_url = "https://example.test"
+            generate_site(
+                self.entries,
+                self.esv_cache,
+                output_root,
+                custom_site_url,
+                topic_taxonomy=self.topic_taxonomy,
+                entry_topics=self.entry_topics,
+            )
+
+            entry_html = (output_root / "entries" / "january-1" / "index.html").read_text()
+            explore_html = (output_root / "explore" / "index.html").read_text()
+
+            for html in (entry_html, explore_html):
+                self.assertNotIn('https://example.test//', html)
+
+            self.assertIn('<link rel="canonical" href="https://example.test/entries/january-1/" />', entry_html)
+            self.assertIn('<link rel="canonical" href="https://example.test/explore/" />', explore_html)
+
+    def test_generate_site_normalizes_trailing_slash_site_url(self):
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+            custom_site_url = "https://example.test/"
+            generate_site(
+                self.entries,
+                self.esv_cache,
+                output_root,
+                custom_site_url,
+                topic_taxonomy=self.topic_taxonomy,
+                entry_topics=self.entry_topics,
+            )
+
+            entry_html = (output_root / "entries" / "january-1" / "index.html").read_text()
+            explore_html = (output_root / "explore" / "index.html").read_text()
+            sitemap_xml = (output_root / "sitemap.xml").read_text()
+            robots_txt = (output_root / "robots.txt").read_text()
+
+            for html in (entry_html, explore_html):
+                self.assertIn('<meta property="og:url" content="https://example.test', html)
+                self.assertNotIn('https://example.test//', html)
+
+            self.assertNotIn('https://example.test//', sitemap_xml)
+            self.assertIn('Sitemap: https://example.test/sitemap.xml', robots_txt)
 
     def test_generate_site_omits_topic_subpages_from_sitemap(self):
         with TemporaryDirectory() as tmp_dir:
