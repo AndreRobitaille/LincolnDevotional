@@ -26,6 +26,12 @@ ENTRIES_PATH = ROOT / "data" / "entries.json"
 ESV_CACHE_PATH = ROOT / "data" / "esv_cache.json"
 OUTPUT_ROOT = ROOT
 SITE_URL = "https://lincolndevotional.com"
+SITE_NAME = "The Believer's Daily Treasure"
+HOMEPAGE_DESCRIPTION = (
+    "A short daily Christian devotional with Scripture for every day, drawn from "
+    "The Believer’s Daily Treasure, the devotional Abraham Lincoln carried."
+)
+EXPLORE_DESCRIPTION = "Browse 366 daily Christian devotions by topic and by today’s need."
 ROUTES_PATH = ROOT / "data" / "routes.json"
 REQUIRED_FIELDS = ("mmdd", "month", "day", "display_date", "title", "bible_verse", "verse_ref", "poem")
 
@@ -57,8 +63,34 @@ def build_description(entry):
     date_text = entry["display_date"].strip()
     verse_ref = entry["verse_ref"].strip()
     bible_verse = entry["bible_verse"].strip()
-    excerpt = bible_verse if len(bible_verse) <= 80 else f"{bible_verse[:77].rstrip()}..."
-    return f"{date_text}: {title}. {verse_ref}. {excerpt}"
+    prefix = f"{date_text}: {title}. {verse_ref}. "
+    excerpt = truncate_at_word_boundary(bible_verse, max(40, 160 - len(prefix)))
+    description = f"{prefix}{excerpt}"
+    if len(description) > 160:
+        description = truncate_at_word_boundary(description, 160)
+    return description
+
+
+def truncate_at_word_boundary(text, max_length):
+    normalized = " ".join(text.split())
+    if len(normalized) <= max_length:
+        return normalized
+    cutoff = max_length - 3
+    truncated = normalized[:cutoff].rsplit(" ", 1)[0].rstrip(".,;:- ")
+    if not truncated:
+        truncated = normalized[:cutoff].rstrip(".,;:- ")
+    truncated = truncated.rstrip(".,;:- ")
+    return f"{truncated}..."
+
+
+def normalize_site_url(site_url):
+    return site_url.rstrip("/")
+
+
+def render_common_social_meta(site_url):
+    return f'''<meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{SITE_NAME}" />
+    <meta name="twitter:card" content="summary" />'''
 
 
 def build_static_asset_version():
@@ -248,10 +280,11 @@ def render_explore_page(topic_taxonomy, payload, site_url):
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href="{site_url}/explore/" />
     <title>Explore - The Believer's Daily Treasure</title>
-    <meta name="description" content="Browse 366 devotions by topic and by today’s need." />
+    <meta name="description" content="{escape(EXPLORE_DESCRIPTION)}" />
     <meta property="og:title" content="Explore - The Believer's Daily Treasure" />
-    <meta property="og:description" content="Browse 366 devotions by topic and by today’s need." />
+    <meta property="og:description" content="{escape(EXPLORE_DESCRIPTION)}" />
     <meta property="og:url" content="{site_url}/explore/" />
+    {render_common_social_meta(site_url)}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -351,6 +384,7 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url, top
     <meta property="og:title" content="{escape(title)}" />
     <meta property="og:description" content="{escape(description)}" />
     <meta property="og:url" content="{canonical_url}" />
+    {render_common_social_meta(site_url)}
     {prev_head_link}
     {next_head_link}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -457,6 +491,7 @@ def write_routes_manifest(entries, output_root):
 
 
 def generate_site(entries, esv_cache, output_root, site_url, topic_taxonomy=None, entry_topics=None):
+    site_url = normalize_site_url(site_url)
     validate_entries(entries)
     output_root.mkdir(parents=True, exist_ok=True)
     entries_dir = output_root / "entries"
