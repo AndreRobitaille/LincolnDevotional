@@ -45,6 +45,47 @@ class GenerateEntryPagesTests(unittest.TestCase):
         self.esv_cache = {
             "0101": {"text": "In this the love of God was made manifest among us."}
         }
+        self.topic_taxonomy = {
+            "topics": [
+                {
+                    "slug": "comfort",
+                    "name": "Comfort",
+                    "group": "need",
+                    "description": "For seasons of sorrow, inward distress, and the need for consolation.",
+                    "related": ["peace", "prayer"],
+                },
+                {
+                    "slug": "peace",
+                    "name": "Peace",
+                    "group": "need",
+                    "description": "For resting in God when the mind is troubled.",
+                    "related": ["comfort", "prayer"],
+                },
+                {
+                    "slug": "prayer",
+                    "name": "Prayer",
+                    "group": "christian-life",
+                    "description": "For communion with God through asking, thanksgiving, and dependence.",
+                    "related": ["comfort", "peace"],
+                },
+            ],
+            "reader_needs": [
+                {"slug": "comfort", "name": "Comfort", "description": "For grief and loss."},
+                {"slug": "hope", "name": "Hope", "description": "For discouragement."},
+            ],
+        }
+        self.entry_topics = {
+            "0101": {
+                "primary_topic": "comfort",
+                "topics": ["comfort", "peace"],
+                "reader_needs": ["comfort"],
+            },
+            "0102": {
+                "primary_topic": "prayer",
+                "topics": ["prayer"],
+                "reader_needs": [],
+            },
+        }
 
     def test_slugify_entry_uses_human_readable_month_day(self):
         self.assertEqual(slugify_entry(self.entries[0]), "january-1")
@@ -83,6 +124,7 @@ class GenerateEntryPagesTests(unittest.TestCase):
             self.assertIn('<nav class="entry-nav" aria-label="Entry navigation">', html)
             self.assertLess(html.index('<nav class="entry-nav" aria-label="Entry navigation">'), html.index('<article class="entry-card" aria-live="polite">'))
             self.assertIn('href="/entries/january-2/"', html)
+            self.assertIn('aria-current="page"', html)
             assert_in_order(
                 self,
                 html,
@@ -97,6 +139,77 @@ class GenerateEntryPagesTests(unittest.TestCase):
             self.assertIn("https://lincolndevotional.com/", sitemap_xml)
             self.assertIn("https://lincolndevotional.com/about.html", sitemap_xml)
             self.assertIn("https://lincolndevotional.com/copyright.html", sitemap_xml)
+
+    def test_generate_site_writes_explore_browse_page_with_inlined_data(self):
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+            generate_site(
+                self.entries,
+                self.esv_cache,
+                output_root,
+                "https://lincolndevotional.com",
+                topic_taxonomy=self.topic_taxonomy,
+                entry_topics=self.entry_topics,
+            )
+
+            explore_page = output_root / "explore" / "index.html"
+            entry_page = output_root / "entries" / "january-1" / "index.html"
+
+            self.assertTrue(explore_page.exists())
+            # Topic drill-down subpages no longer exist — browse is single-page.
+            self.assertFalse((output_root / "explore" / "comfort").exists())
+
+            explore_html = explore_page.read_text()
+            entry_html = entry_page.read_text()
+
+            # Page chrome
+            self.assertIn('<meta name="viewport" content="width=device-width, initial-scale=1" />', explore_html)
+            self.assertIn('<nav class="site-nav" aria-label="Primary">', explore_html)
+            self.assertIn('Dark mode', explore_html)
+            self.assertIn('<footer class="site-footer">', explore_html)
+            self.assertNotIn('static-entry-nav.js', explore_html)
+            self.assertNotIn('permalink.js', explore_html)
+            self.assertIn('<script src="../theme.js?v=20260123"></script>', explore_html)
+            self.assertIn('<script src="../explore.js', explore_html)
+
+            # New browse UI elements
+            self.assertIn("Find a devotion for today’s need", explore_html)
+            self.assertIn('class="explore-filters"', explore_html)
+            self.assertIn('data-facet-group="topic"', explore_html)
+            self.assertIn('data-facet-group="need"', explore_html)
+            self.assertIn('data-explore-results', explore_html)
+            self.assertIn('data-result-count', explore_html)
+            self.assertIn('id="explore-data"', explore_html)
+
+            # Topic and need chips render
+            self.assertIn('data-facet="topic"', explore_html)
+            self.assertIn('data-slug="comfort"', explore_html)
+            self.assertIn('data-facet="need"', explore_html)
+
+            # Entry-page chips link to the canonical filtered URL
+            self.assertIn('class="entry-topic-chips"', entry_html)
+            self.assertIn('href="/explore/?topic=comfort"', entry_html)
+            self.assertIn('href="/explore/?topic=peace"', entry_html)
+            # Primary topic chip has the primary modifier
+            self.assertIn('class="topic-chip topic-chip--primary" href="/explore/?topic=comfort"', entry_html)
+
+    def test_generate_site_omits_topic_subpages_from_sitemap(self):
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+            generate_site(
+                self.entries,
+                self.esv_cache,
+                output_root,
+                "https://lincolndevotional.com",
+                topic_taxonomy=self.topic_taxonomy,
+                entry_topics=self.entry_topics,
+            )
+
+            sitemap_xml = (output_root / "sitemap.xml").read_text()
+
+            self.assertIn("https://lincolndevotional.com/explore/", sitemap_xml)
+            self.assertNotIn("https://lincolndevotional.com/explore/comfort/", sitemap_xml)
+            self.assertNotIn("https://lincolndevotional.com/explore/prayer/", sitemap_xml)
 
     def test_generate_site_omits_esv_block_when_cache_missing(self):
         with TemporaryDirectory() as tmp_dir:
