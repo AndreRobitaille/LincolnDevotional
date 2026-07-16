@@ -90,7 +90,10 @@ def normalize_site_url(site_url):
 def render_common_social_meta(site_url):
     return f'''<meta property="og:type" content="website" />
     <meta property="og:site_name" content="{SITE_NAME}" />
-    <meta name="twitter:card" content="summary" />'''
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />'''
 
 
 def build_static_asset_version():
