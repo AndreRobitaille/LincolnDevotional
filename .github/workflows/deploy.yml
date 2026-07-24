@@ -24,6 +24,7 @@ jobs:
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
           exclude: |
             **/.git*
+            **/.git/**
             **/.github/**
             **/docs/**
             **/tools/**
