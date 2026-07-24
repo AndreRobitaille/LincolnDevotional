@@ -27,7 +27,11 @@ jobs:
             **/.github/**
             **/docs/**
             **/tools/**
+            **/tests/**
             **/*.bak
             **/AGENTS.md
+            **/CLAUDE.md
             **/README.md
             **/LICENSE
+            **/opencode.json
+            **/.claude/**
