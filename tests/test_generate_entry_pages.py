@@ -1,3 +1,4 @@
+from html.parser import HTMLParser
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -16,6 +17,20 @@ def assert_in_order(test_case, html, fragments):
         next_index = html.index(fragment)
         test_case.assertGreater(next_index, current_index)
         current_index = next_index
+
+
+class ExploreLinksParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.links = []
+        self.months = 0
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == "a" and attrs.get("href", "").startswith("/entries/"):
+            self.links.append(attrs["href"])
+        if tag == "section" and attrs.get("class") == "explore-month":
+            self.months += 1
 
 
 class GenerateEntryPagesTests(unittest.TestCase):
@@ -234,6 +249,29 @@ class GenerateEntryPagesTests(unittest.TestCase):
             self.assertIn('href="/explore/?topic=peace"', entry_html)
             # Primary topic chip has the primary modifier
             self.assertIn('class="topic-chip topic-chip--primary" href="/explore/?topic=comfort"', entry_html)
+
+    def test_explore_contains_static_entry_links_by_month_including_leap_day(self):
+        leap_day = dict(
+            self.entries[0],
+            mmdd="0229", month=2, day=29, display_date="February 29",
+            title='Faith < hope & "love"',
+        )
+        entries = self.entries + [leap_day]
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+            generate_site(entries, self.esv_cache, output_root, "https://lincolndevotional.com")
+            html = (output_root / "explore" / "index.html").read_text()
+
+        parser = ExploreLinksParser()
+        parser.feed(html)
+        self.assertEqual(parser.links, [build_entry_href(entry) for entry in entries])
+        self.assertEqual(len(set(parser.links)), len(entries))
+        self.assertEqual(parser.months, 2)
+        self.assertIn('Faith &lt; hope &amp; &quot;love&quot;', html)
+        self.assertIn('2 devotions</span>', html)
+        self.assertIn('1 devotion</span>', html)
+        self.assertNotIn('Loading devotions', html)
+        assert_in_order(self, html, ['January</h3>', 'February</h3>'])
 
     def test_generate_site_adds_common_social_metadata_to_entries_and_explore(self):
         with TemporaryDirectory() as tmp_dir:
