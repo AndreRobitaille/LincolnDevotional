@@ -17,26 +17,24 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css?v=20260519c" />
-    <script src="analytics.js?v=20260509e"></script>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap" /></noscript>
+    <link rel="stylesheet" href="style.css?v=20261003b" />
+    <script defer src="analytics.js?v=20260509e"></script>
   </head>
   <body>
     <div class="page">
       <header class="site-header">
         <div class="brand">
           <p class="site-eyebrow">Abraham Lincoln's Daily Devotional</p>
-          <h1 class="site-title">The Believer's Daily Treasure</h1>
+          <p class="site-title">The Believer's Daily Treasure</p>
           <p class="site-tagline">
             Texts of scripture, arranged for every day in the year.
           </p>
         </div>
         <div class="site-actions">
           <nav class="site-nav" aria-label="Primary">
-            <a href="index.html">Devotional</a>
+            <a href="/">Devotional</a>
             <a href="explore/">By Topic</a>
             <a href="about.html" aria-current="page">About</a>
           </nav>
@@ -49,9 +47,9 @@
       <main class="main-content">
         <article class="about-card">
           <header class="about-header">
-            <h2 class="entry-title about-title">
+            <h1 class="entry-title about-title">
               The Daily Devotional Abraham Lincoln Carried
-            </h2>
+            </h1>
           </header>
 
           <section class="about-section">
@@ -122,7 +120,7 @@
           </section>
 
           <div class="about-cta">
-            <a href="index.html" class="cta-button">Go to Today's Devotion</a>
+            <a href="/" class="cta-button">Go to Today's Devotion</a>
           </div>
         </article>
       </main>

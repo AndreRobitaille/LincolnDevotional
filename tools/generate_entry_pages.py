@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+from datetime import date
 from html import escape
+import hashlib
 import json
 from pathlib import Path
+import subprocess
 from xml.etree import ElementTree as ET
 
 if __package__:
@@ -36,7 +39,20 @@ HOMEPAGE_DESCRIPTION = (
     "A short daily Christian devotional with Scripture for every day, drawn from "
     "The Believer’s Daily Treasure, the devotional Abraham Lincoln carried."
 )
-EXPLORE_DESCRIPTION = "Browse 366 daily Christian devotions by topic and by today’s need."
+EXPLORE_TITLE = "All 366 Daily Devotions by Date and Topic • Lincoln's Devotional"
+EXPLORE_DESCRIPTION = (
+    "Browse all 366 daily devotions from The Believer's Daily Treasure by month, "
+    "topic, or need, including comfort, hope, strength, peace, and guidance."
+)
+ENTRY_TITLE_SUFFIX = " • Lincoln's Devotional"
+ENTRY_TITLE_LIMIT = 65
+FONT_STYLESHEET = (
+    "https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600"
+    "&family=Newsreader:wght@400;500;600&display=swap"
+)
+STYLE_VERSION = "20261003b"
+ANALYTICS_SRC_VERSION = "20260509e"
+SITEMAP_LASTMOD_CACHE = "data/sitemap_lastmod.json"
 ROUTES_PATH = ROOT / "data" / "routes.json"
 REQUIRED_FIELDS = ("mmdd", "month", "day", "display_date", "title", "bible_verse", "verse_ref", "poem")
 
@@ -61,6 +77,32 @@ def build_topic_href(topic_slug):
 
 def build_topic_map(topic_taxonomy):
     return {topic["slug"]: topic for topic in topic_taxonomy.get("topics", [])}
+
+
+def build_entry_title(entry):
+    base = f"{entry['display_date']} Devotional: {entry['title']}"
+    with_suffix = base + ENTRY_TITLE_SUFFIX
+    if len(with_suffix) <= ENTRY_TITLE_LIMIT:
+        return with_suffix
+    return base
+
+
+def current_lastmod_date():
+    return date.today().isoformat()
+
+
+def render_font_links():
+    href = FONT_STYLESHEET
+    return (
+        '<link rel="preconnect" href="https://fonts.googleapis.com" />\n'
+        '    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />\n'
+        f'    <link rel="preload" as="style" href="{href}" onload="this.onload=null;this.rel=\'stylesheet\'" />\n'
+        f'    <noscript><link rel="stylesheet" href="{href}" /></noscript>'
+    )
+
+
+def render_analytics_script(src):
+    return f'<script defer src="{src}"></script>'
 
 
 def build_description(entry):
@@ -155,7 +197,7 @@ def render_esv_block(esv_text):
 
 def render_primary_nav(prefix, current_page=None):
     links = [
-        ("Devotional", f"{prefix}index.html", current_page == "devotional"),
+        ("Devotional", "/", current_page == "devotional"),
         ("By Topic", f"{prefix}explore/", current_page == "explore"),
         ("About", f"{prefix}about.html", current_page == "about"),
     ]
@@ -328,27 +370,22 @@ def render_explore_page(topic_taxonomy, payload, site_url):
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href="{site_url}/explore/" />
-    <title>Explore - The Believer's Daily Treasure</title>
+    <title>{escape(EXPLORE_TITLE)}</title>
     <meta name="description" content="{escape(EXPLORE_DESCRIPTION)}" />
-    <meta property="og:title" content="Explore - The Believer's Daily Treasure" />
+    <meta property="og:title" content="{escape(EXPLORE_TITLE)}" />
     <meta property="og:description" content="{escape(EXPLORE_DESCRIPTION)}" />
     <meta property="og:url" content="{site_url}/explore/" />
     {render_common_social_meta(site_url)}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../style.css?v=20261003a" />
-    <script src="../analytics.js?v=20260509e"></script>
+    {render_font_links()}
+    <link rel="stylesheet" href="../style.css?v={STYLE_VERSION}" />
+    {render_analytics_script(f"../analytics.js?v={ANALYTICS_SRC_VERSION}")}
   </head>
   <body>
     <div class="page">
       <header class="site-header">
         <div class="brand">
           <p class="site-eyebrow">Abraham Lincoln's Daily Devotional</p>
-          <h1 class="site-title">The Believer's Daily Treasure</h1>
+          <p class="site-title">The Believer's Daily Treasure</p>
           <p class="site-tagline">Texts of scripture, arranged for every day in the year.</p>
         </div>
         <div class="site-actions">
@@ -360,7 +397,7 @@ def render_explore_page(topic_taxonomy, payload, site_url):
         <article class="entry-card explore-hero" aria-live="polite">
           <header class="entry-header">
             <p class="entry-date">By Topic</p>
-            <h2 class="entry-title">Find a devotion for today’s need</h2>
+            <h1 class="entry-title">Find a devotion for today’s need</h1>
           </header>
         </article>
 
@@ -408,7 +445,7 @@ def render_explore_page(topic_taxonomy, payload, site_url):
 def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url, topic_map=None, assignment=None):
     href = build_entry_href(entry)
     canonical_url = f"{site_url}{href}"
-    title = f"{entry['display_date']} - {entry['title']}"
+    title = build_entry_title(entry)
     description = build_description(entry)
     prev_link = f'<a href="../{slugify_entry(previous_entry)}/">&larr; Previous</a>'
     next_link = f'<a href="../{slugify_entry(next_entry)}/">Next &rarr;</a>'
@@ -441,21 +478,16 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url, top
     {render_common_social_meta(site_url)}
     {prev_head_link}
     {next_head_link}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../../style.css?v=20260519c" />
-    <script src="../../analytics.js?v=20260509e"></script>
+    {render_font_links()}
+    <link rel="stylesheet" href="../../style.css?v={STYLE_VERSION}" />
+    {render_analytics_script(f"../../analytics.js?v={ANALYTICS_SRC_VERSION}")}
   </head>
   <body>
     <div class="page">
       <header class="site-header">
         <div class="brand">
           <p class="site-eyebrow">Abraham Lincoln's Daily Devotional</p>
-          <h1 class="site-title">The Believer's Daily Treasure</h1>
+          <p class="site-title">The Believer's Daily Treasure</p>
           <p class="site-tagline">Texts of scripture, arranged for every day in the year.</p>
         </div>
         <div class="site-actions">
@@ -469,7 +501,7 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url, top
         <article class="entry-card" aria-live="polite">
           <header class="entry-header">
             <p class="entry-date">{escape(entry['display_date'])}</p>
-            <h2 class="entry-title">{escape(entry['title'])}</h2>
+            <h1 class="entry-title">{escape(entry['title'])}</h1>
           </header>
           <section class="entry-section entry-section--scripture">
             <h3 class="entry-section-title">Scripture</h3>
@@ -512,21 +544,140 @@ def render_entry_page(entry, previous_entry, next_entry, esv_text, site_url, top
 """
 
 
-def write_sitemap(entries, output_root, site_url, topic_taxonomy=None):
-    root = ET.Element("urlset", attrib={"xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9"})
-    static_paths = ["/", "/about.html", "/copyright.html", "/explore/"]
-
-    for path in static_paths:
-        url = ET.SubElement(root, "url")
-        loc = ET.SubElement(url, "loc")
-        loc.text = f"{site_url}{path}"
-
+def sitemap_documents(entries):
+    documents = [
+        ("/", "index.html"),
+        ("/about.html", "about.html"),
+        ("/copyright.html", "copyright.html"),
+        ("/explore/", "explore/index.html"),
+    ]
     for entry in entries:
+        href = build_entry_href(entry)
+        documents.append((href, f"{href.lstrip('/')}index.html"))
+    return documents
+
+
+def git_tracks(output_root):
+    result = subprocess.run(
+        ["git", "rev-parse", "--show-toplevel"],
+        cwd=output_root,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        return False
+    try:
+        return Path(result.stdout.strip()).resolve() == Path(output_root).resolve()
+    except OSError:
+        return False
+
+
+def git_head_bytes(output_root, relative, tracked):
+    if not tracked:
+        return None
+    result = subprocess.run(
+        ["git", "show", f"HEAD:{relative}"],
+        cwd=output_root,
+        capture_output=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        return None
+    return result.stdout
+
+
+def git_commit_date(output_root, relative, tracked):
+    if not tracked:
+        return None
+    result = subprocess.run(
+        ["git", "log", "-1", "--format=%cs", "--", relative],
+        cwd=output_root,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        return None
+    stamp = result.stdout.strip()
+    if len(stamp) == 10 and stamp[4] == "-" and stamp[7] == "-":
+        return stamp
+    return None
+
+
+def load_lastmod_cache(path):
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError(f"{path} must be a JSON object")
+    return data
+
+
+def page_fingerprint(output_root, relative):
+    path = output_root / relative
+    if not path.is_file():
+        return "missing", None
+    content = path.read_bytes()
+    return hashlib.sha256(content).hexdigest(), content
+
+
+def choose_lastmod(stored, fingerprint, content, head, commit_date, today):
+    if isinstance(stored, dict) and stored.get("sha256") == fingerprint and stored.get("lastmod"):
+        return stored["lastmod"]
+    if content is not None and head is not None and content == head and commit_date:
+        return commit_date
+    return today
+
+
+def write_sitemap(entries, output_root, site_url, topic_taxonomy=None):
+    """Write sitemap.xml with one lastmod per URL.
+
+    lastmod is the date that URL's page bytes last changed. A committed cache
+    (data/sitemap_lastmod.json) stores a sha256 of each page beside its date.
+    Regenerating identical pages keeps the stored date, so a no-op build does
+    not rewrite sitemap.xml. A changed page gets today's date, unless its bytes
+    still match HEAD, in which case the date is that file's last git commit
+    (``%cs``). Git is consulted only for this output tree, and only on a cache
+    miss.
+    """
+    output_root = Path(output_root)
+    cache_path = output_root / SITEMAP_LASTMOD_CACHE
+    cache = load_lastmod_cache(cache_path)
+    today = current_lastmod_date()
+    tracked = git_tracks(output_root)
+    updated = {}
+    root = ET.Element("urlset", attrib={"xmlns": "http://www.sitemaps.org/schemas/sitemap/0.9"})
+
+    for url_path, relative in sitemap_documents(entries):
+        fingerprint, content = page_fingerprint(output_root, relative)
+        stored = cache.get(relative)
+        head = None
+        commit_date = None
+        cache_hit = (
+            isinstance(stored, dict)
+            and stored.get("sha256") == fingerprint
+            and stored.get("lastmod")
+        )
+        if not cache_hit:
+            head = git_head_bytes(output_root, relative, tracked)
+            if head is not None and content == head:
+                commit_date = git_commit_date(output_root, relative, tracked)
+        lastmod = choose_lastmod(stored, fingerprint, content, head, commit_date, today)
+        updated[relative] = {"sha256": fingerprint, "lastmod": lastmod}
         url = ET.SubElement(root, "url")
         loc = ET.SubElement(url, "loc")
-        loc.text = f"{site_url}{build_entry_href(entry)}"
+        loc.text = f"{site_url}{url_path}"
+        lastmod_el = ET.SubElement(url, "lastmod")
+        lastmod_el.text = lastmod
+
     sitemap_path = output_root / "sitemap.xml"
     sitemap_path.write_text(ET.tostring(root, encoding="unicode"), encoding="utf-8")
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    cache_path.write_text(
+        json.dumps(updated, indent=2, ensure_ascii=False, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
 
 
 def write_robots_txt(output_root, site_url):

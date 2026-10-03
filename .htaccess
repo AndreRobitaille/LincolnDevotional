@@ -1,3 +1,21 @@
+# Canonical host and folder URLs. If production returns HTTP 500 after deploy,
+# revert the commit that added these rules. That push redeploys the previous file.
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # http, www, and /index.html (any directory) in one hop.
+    # THE_REQUEST ignores DirectoryIndex's internal rewrite to index.html.
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[\s?] [NC]
+    RewriteRule ^(?:(.*/)?)index\.html$ https://lincolndevotional.com/$1 [NC,L,R=301,QSA]
+
+    # Force https and the bare domain. QSA keeps filters such as /explore/?topic=
+    RewriteCond %{HTTPS} off [OR]
+    RewriteCond %{HTTP_HOST} ^www\. [NC]
+    RewriteRule ^ https://lincolndevotional.com%{REQUEST_URI} [L,R=301,QSA]
+</IfModule>
+
 # Keep the FTPS sync state on disk while denying public HTTP access.
 <Files ".ftp-deploy-sync-state.json">
     Require all denied
