@@ -661,26 +661,15 @@ class GenerateEntryPagesTests(unittest.TestCase):
         self.assertIn('<script defer src="analytics.js?v=20260509e"></script>', html)
         self.assertIn('rel="preload" as="style"', html)
 
-    def test_home_intro_copies_the_about_opening_and_links_explore(self):
+    def test_home_has_no_intro_and_keeps_the_noscript_browse_link(self):
         home = (ROOT / "index.html").read_text()
-        about = (ROOT / "about.html").read_text()
-        about_open = re.search(
-            r'<section class="about-section">\s*<p class="entry-text">(.*?)</p>',
-            about,
-            re.S,
-        ).group(1)
-        intro = re.search(
-            r'<section class="home-intro">\s*<p class="entry-text">(.*?)</p>',
-            home,
-            re.S,
-        ).group(1)
-        self.assertEqual(re.sub(r"\s+", " ", intro).strip(), re.sub(r"\s+", " ", about_open).strip())
-        self.assertIn('href="/explore/">Browse all 366 daily readings</a>', home)
-        self.assertIn('href="/about.html">About this edition</a>', home)
+        self.assertNotIn("home-intro", home)
+        self.assertNotIn("About this edition", home)
         self.assertNotIn("lincoln-and-the-bible", home)
         card = re.search(r'<article class="entry-card".*?</article>', home, re.S).group(0)
-        self.assertIn("<noscript>", card)
-        self.assertIn('href="/explore/">Browse all 366 daily readings</a>', card)
+        noscript = re.search(r"<noscript>(.*?)</noscript>", card, re.S).group(1)
+        self.assertIn('href="/explore/">Browse all 366 daily readings</a>', noscript)
+        self.assertEqual(home.count("Browse all 366 daily readings"), 1)
         self.assertIn('<h2 id="entryTitle" class="entry-title">', home)
 
     def test_about_and_copyright_promote_the_page_heading(self):
