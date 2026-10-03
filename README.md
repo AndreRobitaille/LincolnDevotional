@@ -62,6 +62,9 @@ One poem substitution present in later printings was removed in favor of the ori
 - **Parallel Translations**  
   Includes the full King James Version (KJV) text and, where available, the English Standard Version (ESV) for comparison.
 
+- **Search Devotions**
+  Search all 366 entries from `/explore/` by title, scripture reference, poem, or KJV/ESV verse text. Search ignores case and repeated whitespace and matches literal text, including partial words and contiguous phrases. It combines with the existing topic or need filter and keeps results in calendar order. The index loads only when search receives focus or input; ESV snippets retain their translation label. All entry links remain available without JavaScript.
+
 ---
 
 ## Quick Start
@@ -101,6 +104,11 @@ ESV_API_KEY=your_api_key_here
 ```
 
 ### Scripts
+
+- **Generate Pages and Search Index**: `python3 tools/generate_entry_pages.py`
+  Rebuilds committed entry pages, the explore page, and `data/search-index.json` from local data. ESV text comes only from `data/esv_cache.json`; generation makes no API calls. Before writing, the generator expands cached reference ranges and rejects more than 500 verse occurrences or more than half of any book. Book/chapter verse totals are read from the bundled KJV SWORD module using Python's standard library. Repeated or overlapping quotations count each time; unknown or invalid references fail the check.
+
+  Run `python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai` after regeneration. The deploy workflow runs the same tests before FTPS; pull requests run validation without uploading. The tests also detect a stale committed index.
 
 - **Fetch ESV Verses**: `python3 tools/fetch_esv.py --all`  
   Fetches verse text from the ESV API and caches it locally in `data/esv_cache.json`.
