@@ -2,7 +2,7 @@
   "version": "v1",
   "width": 1200,
   "height": 630,
-  "inputs_sha256": "4b9216cf7808cf69b1dc0bccc8e8c914b20369716ed620fe14ee815872e30567",
+  "inputs_sha256": "6ce00c894e9b558bfdad56ee14e6342900ac4a4bdbefe615e462a8b2fdb219e5",
   "images": {
     "site": {
       "file": "site.png",
