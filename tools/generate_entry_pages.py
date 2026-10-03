@@ -259,6 +259,30 @@ def render_facet_chip(slug, label, count, facet):
     )
 
 
+def render_explore_results(payload):
+    sections = []
+    for month in payload["months"]:
+        entries = [entry for entry in payload["entries"] if entry["month"] == month["number"]]
+        if not entries:
+            continue
+        count = len(entries)
+        count_label = "1 devotion" if count == 1 else f"{count} devotions"
+        items = "".join(
+            f'<li><a class="explore-entry" href="{escape(entry["href"])}">'
+            f'<span class="explore-entry-date">{escape(entry["display_date"])}</span>'
+            f'<span class="explore-entry-title">{escape(entry["title"])}</span>'
+            '</a></li>'
+            for entry in entries
+        )
+        sections.append(
+            '<section class="explore-month"><header class="explore-month-header">'
+            f'<h3 class="explore-month-title">{escape(month["name"])}</h3>'
+            f'<span class="explore-month-count">{count_label}</span></header>'
+            f'<ul class="explore-entries-list">{items}</ul></section>'
+        )
+    return "\n".join(sections)
+
+
 def render_explore_page(topic_taxonomy, payload, site_url):
     topic_chips = "".join(
         render_facet_chip(topic["slug"], topic["name"], topic["count"], "topic")
@@ -335,7 +359,7 @@ def render_explore_page(topic_taxonomy, payload, site_url):
         </section>
 
         <section class="explore-results" data-explore-results aria-live="polite" aria-label="Devotions">
-          <p class="explore-loading">Loading devotions…</p>
+          {render_explore_results(payload)}
         </section>
       </main>
 
