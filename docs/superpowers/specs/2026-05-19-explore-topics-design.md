@@ -250,7 +250,7 @@ Examples:
 
 ### Size guidance
 
-The production taxonomy should likely stay in roughly the **35 to 45 topic** range.
+The production taxonomy should likely stay in roughly the **35 to 45 topic** range. Tracked in GitHub Issues: #5 (https://github.com/AndreRobitaille/LincolnDevotional/issues/5).
 
 Too few topics will make pages overly broad and vague. Too many topics will make the browse system noisy and difficult to maintain.
 
@@ -378,7 +378,7 @@ Before publishing:
 - every entry should have a primary topic
 - topic assignments should look plausible to a human reader
 - no topic page should feel empty or incoherent
-- no topic should become a junk drawer containing too much of the corpus
+- no topic should become a junk drawer containing too much of the corpus (tracked in GitHub Issues: #4, https://github.com/AndreRobitaille/LincolnDevotional/issues/4)
 - entry chips should feel helpful, not random or excessive
 - Explore page should stay visually simple and easy to scan
 
@@ -389,7 +389,7 @@ Before publishing:
 3. Generate and review entry-topic assignments.
 4. Generate the Explore page and topic pages.
 5. Add topic chips to devotional entry pages.
-6. Consider search later once topic data is stable.
+6. Tracked in GitHub Issues: #6 (https://github.com/AndreRobitaille/LincolnDevotional/issues/6).
 
 ## Recommendation Summary
 
