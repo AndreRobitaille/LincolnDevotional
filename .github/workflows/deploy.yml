@@ -27,6 +27,7 @@ jobs:
             **/.git/**
             **/.github/**
             **/docs/**
+            **/data/entry_topics_cache.json
             **/tools/**
             **/tests/**
             **/*.bak
