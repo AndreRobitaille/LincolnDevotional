@@ -1,0 +1,4 @@
+# Keep the FTPS sync state on disk while denying public HTTP access.
+<Files ".ftp-deploy-sync-state.json">
+    Require all denied
+</Files>
