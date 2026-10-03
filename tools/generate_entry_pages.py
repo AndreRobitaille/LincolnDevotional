@@ -5,6 +5,11 @@ import json
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
+if __package__:
+    from .esv_limits import validate_esv_cache
+else:
+    from esv_limits import validate_esv_cache
+
 
 MONTH_NAMES = {
     1: "january",
@@ -249,6 +254,23 @@ def build_explore_payload(entries, entry_topics, topic_taxonomy):
     }
 
 
+def build_search_index(entries, esv_cache):
+    validate_esv_cache(esv_cache)
+    return [
+        {
+            "mmdd": entry["mmdd"],
+            "display_date": entry["display_date"],
+            "title": entry["title"],
+            "href": build_entry_href(entry),
+            "verse_ref": entry["verse_ref"],
+            "devotional": entry["poem"],
+            "kjv": entry["bible_verse"],
+            "esv": esv_cache.get(entry["mmdd"], {}).get("text", ""),
+        }
+        for entry in entries
+    ]
+
+
 def render_facet_chip(slug, label, count, facet):
     disabled = ' data-disabled="true"' if count == 0 else ""
     count_html = f'<span class="facet-chip-count">{count}</span>' if count else '<span class="facet-chip-count facet-chip-count--zero">0</span>'
@@ -318,7 +340,7 @@ def render_explore_page(topic_taxonomy, payload, site_url):
       href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../style.css?v=20260519c" />
+    <link rel="stylesheet" href="../style.css?v=20261003a" />
     <script src="../analytics.js?v=20260509e"></script>
   </head>
   <body>
@@ -343,6 +365,11 @@ def render_explore_page(topic_taxonomy, payload, site_url):
         </article>
 
         <section class="explore-filters" aria-label="Filter devotions">
+          <div class="explore-search" hidden>
+            <label class="facet-legend" for="devotion-search">Search devotions</label>
+            <input id="devotion-search" type="search" placeholder="Word, phrase, or scripture reference" aria-describedby="search-status" />
+            <p id="search-status" class="explore-search-status" role="status"></p>
+          </div>
           <fieldset class="facet-group" data-facet-group="topic">
             <legend class="facet-legend">By topic</legend>
             <div class="facet-chips" role="group" aria-label="Topic filters">{topic_chips}</div>
@@ -371,7 +398,7 @@ def render_explore_page(topic_taxonomy, payload, site_url):
     </div>
     <script type="application/json" id="explore-data">{inline_payload}</script>
     <script src="../theme.js?v=20260123"></script>
-    <script src="../explore.js?v=20260520a"></script>
+    <script src="../explore.js?v=20261003a"></script>
   </body>
 </html>"""
 
@@ -520,6 +547,7 @@ def write_routes_manifest(entries, output_root):
 def generate_site(entries, esv_cache, output_root, site_url, topic_taxonomy=None, entry_topics=None):
     site_url = normalize_site_url(site_url)
     validate_entries(entries)
+    search_index = build_search_index(entries, esv_cache)
     output_root.mkdir(parents=True, exist_ok=True)
     entries_dir = output_root / "entries"
     entries_dir.mkdir(parents=True, exist_ok=True)
@@ -545,6 +573,10 @@ def generate_site(entries, esv_cache, output_root, site_url, topic_taxonomy=None
     write_sitemap(entries, output_root, site_url, topic_taxonomy=topic_taxonomy)
     write_robots_txt(output_root, site_url)
     write_routes_manifest(entries, output_root)
+    (output_root / "data" / "search-index.json").write_text(
+        json.dumps(search_index, ensure_ascii=False, separators=(",", ":")) + "\n",
+        encoding="utf-8",
+    )
 
 
 def main():

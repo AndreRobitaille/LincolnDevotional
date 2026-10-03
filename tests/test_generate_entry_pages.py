@@ -1,14 +1,18 @@
 from html.parser import HTMLParser
+import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 
 from tools.generate_entry_pages import (
+    ROOT,
     build_description,
     build_entry_href,
+    build_search_index,
     generate_site,
     slugify_entry,
 )
+from tools.esv_limits import expand_reference, load_kjv_verse_counts, validate_esv_cache
 
 
 def assert_in_order(test_case, html, fragments):
@@ -58,7 +62,7 @@ class GenerateEntryPagesTests(unittest.TestCase):
             },
         ]
         self.esv_cache = {
-            "0101": {"text": "In this the love of God was made manifest among us."}
+            "0101": {"ref": "1 John 4:9", "text": "In this the love of God was made manifest among us."}
         }
         self.topic_taxonomy = {
             "topics": [
@@ -107,6 +111,48 @@ class GenerateEntryPagesTests(unittest.TestCase):
 
     def test_build_entry_href_uses_entries_directory(self):
         self.assertEqual(build_entry_href(self.entries[0]), "/entries/january-1/")
+
+    def test_search_index_contains_source_text_and_uses_only_cached_esv(self):
+        entries = [dict(self.entries[0], esv="Untrusted translation"), self.entries[1]]
+        index = build_search_index(entries, self.esv_cache)
+        self.assertEqual(index[0], {
+            "mmdd": "0101",
+            "display_date": "January 1",
+            "title": self.entries[0]["title"],
+            "href": "/entries/january-1/",
+            "verse_ref": "1 John 4:9",
+            "devotional": self.entries[0]["poem"],
+            "kjv": self.entries[0]["bible_verse"],
+            "esv": self.esv_cache["0101"]["text"],
+        })
+        self.assertEqual(index[1]["esv"], "")
+
+    def test_generate_site_writes_search_index_under_deployed_data_directory(self):
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+            generate_site(self.entries, self.esv_cache, output_root, "https://example.test")
+            index = json.loads((output_root / "data" / "search-index.json").read_text())
+            self.assertEqual(index, build_search_index(self.entries, self.esv_cache))
+
+    def test_generate_site_rejects_unsafe_cache_before_writing_any_files(self):
+        cache = {"0101": {"ref": "Jude 1-13", "text": "Too much of one book"}}
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir) / "site"
+            with self.assertRaisesRegex(ValueError, "maximum is half"):
+                generate_site(self.entries, cache, output_root, "https://example.test")
+            self.assertFalse(output_root.exists())
+
+    def test_committed_search_index_is_current_and_static_links_cover_all_366_entries(self):
+        entries = json.loads((ROOT / "data" / "entries.json").read_text())
+        cache = json.loads((ROOT / "data" / "esv_cache.json").read_text())
+        index = json.loads((ROOT / "data" / "search-index.json").read_text())
+        self.assertEqual(index, build_search_index(entries, cache))
+        self.assertEqual(len(index), 366)
+        self.assertEqual(len({record["mmdd"] for record in index}), 366)
+        self.assertIn("0229", {record["mmdd"] for record in index})
+        parser = ExploreLinksParser()
+        parser.feed((ROOT / "explore" / "index.html").read_text())
+        self.assertEqual(parser.links, [entry["href"] for entry in index])
 
     def test_build_description_prefers_title_and_reference(self):
         description = build_description(self.entries[0])
@@ -445,6 +491,70 @@ class GenerateEntryPagesTests(unittest.TestCase):
             self.assertIn('href="/entries/december-31/"', first_html)
             self.assertIn('href="/entries/january-1/"', last_html)
             self.assertIn('href="/entries/january-1/"', last_html)
+
+
+class EsvLimitTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.verse_counts = load_kjv_verse_counts()
+
+    def test_kjv_reader_counts_verse_records_including_chapter_and_book_ends(self):
+        self.assertEqual(len(self.verse_counts), 66)
+        self.assertEqual(sum(sum(chapters.values()) for chapters in self.verse_counts.values()), 31102)
+        self.assertEqual(self.verse_counts["Gen"][1], 31)
+        self.assertEqual(self.verse_counts["Ps"][119], 176)
+        self.assertEqual(sum(self.verse_counts["1John"].values()), 105)
+        self.assertEqual(self.verse_counts["Jude"], {1: 25})
+
+    def test_reference_expansion_handles_ranges_lists_and_single_chapter_books(self):
+        examples = {
+            "1 Peter 1:18-19": [("1Pet", 1, 18), ("1Pet", 1, 19)],
+            "1 John 3:19, 21": [("1John", 3, 19), ("1John", 3, 21)],
+            "2 Corinthians 5:6,8": [("2Cor", 5, 6), ("2Cor", 5, 8)],
+            "Jude 21": [("Jude", 1, 21)],
+            "Jude 3–4": [("Jude", 1, 3), ("Jude", 1, 4)],
+            "Genesis 1:31-2:2": [("Gen", 1, 31), ("Gen", 2, 1), ("Gen", 2, 2)],
+            "Romans 8:1; 8:5": [("Rom", 8, 1), ("Rom", 8, 5)],
+        }
+        for reference, expected in examples.items():
+            with self.subTest(reference=reference):
+                self.assertEqual(expand_reference(reference, self.verse_counts), expected)
+
+    def test_rejects_missing_unknown_and_invalid_references_instead_of_undercounting(self):
+        for reference in (None, "", "Unknown 1:1", "Romans 8", "Romans 99:1", "Jude 26", "Jude 0", "Jude 4-2", "John 3:1,", "John 3:1, 3:99"):
+            with self.subTest(reference=reference):
+                with self.assertRaises(ValueError):
+                    validate_esv_cache({"entry": {"ref": reference}}, self.verse_counts)
+
+    def test_accepts_500_occurrences_and_rejects_501_even_when_verses_repeat(self):
+        cache = {str(i): {"ref": "Genesis 1:1"} for i in range(500)}
+        self.assertEqual(validate_esv_cache(cache, self.verse_counts), 500)
+        cache["extra"] = {"ref": "Genesis 1:2"}
+        with self.assertRaisesRegex(ValueError, "501 verses; maximum is 500"):
+            validate_esv_cache(cache, self.verse_counts)
+
+    def test_accepts_exactly_half_a_book_and_rejects_more_than_half(self):
+        self.assertEqual(validate_esv_cache({"entry": {"ref": "3 John 1-7"}}, self.verse_counts), 7)
+        for reference in ("3 John 1-8", "2 John 1-7", "Jude 1-13"):
+            with self.subTest(reference=reference):
+                with self.assertRaisesRegex(ValueError, "maximum is half"):
+                    validate_esv_cache({"entry": {"ref": reference}}, self.verse_counts)
+
+    def test_cache_limits_cover_records_outside_the_devotional_index(self):
+        cache = {"unused": {"ref": "2 John 1-7"}}
+        with self.assertRaisesRegex(ValueError, "maximum is half"):
+            build_search_index([], cache)
+
+    def test_real_committed_esv_cache_stays_within_both_limits(self):
+        cache = json.loads((ROOT / "data" / "esv_cache.json").read_text())
+        self.assertGreater(validate_esv_cache(cache, self.verse_counts), 0)
+
+    def test_deploy_runs_the_test_command_before_ftps_and_requires_success(self):
+        workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text()
+        command = "run: python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai"
+        self.assertLess(workflow.index(command), workflow.index("uses: SamKirkland/FTP-Deploy-Action"))
+        self.assertIn("if: ${{ success() && github.event_name != 'pull_request' }}", workflow)
+        self.assertNotIn("continue-on-error", workflow)
 
 
 if __name__ == "__main__":

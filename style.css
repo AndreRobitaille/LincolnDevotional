@@ -1001,6 +1001,57 @@ input[type="date"] {
     border-top: 1px dashed var(--border);
 }
 
+.explore-search {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.explore-search[hidden] {
+    display: none;
+}
+
+.explore-search input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface-elevated);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+}
+
+.explore-search input::placeholder {
+    color: var(--muted);
+}
+
+.explore-search input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.explore-search-status {
+    margin: 0;
+    color: var(--muted);
+    font-family: var(--font-display);
+}
+
+.explore-search-status:empty {
+    display: none;
+}
+
+.explore-entry-snippet {
+    grid-column: 2 / -1;
+    color: var(--muted);
+    font-family: var(--font-display);
+    font-size: 0.98rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
 .explore-count {
     font-family: var(--font-display);
     font-style: italic;
@@ -1187,6 +1238,10 @@ input[type="date"] {
         font-size: 1.04rem;
     }
 
+    .explore-entry-snippet {
+        grid-column: 1 / -1;
+    }
+
     .explore-entry-primary {
         justify-self: start;
         margin-top: 2px;
@@ -1201,4 +1256,3 @@ input[type="date"] {
         margin-left: 0;
     }
 }
-

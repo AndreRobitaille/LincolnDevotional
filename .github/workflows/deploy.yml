@@ -3,6 +3,8 @@ name: Deploy to cPanel (FTPS)
 on:
   push:
     branches: ["main"]
+  pull_request:
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -12,7 +14,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Validate generated data and ESV limits
+        run: python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai
+
       - name: Deploy via FTPS
+        if: ${{ success() && github.event_name != 'pull_request' }}
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_SERVER }}
