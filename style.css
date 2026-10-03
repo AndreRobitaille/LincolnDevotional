@@ -162,26 +162,6 @@ a:focus-visible {
     gap: 32px;
 }
 
-.home-intro {
-    max-width: 40rem;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.home-intro .entry-text {
-    white-space: normal;
-    color: var(--muted);
-    font-size: 1.05rem;
-}
-
-.home-intro-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px 22px;
-    margin: 16px 0 0;
-}
-
 .home-noscript {
     margin: 0 0 18px;
     text-align: center;
