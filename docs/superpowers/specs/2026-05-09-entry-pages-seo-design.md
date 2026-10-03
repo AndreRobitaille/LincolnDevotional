@@ -125,7 +125,7 @@ Phase 1 internal linking should include:
 
 This improves crawl depth and makes the generated entry set easier to discover.
 
-An archive/index page may be added later, but it is not required for phase 1.
+Tracked in GitHub Issues: #3 (https://github.com/AndreRobitaille/LincolnDevotional/issues/3).
 
 ## Sitemap and Robots
 
