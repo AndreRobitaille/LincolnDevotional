@@ -1,18 +1,30 @@
+from html import escape
 from html.parser import HTMLParser
+from datetime import date
 import json
 from pathlib import Path
+import re
+import subprocess
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 from tools.generate_entry_pages import (
+    ENTRY_TITLE_LIMIT,
+    ENTRY_TITLE_SUFFIX,
+    EXPLORE_DESCRIPTION,
+    EXPLORE_TITLE,
     ROOT,
     build_description,
     build_entry_href,
+    build_entry_title,
     build_search_index,
+    choose_lastmod,
     generate_site,
     slugify_entry,
 )
 from tools.esv_limits import expand_reference, load_kjv_verse_counts, validate_esv_cache
+from tools.social_meta import build_share_title
 
 
 def assert_in_order(test_case, html, fragments):
@@ -337,7 +349,7 @@ class GenerateEntryPagesTests(unittest.TestCase):
             for html in (entry_html, explore_html):
                 self.assertIn('<meta property="og:type" content="website" />', html)
                 self.assertIn('<meta property="og:site_name" content="The Believer\'s Daily Treasure" />', html)
-                self.assertIn('<meta name="twitter:card" content="summary" />', html)
+                self.assertIn('<meta name="twitter:card" content="summary_large_image" />', html)
                 self.assertNotIn('twitter:site', html)
 
     def test_generate_site_normalizes_trailing_slash_site_url_for_canonical_urls(self):
@@ -492,6 +504,231 @@ class GenerateEntryPagesTests(unittest.TestCase):
             self.assertIn('href="/entries/january-1/"', last_html)
             self.assertIn('href="/entries/january-1/"', last_html)
 
+    def test_entry_title_adds_site_suffix_only_when_it_fits(self):
+        short = dict(self.entries[0], display_date="July 1", title="Joy in God")
+        self.assertEqual(
+            build_entry_title(short),
+            "July 1 Devotional: Joy in God • Lincoln's Devotional",
+        )
+        self.assertLessEqual(len(build_entry_title(short)), ENTRY_TITLE_LIMIT)
+
+        long = dict(self.entries[0], display_date="October 3", title="Of the Divine Guidance")
+        self.assertEqual(build_entry_title(long), "October 3 Devotional: Of the Divine Guidance")
+        self.assertFalse(build_entry_title(long).endswith(ENTRY_TITLE_SUFFIX))
+        self.assertGreater(len(build_entry_title(long) + ENTRY_TITLE_SUFFIX), ENTRY_TITLE_LIMIT)
+
+    def test_real_entries_follow_the_title_length_rule(self):
+        entries = json.loads((ROOT / "data" / "entries.json").read_text())
+        titles = [build_entry_title(entry) for entry in entries]
+        self.assertEqual(len(titles), 366)
+        suffixed = 0
+        for entry, title in zip(entries, titles):
+            base = f"{entry['display_date']} Devotional: {entry['title']}"
+            if len(base + ENTRY_TITLE_SUFFIX) <= ENTRY_TITLE_LIMIT:
+                self.assertEqual(title, base + ENTRY_TITLE_SUFFIX)
+                suffixed += 1
+            else:
+                self.assertEqual(title, base)
+        self.assertEqual(suffixed, 95)
+        self.assertEqual(min(len(title) for title in titles), 43)
+        self.assertEqual(max(len(title) for title in titles), 73)
+        self.assertEqual(sum(len(title) > ENTRY_TITLE_LIMIT for title in titles), 15)
+
+    def test_generate_site_uses_entry_title_h1_root_nav_and_nonblocking_head(self):
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+            generate_site(self.entries, self.esv_cache, output_root, "https://lincolndevotional.com")
+            html = (output_root / "entries" / "january-1" / "index.html").read_text()
+            explore = (output_root / "explore" / "index.html").read_text()
+
+        title = build_entry_title(self.entries[0])
+        self.assertIn(f"<title>{title}</title>", html)
+        self.assertIn(f'<meta property="og:title" content="{build_share_title(self.entries[0])}" />', html)
+        self.assertEqual(len(re.findall(r"<h1\b", html)), 1)
+        self.assertIn(f'<h1 class="entry-title">{self.entries[0]["title"]}</h1>', html)
+        self.assertIn('<p class="site-title">The Believer\'s Daily Treasure</p>', html)
+        self.assertNotIn("<h2", html)
+        self.assertIn('<a aria-current="page" href="/">Devotional</a>', html)
+        self.assertNotIn("index.html", html)
+        self.assertIn('rel="preload" as="style"', html)
+        self.assertIn("onload=\"this.onload=null;this.rel='stylesheet'\"", html)
+        self.assertIn("<noscript><link rel=\"stylesheet\"", html)
+        self.assertIn('<script defer src="../../analytics.js?v=20260509e"></script>', html)
+
+        self.assertEqual(len(EXPLORE_TITLE), 64)
+        self.assertEqual(len(EXPLORE_DESCRIPTION), 147)
+        self.assertIn(f"<title>{EXPLORE_TITLE.replace(chr(39), '&#x27;')}</title>", explore)
+        self.assertIn(EXPLORE_DESCRIPTION.replace("'", "&#x27;"), explore)
+        self.assertIn('<meta property="og:title" content="' + EXPLORE_TITLE.replace("'", "&#x27;") + '" />', explore)
+        self.assertEqual(len(re.findall(r"<h1\b", explore)), 1)
+        self.assertIn('<h1 class="entry-title">Find a devotion for today’s need</h1>', explore)
+        self.assertIn('<p class="site-title">The Believer\'s Daily Treasure</p>', explore)
+        self.assertIn('<a href="/">Devotional</a>', explore)
+        self.assertNotIn("index.html", explore)
+        self.assertIn('<script defer src="../analytics.js?v=20260509e"></script>', explore)
+
+    def test_sitemap_lastmod_is_stable_until_page_content_changes(self):
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+
+            def generate(entries, stamp):
+                with patch("tools.generate_entry_pages.current_lastmod_date", return_value=stamp):
+                    generate_site(entries, self.esv_cache, output_root, "https://lincolndevotional.com")
+                return (output_root / "sitemap.xml").read_text()
+
+            first = generate(self.entries, "2026-01-15")
+            changed = [dict(entry) for entry in self.entries]
+            changed[0] = dict(changed[0], title="A Different Title")
+            second = generate(changed, "2026-02-02")
+            third = generate(changed, "2026-03-03")
+
+        self.assertEqual(second, third)
+        first_dates = dict(re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", first))
+        second_dates = dict(re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", second))
+        self.assertEqual(len(first_dates), 6)
+        self.assertTrue(all(re.fullmatch(r"\d{4}-\d{2}-\d{2}", value) for value in first_dates.values()))
+        self.assertEqual(second_dates["https://lincolndevotional.com/entries/january-1/"], "2026-02-02")
+        self.assertEqual(second_dates["https://lincolndevotional.com/explore/"], "2026-02-02")
+        self.assertEqual(second_dates["https://lincolndevotional.com/entries/january-2/"], "2026-01-15")
+        self.assertEqual(second_dates["https://lincolndevotional.com/about.html"], "2026-01-15")
+        self.assertEqual(second_dates["https://lincolndevotional.com/"], "2026-01-15")
+
+    def test_choose_lastmod_prefers_stored_date_then_git_date_then_today(self):
+        stored = {"sha256": "abc", "lastmod": "2024-05-01"}
+        self.assertEqual(choose_lastmod(stored, "abc", b"new", b"old", "2020-01-01", "2026-10-03"), "2024-05-01")
+        self.assertEqual(choose_lastmod(None, "abc", b"same", b"same", "2024-06-01", "2026-10-03"), "2024-06-01")
+        self.assertEqual(choose_lastmod(None, "abc", b"new", b"old", "2024-06-01", "2026-10-03"), "2026-10-03")
+        self.assertEqual(choose_lastmod(None, "missing", None, None, None, "2026-10-03"), "2026-10-03")
+
+    def test_unchanged_committed_pages_reuse_git_commit_date(self):
+        with TemporaryDirectory() as tmp_dir:
+            output_root = Path(tmp_dir)
+            subprocess.run(["git", "init"], cwd=output_root, check=True, capture_output=True)
+            subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=output_root, check=True)
+            subprocess.run(["git", "config", "user.name", "Test"], cwd=output_root, check=True)
+            with patch("tools.generate_entry_pages.current_lastmod_date", return_value="2026-01-15"):
+                generate_site(self.entries, self.esv_cache, output_root, "https://lincolndevotional.com")
+            subprocess.run(["git", "add", "-A"], cwd=output_root, check=True)
+            env = dict(**subprocess.os.environ)
+            env["GIT_AUTHOR_DATE"] = "2024-06-01T12:00:00"
+            env["GIT_COMMITTER_DATE"] = "2024-06-01T12:00:00"
+            subprocess.run(
+                ["git", "commit", "-m", "seed"],
+                cwd=output_root,
+                check=True,
+                capture_output=True,
+                env=env,
+            )
+            (output_root / "data" / "sitemap_lastmod.json").unlink()
+            with patch("tools.generate_entry_pages.current_lastmod_date", return_value="2026-08-08"):
+                generate_site(self.entries, self.esv_cache, output_root, "https://lincolndevotional.com")
+            recovered = (output_root / "sitemap.xml").read_text()
+            with patch("tools.generate_entry_pages.current_lastmod_date", return_value="2026-09-09"):
+                generate_site(self.entries, self.esv_cache, output_root, "https://lincolndevotional.com")
+            again = (output_root / "sitemap.xml").read_text()
+
+        dates = dict(re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", recovered))
+        self.assertEqual(dates["https://lincolndevotional.com/entries/january-1/"], "2024-06-01")
+        self.assertEqual(dates["https://lincolndevotional.com/explore/"], "2024-06-01")
+        self.assertEqual(recovered, again)
+
+    def test_home_jsonld_names_the_site_without_unconfirmed_facts(self):
+        html = (ROOT / "index.html").read_text()
+        match = re.search(r'<script type="application/ld\+json">\s*(\{.*?\})\s*</script>', html, re.S)
+        self.assertIsNotNone(match)
+        data = json.loads(match.group(1))
+        self.assertEqual(data["@context"], "https://schema.org")
+        self.assertEqual(data["@type"], "WebSite")
+        self.assertEqual(data["name"], "The Believer's Daily Treasure")
+        self.assertEqual(data["url"], "https://lincolndevotional.com/")
+        self.assertEqual(data["alternateName"], ["Lincoln's Daily Devotional", "Lincoln Devotional"])
+        self.assertEqual(data["inLanguage"], "en")
+        description_meta = re.search(r'<meta name="description" content="([^"]*)"', html).group(1)
+        self.assertEqual(data["description"], description_meta)
+        for field in ("publisher", "editor", "author", "datePublished", "about"):
+            self.assertNotIn(field, data)
+        title = "Lincoln's Daily Devotional: The Believer's Daily Treasure"
+        description = "A short daily Christian devotional with Scripture and a poem for every day, from The Believer's Daily Treasure, the devotional Abraham Lincoln carried."
+        self.assertEqual(description_meta, description)
+        self.assertIn(f"<title>{title}</title>", html)
+        self.assertIn(f'<meta property="og:title" content="{title}" />', html)
+        self.assertIn(f'<meta name="twitter:title" content="{escape(title)}" />', html)
+        self.assertIn(f'<meta property="og:description" content="{description}" />', html)
+        self.assertEqual(data["name"], "The Believer's Daily Treasure")
+        self.assertIn('<h1 class="site-title">The Believer\'s Daily Treasure</h1>', html)
+        self.assertEqual(len(re.findall(r"<h1\b", html)), 1)
+        self.assertIn('<a href="/" aria-current="page">Devotional</a>', html)
+        self.assertIn('<script defer src="analytics.js?v=20260509e"></script>', html)
+        self.assertIn('rel="preload" as="style"', html)
+
+    def test_home_intro_copies_the_about_opening_and_links_explore(self):
+        home = (ROOT / "index.html").read_text()
+        about = (ROOT / "about.html").read_text()
+        about_open = re.search(
+            r'<section class="about-section">\s*<p class="entry-text">(.*?)</p>',
+            about,
+            re.S,
+        ).group(1)
+        intro = re.search(
+            r'<section class="home-intro">\s*<p class="entry-text">(.*?)</p>',
+            home,
+            re.S,
+        ).group(1)
+        self.assertEqual(re.sub(r"\s+", " ", intro).strip(), re.sub(r"\s+", " ", about_open).strip())
+        self.assertIn('href="/explore/">Browse all 366 daily readings</a>', home)
+        self.assertIn('href="/about.html">About this edition</a>', home)
+        self.assertNotIn("lincoln-and-the-bible", home)
+        card = re.search(r'<article class="entry-card".*?</article>', home, re.S).group(0)
+        self.assertIn("<noscript>", card)
+        self.assertIn('href="/explore/">Browse all 366 daily readings</a>', card)
+        self.assertIn('<h2 id="entryTitle" class="entry-title">', home)
+
+    def test_about_and_copyright_promote_the_page_heading(self):
+        for relative, heading in (
+            ("about.html", "The Daily Devotional Abraham Lincoln Carried"),
+            ("copyright.html", "Copyright and Public Domain Notice"),
+        ):
+            html = (ROOT / relative).read_text()
+            self.assertEqual(len(re.findall(r"<h1\b", html)), 1, relative)
+            self.assertIn(f"<h1 class=\"entry-title about-title\">", html)
+            self.assertIn(heading, html)
+            self.assertIn('<p class="site-title">The Believer\'s Daily Treasure</p>', html)
+            self.assertNotIn("<h2", html)
+            self.assertIn('<a href="/">Devotional</a>', html)
+            self.assertNotIn('href="index.html"', html)
+            self.assertIn('<script defer src="analytics.js?v=20260509e"></script>', html)
+            self.assertIn("<noscript><link rel=\"stylesheet\"", html)
+
+    def test_scripts_other_than_analytics_do_not_call_gtag(self):
+        for path in ROOT.glob("*.js"):
+            if path.name == "analytics.js":
+                continue
+            self.assertNotIn("gtag", path.read_text(), path.name)
+            self.assertNotIn("dataLayer", path.read_text(), path.name)
+
+    def test_committed_sitemap_has_lastmod_on_every_url(self):
+        xml = (ROOT / "sitemap.xml").read_text()
+        locs = re.findall(r"<loc>([^<]+)</loc>", xml)
+        lastmods = re.findall(r"<lastmod>(\d{4}-\d{2}-\d{2})</lastmod>", xml)
+        self.assertEqual(len(locs), 370)
+        self.assertEqual(len(lastmods), 370)
+        for value in lastmods:
+            self.assertEqual(date.fromisoformat(value).isoformat(), value)
+        self.assertEqual(xml.count("<url>"), 370)
+
+    def test_committed_generated_pages_have_one_h1_and_root_nav(self):
+        pages = sorted((ROOT / "entries").glob("*/index.html"))
+        self.assertEqual(len(pages), 366)
+        explore = (ROOT / "explore" / "index.html").read_text()
+        self.assertEqual(len(re.findall(r"<h1\b", explore)), 1)
+        self.assertNotIn("index.html", explore)
+        self.assertIn('<a href="/">Devotional</a>', explore)
+        for page in pages:
+            html = page.read_text()
+            self.assertEqual(len(re.findall(r"<h1\b", html)), 1, page.name)
+            self.assertIn('<a aria-current="page" href="/">Devotional</a>', html)
+            self.assertNotIn("index.html", html)
+
 
 class EsvLimitTests(unittest.TestCase):
     @classmethod
@@ -551,7 +788,7 @@ class EsvLimitTests(unittest.TestCase):
 
     def test_deploy_runs_the_test_command_before_ftps_and_requires_success(self):
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text()
-        command = "run: python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai"
+        command = "python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai"
         self.assertLess(workflow.index(command), workflow.index("uses: SamKirkland/FTP-Deploy-Action"))
         self.assertIn("if: ${{ success() && github.event_name != 'pull_request' }}", workflow)
         self.assertNotIn("continue-on-error", workflow)

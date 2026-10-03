@@ -92,6 +92,7 @@ a:focus-visible {
     font-family: var(--font-display);
     font-size: clamp(2.4rem, 3.4vw, 3.3rem);
     font-weight: 600;
+    line-height: 1.75;
     margin: 0 0 10px;
 }
 
@@ -161,6 +162,31 @@ a:focus-visible {
     gap: 32px;
 }
 
+.home-intro {
+    max-width: 40rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.home-intro .entry-text {
+    white-space: normal;
+    color: var(--muted);
+    font-size: 1.05rem;
+}
+
+.home-intro-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 22px;
+    margin: 16px 0 0;
+}
+
+.home-noscript {
+    margin: 0 0 18px;
+    text-align: center;
+}
+
 .entry-card,
 .about-card {
     background:
@@ -189,6 +215,8 @@ a:focus-visible {
 .entry-title {
     font-family: var(--font-display);
     font-size: clamp(2rem, 2.8vw, 2.7rem);
+    font-weight: 700;
+    line-height: 1.75;
     margin: 0;
 }
 

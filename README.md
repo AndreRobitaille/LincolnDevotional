@@ -65,6 +65,9 @@ One poem substitution present in later printings was removed in favor of the ori
 - **Search Devotions**
   Search all 366 entries from `/explore/` by title, scripture reference, poem, or KJV/ESV verse text. Search ignores case and repeated whitespace and matches literal text, including partial words and contiguous phrases. It combines with the existing topic or need filter and keeps results in calendar order. The index loads only when search receives focus or input; ESV snippets retain their translation label. All entry links remain available without JavaScript.
 
+- **Sharing Previews**
+  Every dated entry has a static image with a large, reviewed headline and Lincoln's hat profile. General pages use an evergreen site card. Images and social metadata are available without JavaScript or per-share generation. See [Sharing previews](docs/SHARING.md) for filenames, editorial review, regeneration, validation, and cache updates.
+
 ---
 
 ## Quick Start
@@ -108,7 +111,10 @@ ESV_API_KEY=your_api_key_here
 - **Generate Pages and Search Index**: `python3 tools/generate_entry_pages.py`
   Rebuilds committed entry pages, the explore page, and `data/search-index.json` from local data. ESV text comes only from `data/esv_cache.json`; generation makes no API calls. Before writing, the generator expands cached reference ranges and rejects more than 500 verse occurrences or more than half of any book. Book/chapter verse totals are read from the bundled KJV SWORD module using Python's standard library. Repeated or overlapping quotations count each time; unknown or invalid references fail the check.
 
-  Run `python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai` after regeneration. The deploy workflow runs the same tests before FTPS; pull requests run validation without uploading. The tests also detect a stale committed index.
+  Run `python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai tests.test_share_images` after regeneration. The deploy workflow runs these tests and the sharing image checker before FTPS; pull requests run validation without uploading. The tests also detect a stale committed index.
+
+- **Generate Sharing Images**: `python3 tools/generate_share_images.py`
+  Install the maintenance dependency with `python3 -m pip install -r tools/share_requirements.txt`. Rebuilds the 367 committed PNGs in `assets/og/v1/` using bundled artwork and fonts, with no API or AI calls. Run `python3 tools/generate_share_images.py --check` to verify all images without writing. Review changed source entries and their headlines before regeneration; see [Sharing previews](docs/SHARING.md).
 
 - **Fetch ESV Verses**: `python3 tools/fetch_esv.py --all`  
   Fetches verse text from the ESV API and caches it locally in `data/esv_cache.json`.

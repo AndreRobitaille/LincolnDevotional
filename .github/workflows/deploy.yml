@@ -17,10 +17,15 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: '3.14'
 
-      - name: Validate generated data and ESV limits
-        run: python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai
+      - name: Install sharing image tools
+        run: python3 -m pip install -r tools/share_requirements.txt
+
+      - name: Validate pages, sharing images, and ESV limits
+        run: |
+          python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai tests.test_share_images
+          python3 tools/generate_share_images.py --check
 
       - name: Deploy via FTPS
         if: ${{ success() && github.event_name != 'pull_request' }}
