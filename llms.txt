@@ -1,0 +1,14 @@
+# Lincoln's Daily Devotional (The Believer's Daily Treasure)
+
+> A free digital edition of The Believer's Daily Treasure, the 19th-century daily Christian devotional Abraham Lincoln carried. 366 daily readings, each with one King James Bible verse (1769 Oxford text), an ESV parallel, and a short period poem. Restored from an early Presbyterian Board of Publication printing.
+
+## Key pages
+- [About this edition](https://lincolndevotional.com/about.html): history of the book, Lincoln's copy, editorial approach
+- [All 366 daily devotions](https://lincolndevotional.com/explore/): every reading by date, searchable and filterable by topic and need
+- [Copyright and public-domain notice](https://lincolndevotional.com/copyright.html)
+
+## Daily readings
+- One page per calendar day: https://lincolndevotional.com/entries/{month}-{day}/ (for example https://lincolndevotional.com/entries/february-12/), from january-1 through december-31, including february-29
+
+## Data
+- [entries.json](https://lincolndevotional.com/data/entries.json): all 366 readings (date, title, verse reference, KJV text, poem) as JSON
