@@ -648,7 +648,7 @@ class GenerateEntryPagesTests(unittest.TestCase):
         for field in ("publisher", "editor", "author", "datePublished", "about"):
             self.assertNotIn(field, data)
         title = "Lincoln's Daily Devotional: The Believer's Daily Treasure"
-        description = "A short daily Christian devotional with Scripture and a poem for every day, from The Believer's Daily Treasure, the devotional Abraham Lincoln carried."
+        description = "A short daily Christian devotional with Scripture and a poem for every day, from The Believer's Daily Treasure, the devotional Abraham Lincoln owned."
         self.assertEqual(description_meta, description)
         self.assertIn(f"<title>{title}</title>", html)
         self.assertIn(f'<meta property="og:title" content="{title}" />', html)
