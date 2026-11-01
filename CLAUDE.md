@@ -2,10 +2,12 @@
 
 ## Deploying
 
-**Pushing to `main` deploys straight to production.** `.github/workflows/deploy.yml`
-FTPS-uploads the repo root to the live cPanel host on every push to `main`. There is no
+**Pushing to `master` deploys straight to production.** `.github/workflows/deploy.yml`
+FTPS-uploads the repo root to the live cPanel host on every push to `master`. There is no
 staging step and no manual gate. Work on a branch; merge only when the change is ready to
-be live.
+be live. `master` is the default branch. Pull requests targeting it run validation
+without uploading. See [README.md](README.md#deployment-and-default-branch) for updating
+an existing clone after the branch rename.
 
 ## Local dev server
 
@@ -18,17 +20,19 @@ mobile QA. (`AGENTS.md` still documents port 8000 / localhost — this supersede
 
 ## Tests
 
-Run from the project root — the tests import `tools.*`, and `tests/` has no `__init__.py`,
-so it only resolves with the repo root as cwd:
+Run the same checks as the deployment workflow from the project root so the tests can
+import `tools.*` and resolve `tests/`:
 
 ```bash
-python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai
+python3 tools/audit_topics.py
+python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai tests.test_share_images tests.test_audit_topics
+python3 tools/generate_share_images.py --check
 ```
 
-They mock their network calls, so no API keys are needed. Coverage is limited to
-`generate_entry_pages` and `tag_entries_openai`; nothing else in `tools/` has tests, and
-the front-end has none at all. For UI changes, verify by hand: load a date, use the date
-picker, toggle light/dark, and check the console for errors.
+The tests mock their network calls, so no API keys are needed. They cover page and
+search generation, topic assignment and validation, sharing images, and ESV limits.
+The front-end has no automated tests. For UI changes, verify by hand: load a date, use
+the date picker, toggle light/dark, and check the console for errors.
 
 ## API keys
 
