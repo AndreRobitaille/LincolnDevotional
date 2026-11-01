@@ -42,9 +42,12 @@ titles, image metadata, static assets, and validation on top of that head.
 
 The source is suitable for release with the date-dependent test fixed and normal
 post-release redirect checks. At the user's request, the combined sharing and
-SEO changes are published as a squash commit on `main`. This retains PR #11's
-code without making its original head an ancestor of `main`, leaving the PR's
-review and closure to Grok. Codex does not explicitly merge or close the PR.
-Pushing to `main` triggers the repository's FTPS deployment workflow. The final
+SEO changes were published as a squash commit on the then-default branch, `main`.
+This retained PR #11's code without making its original head an ancestor of `main`,
+leaving the PR's review and closure to Grok. Codex does not explicitly merge or close the PR.
+That push to `main` triggered the repository's FTPS deployment workflow. The final
 deployment result and public verification evidence are provided in the chat's
 handoff prompt; this document records the source review and release strategy.
+
+The default and FTPS deployment branch is now `master`. See the
+[current deployment instructions](../README.md#deployment-and-default-branch).

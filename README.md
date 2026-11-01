@@ -93,6 +93,28 @@ No build tools or package managers are required.
 
 ---
 
+## Deployment and Default Branch
+
+`master` is the default branch locally and on GitHub. Every push to `master`, including
+a merged pull request, runs `.github/workflows/deploy.yml`: it validates the taxonomy,
+runs the Python tests, checks the committed sharing images, and then uploads the site
+to production over FTPS. There is no staging step or manual deployment gate. Pull
+requests targeting `master` run the same validation without uploading.
+
+For an existing clone whose local branch is still named `main`, update it with:
+
+```bash
+git branch -m main master
+git fetch origin --prune
+git branch --set-upstream-to=origin/master master
+git remote set-head origin -a
+```
+
+New clones select `master` automatically. The default branch requires a pull request
+and a successful `deploy` check, and prevents deletion and force pushes.
+
+---
+
 ## Developer Tools
 
 The repository includes Python scripts in the `tools/` directory to manage data.
@@ -114,7 +136,7 @@ ESV_API_KEY=your_api_key_here
 - **Generate Pages and Search Index**: `python3 tools/generate_entry_pages.py`
   Rebuilds committed entry pages, the explore page, and `data/search-index.json` from local data. ESV text comes only from `data/esv_cache.json`; generation makes no API calls. Before writing, the generator expands cached reference ranges and rejects more than 500 verse occurrences or more than half of any book. Book/chapter verse totals are read from the bundled KJV SWORD module using Python's standard library. Repeated or overlapping quotations count each time; unknown or invalid references fail the check.
 
-  Run `python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai tests.test_share_images` after regeneration. The deploy workflow runs these tests and the sharing image checker before FTPS; pull requests run validation without uploading. The tests also detect a stale committed index.
+  Run `python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai tests.test_share_images tests.test_audit_topics` after regeneration. The deploy workflow runs these tests and the sharing image checker before FTPS; pull requests run validation without uploading. The tests also detect a stale committed index.
 
 - **Generate Sharing Images**: `python3 tools/generate_share_images.py`
   Install the maintenance dependency with `python3 -m pip install -r tools/share_requirements.txt`. Rebuilds the 367 committed PNGs in `assets/og/v1/` using bundled artwork and fonts, with no API or AI calls. Run `python3 tools/generate_share_images.py --check` to verify all images without writing. Review changed source entries and their headlines before regeneration; see [Sharing previews](docs/SHARING.md).
