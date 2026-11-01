@@ -116,7 +116,7 @@ There are 77 readings with a secondary topic. The [passage lists](passages-by-ta
 
 The approved vocabulary and all 366 assignments are installed in `data/topic_taxonomy.json` and `data/entry_topics.json`. The descriptions retain the detailed scope behind each short label. Explore puts reader needs first, groups topics under five headings, and shows the selected tag's description. Daily entry chips link to the focused filters.
 
-`tools/audit_topics.py` enforces the 25-reading and three-word limits, complete coverage, and valid assignments. Both page generation and the PR/deployment workflow run it. The tagging maintenance tool checkpoints draft progress only in its internal cache, validates the complete candidate collection, and atomically replaces approved assignments after success.
+`tools/audit_topics.py` enforces the 25-reading and three-word limits, complete coverage, and valid assignments. Both page generation and the PR/deployment workflow run it. The tagging maintenance tool checkpoints draft progress only in its internal cache, validates the complete candidate collection, and atomically replaces approved assignments after success. `--resume` restores matching checkpoints and fetches only unfinished entries. Checkpoints bind the source text, vocabulary, model, and approved dataset; changes to those inputs stop recovery before any API request. Older unscoped caches are not used as draft checkpoints.
 
 Retired links such as `?topic=faith` display an explanation and links to the narrower choices in `data/legacy_tag_suggestions.json`. They do not select an arbitrary replacement or display a combined broad result. Unknown filters also offer an explicit recovery path. Full text search remains available for broad terms.
 

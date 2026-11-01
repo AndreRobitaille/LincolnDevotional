@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -187,6 +188,11 @@ def write_cache(cache):
     write_assignments(CACHE_PATH, cache)
 
 
+def fingerprint(value):
+    payload = json.dumps(value, sort_keys=True, ensure_ascii=False).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def _format_vocab_lines(items):
     lines = []
     for item in items:
@@ -298,7 +304,7 @@ def main(argv=None):
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--entry", action="append", default=[])
     parser.add_argument("--report", action="store_true")
-    parser.add_argument("--resume", action="store_true", help="Skip entries that already have assignments")
+    parser.add_argument("--resume", action="store_true", help="Restore matching draft checkpoints; otherwise skip approved entries")
     args = parser.parse_args(argv)
 
     entries = load_json(ENTRIES_PATH)
@@ -317,9 +323,38 @@ def main(argv=None):
         selected_mmdd = set(args.entry)
         selected = [entry for entry in entries if entry["mmdd"] in selected_mmdd]
     assignments = load_json(ENTRY_TOPICS_PATH) if ENTRY_TOPICS_PATH.exists() else {}
-    cache = load_cache()
+    approved_hash = fingerprint(assignments)
+    context_hash = fingerprint({"entries": entries, "taxonomy": topic_taxonomy, "model": MODEL})
+    completed = {}
+    checkpoint_status = None
     if args.resume:
-        selected = [entry for entry in selected if entry["mmdd"] not in assignments]
+        checkpoint = load_cache()
+        if "context_sha256" in checkpoint:
+            if checkpoint["context_sha256"] != context_hash:
+                raise ValueError("Checkpoint source, taxonomy, or model changed; no API requests were made")
+            if approved_hash not in (checkpoint.get("base_sha256"), checkpoint.get("candidate_sha256")):
+                raise ValueError("Approved assignments changed since this checkpoint; no API requests were made")
+            checkpoint_status = checkpoint.get("status")
+            if checkpoint_status not in ("draft", "ready", "complete"):
+                raise ValueError("Unknown checkpoint status")
+            completed = checkpoint["assignments"]
+            checkpoint_entries = [entry for entry in entries if entry["mmdd"] in completed]
+            if completed:
+                validate_topics(topic_taxonomy, completed, checkpoint_entries, require_used_tags=False)
+            for entry in selected:
+                if entry["mmdd"] in completed:
+                    assignments[entry["mmdd"]] = completed[entry["mmdd"]]
+        skip = completed if checkpoint_status == "draft" else assignments
+        selected = [entry for entry in selected if entry["mmdd"] not in skip]
+
+    def save_checkpoint(status):
+        write_cache({
+            "context_sha256": context_hash,
+            "base_sha256": approved_hash,
+            "candidate_sha256": fingerprint(assignments),
+            "status": status,
+            "assignments": completed,
+        })
 
     if not args.dry_run and not os.environ.get("OPENAI_API_KEY"):
         raise SystemExit("OPENAI_API_KEY is required")
@@ -334,16 +369,18 @@ def main(argv=None):
         sanitized = _sanitize_optional_reader_needs(sanitized, allowed_topics, allowed_reader_needs)
         normalized = normalize_assignment(sanitized, allowed_topics, allowed_reader_needs)
         assignments[entry["mmdd"]] = normalized
-        cache[entry["mmdd"]] = normalized
+        completed[entry["mmdd"]] = normalized
         if args.report:
             print(json.dumps(normalized, sort_keys=True))
         # Retain draft progress in the internal cache; approved data waits for the full audit.
         if not args.dry_run:
-            write_cache(cache)
+            save_checkpoint("draft")
 
     if not args.dry_run:
         validate_topics(topic_taxonomy, assignments, entries, require_used_tags=False)
+        save_checkpoint("ready")
         write_assignments(ENTRY_TOPICS_PATH, assignments)
+        save_checkpoint("complete")
 
 
 if __name__ == "__main__":

@@ -122,4 +122,59 @@ class TopicPolicyTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "a has 26 passages"):
                     tagger.main(["--entry", "0130"])
             self.assertEqual(paths["ENTRY_TOPICS_PATH"].read_text(), approved)
-            self.assertEqual(json.loads(paths["CACHE_PATH"].read_text())["0130"]["primary_topic"], "a")
+            self.assertEqual(json.loads(paths["CACHE_PATH"].read_text())["assignments"]["0130"]["primary_topic"], "a")
+
+    def test_interrupted_batch_restores_checkpoint_without_repeating_paid_requests(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = {
+                "ENTRIES_PATH": root / "entries.json",
+                "TOPIC_TAXONOMY_PATH": root / "taxonomy.json",
+                "ENTRY_TOPICS_PATH": root / "approved.json",
+                "CACHE_PATH": root / "cache.json",
+            }
+            entries = self.entries[:2]
+            paths["ENTRIES_PATH"].write_text(json.dumps(entries))
+            paths["TOPIC_TAXONOMY_PATH"].write_text(json.dumps(self.taxonomy))
+            paths["ENTRY_TOPICS_PATH"].write_text("{}")
+
+            def response(slug):
+                assignment = {"primary_topic": slug, "topics": [slug], "reader_needs": []}
+                return {"output": [{"type": "message", "content": [
+                    {"type": "output_text", "text": json.dumps(assignment)}
+                ]}]}
+
+            with patch.multiple(tagger, **paths), patch.dict(os.environ, {"OPENAI_API_KEY": "test"}):
+                with patch.object(tagger, "fetch_assignment", side_effect=[response("a"), TimeoutError()]):
+                    with self.assertRaises(TimeoutError):
+                        tagger.main([])
+                self.assertEqual(paths["ENTRY_TOPICS_PATH"].read_text(), "{}")
+                with patch.object(tagger, "fetch_assignment", return_value=response("b")) as fetch:
+                    tagger.main(["--resume"])
+                self.assertEqual(fetch.call_count, 1)
+                self.assertEqual(fetch.call_args.args[0]["mmdd"], "0102")
+                approved = json.loads(paths["ENTRY_TOPICS_PATH"].read_text())
+                self.assertEqual(approved["0101"]["primary_topic"], "a")
+                self.assertEqual(approved["0102"]["primary_topic"], "b")
+                with patch.object(tagger, "fetch_assignment") as fetch:
+                    tagger.main(["--resume"])
+                    fetch.assert_not_called()
+
+                original = paths["ENTRY_TOPICS_PATH"].read_text()
+                approved["0101"]["primary_topic"] = "b"
+                approved["0101"]["topics"] = ["b"]
+                paths["ENTRY_TOPICS_PATH"].write_text(json.dumps(approved))
+                with patch.object(tagger, "fetch_assignment") as fetch:
+                    with self.assertRaisesRegex(ValueError, "Approved assignments changed"):
+                        tagger.main(["--resume"])
+                    fetch.assert_not_called()
+                self.assertEqual(json.loads(paths["ENTRY_TOPICS_PATH"].read_text()), approved)
+                paths["ENTRY_TOPICS_PATH"].write_text(original)
+
+                changed = deepcopy(self.taxonomy)
+                changed["topics"][0]["name"] = "Changed Label"
+                paths["TOPIC_TAXONOMY_PATH"].write_text(json.dumps(changed))
+                with patch.object(tagger, "fetch_assignment") as fetch:
+                    with self.assertRaisesRegex(ValueError, "taxonomy, or model changed"):
+                        tagger.main(["--resume"])
+                    fetch.assert_not_called()
