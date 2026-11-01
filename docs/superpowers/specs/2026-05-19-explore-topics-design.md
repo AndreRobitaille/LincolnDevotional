@@ -250,7 +250,7 @@ Examples:
 
 ### Size guidance
 
-The production taxonomy should likely stay in roughly the **35 to 45 topic** range. Tracked in GitHub Issues: #5 (https://github.com/AndreRobitaille/LincolnDevotional/issues/5).
+The revised taxonomy has **40 topics and 7 reader needs**. Each label contains at most **25 readings**, including secondary assignments, and uses at most **three words**, preferably one or two. The [November 2026 editorial record](../proposals/2026-11-01-focused-tags/README.md) supersedes the original sizing guidance and documents the resolution of issues #4 and #5.
 
 Too few topics will make pages overly broad and vague. Too many topics will make the browse system noisy and difficult to maintain.
 
@@ -277,7 +277,7 @@ This file should store approved topic assignments for entries.
 Each entry should include:
 
 - `primary_topic`
-- `topics` (typically 2 to 4)
+- `topics` (one primary and at most one substantial secondary topic)
 - `reader_needs` (typically 0 to 2)
 
 Example:
@@ -378,7 +378,8 @@ Before publishing:
 - every entry should have a primary topic
 - topic assignments should look plausible to a human reader
 - no topic page should feel empty or incoherent
-- no topic should become a junk drawer containing too much of the corpus (tracked in GitHub Issues: #4, https://github.com/AndreRobitaille/LincolnDevotional/issues/4)
+- every topic and reader need must contain at most 25 readings; reject the full dataset before generation if a label exceeds this limit
+- review assignments against the inclusion and exclusion definitions in the November 2026 editorial record
 - entry chips should feel helpful, not random or excessive
 - Explore page should stay visually simple and easy to scan
 

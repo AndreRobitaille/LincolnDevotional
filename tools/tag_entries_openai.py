@@ -6,6 +6,11 @@ import os
 from pathlib import Path
 from urllib import request
 
+if __package__:
+    from .audit_topics import validate as validate_topics, validate_taxonomy
+else:
+    from audit_topics import validate as validate_topics, validate_taxonomy
+
 
 ROOT = Path(__file__).resolve().parent.parent
 ENTRIES_PATH = ROOT / "data" / "entries.json"
@@ -167,7 +172,9 @@ def normalize_assignment(assignment, allowed_topics, allowed_reader_needs=None):
 
 
 def write_assignments(path, assignments):
-    path.write_text(json.dumps(assignments, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(assignments, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
+    temporary.replace(path)
 
 
 def load_cache():
@@ -185,6 +192,8 @@ def _format_vocab_lines(items):
     for item in items:
         slug = item.get("slug", "")
         description = item.get("description", "").strip()
+        if item.get("exclude"):
+            description += " Exclude: " + item["exclude"]
         lines.append(f"- {slug}: {description}")
     return "\n".join(lines)
 
@@ -294,6 +303,13 @@ def main(argv=None):
 
     entries = load_json(ENTRIES_PATH)
     topic_taxonomy = load_json(TOPIC_TAXONOMY_PATH)
+    validate_taxonomy(topic_taxonomy)
+    scopes_path = ROOT / "data" / "editorial_scopes.json"
+    if scopes_path.exists():
+        scopes = load_json(scopes_path)
+        for records in topic_taxonomy.values():
+            for record in records:
+                record["exclude"] = scopes.get(record["slug"], {}).get("exclude", "")
     allowed_topics = build_allowed_topic_map(topic_taxonomy)
     allowed_reader_needs = build_allowed_reader_needs_map(topic_taxonomy)
     selected = select_entries(entries, args.limit)
@@ -321,14 +337,13 @@ def main(argv=None):
         cache[entry["mmdd"]] = normalized
         if args.report:
             print(json.dumps(normalized, sort_keys=True))
-        # Incremental save so a mid-loop crash never loses more than the current entry.
+        # Retain draft progress in the internal cache; approved data waits for the full audit.
         if not args.dry_run:
-            write_assignments(ENTRY_TOPICS_PATH, assignments)
             write_cache(cache)
 
     if not args.dry_run:
+        validate_topics(topic_taxonomy, assignments, entries, require_used_tags=False)
         write_assignments(ENTRY_TOPICS_PATH, assignments)
-        write_cache(cache)
 
 
 if __name__ == "__main__":

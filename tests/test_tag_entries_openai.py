@@ -27,7 +27,7 @@ class TagEntriesOpenAITests(unittest.TestCase):
                 {"slug": "prayer", "name": "Prayer", "group": "christian-life", "description": "desc", "related": []},
             ],
             "reader_needs": [
-                {"slug": "comfort", "name": "Comfort", "description": "desc"},
+                {"slug": "need-comfort", "name": "Comfort", "description": "desc"},
                 {"slug": "hope", "name": "Hope", "description": "desc"},
                 {"slug": "strength", "name": "Strength", "description": "desc"},
             ],
@@ -54,7 +54,7 @@ class TagEntriesOpenAITests(unittest.TestCase):
 
         self.assertEqual(normalized["primary_topic"], "comfort")
         self.assertEqual(normalized["topics"], ["comfort", "peace"])
-        self.assertEqual(normalized["reader_needs"], ["comfort", "hope"])
+        self.assertEqual(normalized["reader_needs"], ["need-comfort", "hope"])
 
     def test_normalize_assignment_rejects_unknown_primary_topic(self):
         with self.assertRaises(ValueError):
@@ -164,7 +164,7 @@ class TagEntriesOpenAITests(unittest.TestCase):
             payload = json.loads(entry_topics_path.read_text(encoding="utf-8"))
             self.assertEqual(payload["0101"]["primary_topic"], "love-of-neighbor")
             self.assertEqual(payload["0101"]["topics"], ["love-of-neighbor", "prayer"])
-            self.assertEqual(payload["0101"]["reader_needs"], ["comfort"])
+            self.assertEqual(payload["0101"]["reader_needs"], ["need-comfort"])
 
     def test_main_coerces_scalar_reader_needs_responses_end_to_end(self):
         with TemporaryDirectory() as tmp_dir:

@@ -7,6 +7,8 @@
   const clearButton = document.querySelector(".explore-clear");
   const searchInput = document.getElementById("devotion-search");
   const searchStatus = document.getElementById("search-status");
+  const retiredFilter = document.querySelector("[data-retired-filter]");
+  const filterDescription = document.querySelector("[data-filter-description]");
   if (!dataNode || !resultsNode) {
     return;
   }
@@ -189,7 +191,50 @@
     resultsNode.appendChild(el("p", { class: "explore-empty", text: text }));
   }
 
+  function renderFilterContext() {
+    const records = state.facet === "need" ? data.needs : data.topics;
+    const selected = (records || []).find((record) => record.slug === state.slug);
+    if (filterDescription) {
+      filterDescription.hidden = !selected;
+      filterDescription.textContent = selected
+        ? selected.name + ": " + selected.description : "";
+    }
+    if (!retiredFilter) return !state.facet || Boolean(selected);
+    retiredFilter.replaceChildren();
+    retiredFilter.hidden = !state.facet || Boolean(selected);
+    if (retiredFilter.hidden) return true;
+
+    const legacyChoices = (data.legacy || {})[state.slug];
+    const suggestions = Array.isArray(legacyChoices) ? legacyChoices : [];
+    retiredFilter.appendChild(el("p", {
+      text: suggestions.length
+        ? "This older filter has been replaced. Choose a focused tag, or clear filters to browse all readings."
+        : "This filter is unavailable. Choose another tag, or clear filters to browse all readings.",
+    }));
+    const choices = el("div", { class: "facet-chips" });
+    for (const suggestion of suggestions) {
+      const params = new URLSearchParams(window.location.search);
+      params.delete("topic");
+      params.delete("need");
+      params.set(suggestion.facet, suggestion.slug);
+      choices.appendChild(el("a", {
+        class: "facet-chip",
+        href: "?" + params.toString(),
+        text: suggestion.name,
+      }));
+    }
+    retiredFilter.appendChild(choices);
+    return false;
+  }
+
   function renderResults() {
+    const validFilter = renderFilterContext();
+    if (clearButton) clearButton.hidden = !state.facet;
+    if (!validFilter) {
+      if (countNode) countNode.textContent = "Choose a tag";
+      renderMessage("Choose a focused tag above, or clear filters to see all devotions.");
+      return;
+    }
     const query = searchIndex && searchInput ? normalizeSearch(searchInput.value) : "";
     const filtered = entries.filter((entry) =>
       matchesFilters(entry) && matchesSearch(entry, query),

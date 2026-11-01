@@ -1,0 +1,12 @@
+{
+  "status": "Editorial taxonomy accepted for implementation",
+  "date": "2026-11-01",
+  "source_commit": "8c9a8310c382a79caaa81ff23db55eb9d9cd944c",
+  "entries_blob": "cb994084fb16a04a243b47f44e055e01bf5d1898",
+  "taxonomy_blob": "2026fa9e9eeb11b3d576e5a0a79570a27d32b11e",
+  "assignments_blob": "98153c4312c7e72361ef21cf289cb0c2617a3215",
+  "maximum_passages_per_tag": 25,
+  "external_tagging_calls": 0,
+  "preferred_label_words": 2,
+  "maximum_label_words": 3
+}

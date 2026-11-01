@@ -9,12 +9,14 @@ import subprocess
 from xml.etree import ElementTree as ET
 
 if __package__:
+    from .audit_topics import validate as validate_topics
     from .esv_limits import validate_esv_cache
     from .social_meta import (
         build_share_title, load_headlines, refresh_static_share_meta,
         render_image_meta, validate_headlines,
     )
 else:
+    from audit_topics import validate as validate_topics
     from esv_limits import validate_esv_cache
     from social_meta import (
         build_share_title, load_headlines, refresh_static_share_meta,
@@ -58,7 +60,7 @@ FONT_STYLESHEET = (
     "https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600"
     "&family=Newsreader:wght@400;500;600&display=swap"
 )
-STYLE_VERSION = "20261003b"
+STYLE_VERSION = "20261101a"
 ANALYTICS_SRC_VERSION = "20260509e"
 SITEMAP_LASTMOD_CACHE = "data/sitemap_lastmod.json"
 ROUTES_PATH = ROOT / "data" / "routes.json"
@@ -279,6 +281,7 @@ def build_explore_payload(entries, entry_topics, topic_taxonomy):
             "description": topic.get("description", ""),
             "count": topic_counts.get(topic["slug"], 0),
             "primary_count": primary_counts.get(topic["slug"], 0),
+            "group": topic.get("group", "Topics"),
         }
         for topic in topic_list
     ]
@@ -295,12 +298,24 @@ def build_explore_payload(entries, entry_topics, topic_taxonomy):
         {"number": number, "name": name.capitalize()}
         for number, name in MONTH_NAMES.items()
     ]
+    legacy_path = ROOT / "data" / "legacy_tag_suggestions.json"
+    legacy = load_json(legacy_path) if legacy_path.exists() else {}
+    available = {
+        record["slug"]: {"facet": facet, "name": record["name"]}
+        for facet, records in (("topic", topics_payload), ("need", needs_payload))
+        for record in records
+    }
+    legacy_suggestions = {
+        slug: [dict(available[target], slug=target) for target in targets if target in available]
+        for slug, targets in legacy.items()
+    }
     return {
         "entries": entry_records,
         "topics": topics_payload,
         "needs": needs_payload,
         "months": months_payload,
         "total": len(entry_records),
+        "legacy": legacy_suggestions,
     }
 
 
@@ -355,11 +370,27 @@ def render_explore_results(payload):
     return "\n".join(sections)
 
 
+def render_topic_groups(topics):
+    groups = {}
+    for topic in topics:
+        groups.setdefault(topic["group"], []).append(topic)
+    sections = []
+    for group, records in groups.items():
+        chips = "".join(
+            render_facet_chip(topic["slug"], topic["name"], topic["count"], "topic")
+            for topic in records
+        )
+        sections.append(
+            '<div class="topic-group">'
+            f'<h2 class="topic-group-title">{escape(group)}</h2>'
+            f'<div class="facet-chips" role="group" aria-label="{escape(group)}">'
+            f'{chips}</div></div>'
+        )
+    return "".join(sections)
+
+
 def render_explore_page(topic_taxonomy, payload, site_url):
-    topic_chips = "".join(
-        render_facet_chip(topic["slug"], topic["name"], topic["count"], "topic")
-        for topic in payload["topics"]
-    )
+    topic_groups = render_topic_groups(payload["topics"])
     need_chips_html = "".join(
         render_facet_chip(need["slug"], need["name"], need["count"], "need")
         for need in payload["needs"]
@@ -415,15 +446,17 @@ def render_explore_page(topic_taxonomy, payload, site_url):
             <input id="devotion-search" type="search" placeholder="Word, phrase, or scripture reference" aria-describedby="search-status" />
             <p id="search-status" class="explore-search-status" role="status"></p>
           </div>
-          <fieldset class="facet-group" data-facet-group="topic">
-            <legend class="facet-legend">By topic</legend>
-            <div class="facet-chips" role="group" aria-label="Topic filters">{topic_chips}</div>
-          </fieldset>
+          <div class="explore-retired" data-retired-filter role="status" hidden></div>
           <fieldset class="facet-group" data-facet-group="need">
             <legend class="facet-legend">By need</legend>
             <div class="facet-chips" role="group" aria-label="Reader-need filters">{need_chips_html}</div>
             {needs_note}
           </fieldset>
+          <fieldset class="facet-group" data-facet-group="topic">
+            <legend class="facet-legend">By topic</legend>
+            {topic_groups}
+          </fieldset>
+          <p class="explore-filter-description" data-filter-description hidden></p>
           <div class="explore-summary">
             <span class="explore-count" data-result-count>{payload['total']} devotions</span>
             <button class="explore-clear" type="button" hidden>Clear filters</button>
@@ -443,7 +476,7 @@ def render_explore_page(topic_taxonomy, payload, site_url):
     </div>
     <script type="application/json" id="explore-data">{inline_payload}</script>
     <script src="../theme.js?v=20260123"></script>
-    <script src="../explore.js?v=20261003a"></script>
+    <script src="../explore.js?v=20261101a"></script>
   </body>
 </html>"""
 
@@ -708,6 +741,8 @@ def generate_site(entries, esv_cache, output_root, site_url, topic_taxonomy=None
     site_url = normalize_site_url(site_url)
     validate_entries(entries)
     search_index = build_search_index(entries, esv_cache)
+    if topic_taxonomy is not None or entry_topics is not None:
+        validate_topics(topic_taxonomy, entry_topics, entries)
     output_root.mkdir(parents=True, exist_ok=True)
     entries_dir = output_root / "entries"
     entries_dir.mkdir(parents=True, exist_ok=True)
@@ -745,10 +780,11 @@ def main():
     validate_headlines(entries, load_headlines())
     esv_cache = load_json(ESV_CACHE_PATH)
     validate_esv_cache(esv_cache)
-    for relative in ("index.html", "about.html", "copyright.html"):
-        refresh_static_share_meta(OUTPUT_ROOT / relative, SITE_URL)
     topic_taxonomy = load_json(ROOT / "data" / "topic_taxonomy.json")
     entry_topics = load_json(ROOT / "data" / "entry_topics.json")
+    validate_topics(topic_taxonomy, entry_topics, entries)
+    for relative in ("index.html", "about.html", "copyright.html"):
+        refresh_static_share_meta(OUTPUT_ROOT / relative, SITE_URL)
     generate_site(entries, esv_cache, OUTPUT_ROOT, SITE_URL, topic_taxonomy=topic_taxonomy, entry_topics=entry_topics)
 
 

@@ -101,7 +101,7 @@ class GenerateEntryPagesTests(unittest.TestCase):
                 },
             ],
             "reader_needs": [
-                {"slug": "comfort", "name": "Comfort", "description": "For grief and loss."},
+                {"slug": "need-comfort", "name": "Comfort", "description": "For grief and loss."},
                 {"slug": "hope", "name": "Hope", "description": "For discouragement."},
             ],
         }
@@ -109,12 +109,12 @@ class GenerateEntryPagesTests(unittest.TestCase):
             "0101": {
                 "primary_topic": "comfort",
                 "topics": ["comfort", "peace"],
-                "reader_needs": ["comfort"],
+                "reader_needs": ["need-comfort"],
             },
             "0102": {
                 "primary_topic": "prayer",
                 "topics": ["prayer"],
-                "reader_needs": [],
+                "reader_needs": ["hope"],
             },
         }
 

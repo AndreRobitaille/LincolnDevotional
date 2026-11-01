@@ -922,6 +922,34 @@ input[type="date"] {
     gap: 10px;
 }
 
+.topic-group + .topic-group {
+    margin-top: 12px;
+}
+
+.topic-group-title {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.explore-retired,
+.explore-filter-description {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.explore-retired[hidden],
+.explore-filter-description[hidden] {
+    display: none;
+}
+
+.explore-retired .facet-chip {
+    text-decoration: none;
+}
+
 .facet-chip {
     display: inline-flex;
     align-items: center;
