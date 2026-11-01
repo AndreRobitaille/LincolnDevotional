@@ -1,0 +1,281 @@
+{
+  "topics": [
+    {
+      "slug": "adoption-and-inheritance",
+      "name": "Adoption",
+      "description": "Belonging to God's family and receiving a child's inheritance.",
+      "group": "Salvation and belonging"
+    },
+    {
+      "slug": "atonement-and-redemption",
+      "name": "Redemption",
+      "description": "Christ's sacrificial death, ransom, and the freedom it purchases.",
+      "group": "Salvation and belonging"
+    },
+    {
+      "slug": "forgiveness-and-reconciliation",
+      "name": "God's Forgiveness",
+      "description": "God pardoning sin, removing estrangement, and restoring peace with himself.",
+      "group": "Salvation and belonging"
+    },
+    {
+      "slug": "justification-in-christ",
+      "name": "Justification",
+      "description": "Acceptance before God through Christ's righteousness rather than personal merit.",
+      "group": "Salvation and belonging"
+    },
+    {
+      "slug": "life-in-christ",
+      "name": "In Christ",
+      "description": "New life, union with Christ, and sharing in his life and spiritual blessings.",
+      "group": "Salvation and belonging"
+    },
+    {
+      "slug": "work-of-the-holy-spirit",
+      "name": "Holy Spirit",
+      "description": "The Spirit's indwelling, renewal, sanctification, leading, comfort, and seal.",
+      "group": "Salvation and belonging"
+    },
+    {
+      "slug": "consecration-to-god",
+      "name": "Consecration",
+      "description": "Wholehearted allegiance to God and offering one's life and actions to him.",
+      "group": "Prayer and devotion"
+    },
+    {
+      "slug": "love-for-god-and-christ",
+      "name": "Loving God",
+      "description": "Loving, treasuring, and delighting personally in God or Christ.",
+      "group": "Prayer and devotion"
+    },
+    {
+      "slug": "gods-love-and-mercy",
+      "name": "God's Love",
+      "description": "God's undeserved love, patient mercy, and gift of salvation.",
+      "group": "Salvation and belonging"
+    },
+    {
+      "slug": "gods-guidance",
+      "name": "God's Guidance",
+      "description": "God personally leading, teaching, and directing the believer's course.",
+      "group": "Prayer and devotion"
+    },
+    {
+      "slug": "refuge-in-trouble",
+      "name": "Refuge",
+      "description": "God's presence, protection, and rescue amid danger or distress.",
+      "group": "Trials and growth"
+    },
+    {
+      "slug": "trust-in-providence",
+      "name": "Providence",
+      "description": "Confidence in God's care, provision, faithfulness, and ordering of present life.",
+      "group": "Trials and growth"
+    },
+    {
+      "slug": "perseverance-in-faith",
+      "name": "Perseverance",
+      "description": "Continuing in faith and good works, and God's keeping believers to the end.",
+      "group": "Trials and growth"
+    },
+    {
+      "slug": "scripture-and-meditation",
+      "name": "Scripture",
+      "description": "Reading, loving, keeping, and reflecting on Scripture as a source of truth and help.",
+      "group": "Prayer and devotion"
+    },
+    {
+      "slug": "drawing-near-in-prayer",
+      "name": "Prayer",
+      "description": "Approaching God in private or shared prayer, being heard, and seeking his help.",
+      "group": "Prayer and devotion"
+    },
+    {
+      "slug": "intercession",
+      "name": "Intercession",
+      "description": "Christ or the Spirit interceding, or believers praying specifically for others.",
+      "group": "Prayer and devotion"
+    },
+    {
+      "slug": "praise-and-thanksgiving",
+      "name": "Thanksgiving",
+      "description": "Deliberately thanking and praising God for his works and gifts.",
+      "group": "Prayer and devotion"
+    },
+    {
+      "slug": "serving-others",
+      "name": "Serving Others",
+      "description": "Good works directed toward a neighbour's good, practical charity, and bearing others' burdens.",
+      "group": "Life with others"
+    },
+    {
+      "slug": "church-fellowship",
+      "name": "Church Fellowship",
+      "description": "Belonging, gathering, worshipping, and maintaining unity within the church.",
+      "group": "Life with others"
+    },
+    {
+      "slug": "forgiving-and-loving-enemies",
+      "name": "Forgiving Others",
+      "description": "Responding to wrongs with forgiveness, forbearance, peace, and love.",
+      "group": "Life with others"
+    },
+    {
+      "slug": "gospel-witness",
+      "name": "Gospel Witness",
+      "description": "Confessing and defending the gospel, a public Christian example, and concern for others' salvation.",
+      "group": "Life with others"
+    },
+    {
+      "slug": "honesty-and-speech",
+      "name": "Integrity",
+      "description": "Truthfulness, integrity, a clear conscience, and speech that helps rather than harms.",
+      "group": "Life with others"
+    },
+    {
+      "slug": "work-and-stewardship",
+      "name": "Stewardship",
+      "description": "Using time, opportunities, possessions, work, and civic responsibilities faithfully.",
+      "group": "Life with others"
+    },
+    {
+      "slug": "humility-and-meekness",
+      "name": "Humility",
+      "description": "Renouncing pride, acknowledging dependence, and treating others gently.",
+      "group": "Life with others"
+    },
+    {
+      "slug": "self-control-and-self-denial",
+      "name": "Self Control",
+      "description": "Governing desires and passions, rejecting worldly attachment, and giving up personal advantage.",
+      "group": "Life with others"
+    },
+    {
+      "slug": "watchfulness",
+      "name": "Watchfulness",
+      "description": "Recognising spiritual danger, avoiding occasions of sin, and guarding against drift.",
+      "group": "Trials and growth"
+    },
+    {
+      "slug": "repentance-and-self-examination",
+      "name": "Repentance",
+      "description": "Recognising and confessing sin, examining one's ways, and returning to God.",
+      "group": "Trials and growth"
+    },
+    {
+      "slug": "patience-in-suffering",
+      "name": "Patience",
+      "description": "Enduring affliction, waiting patiently, and submitting to God amid sorrow.",
+      "group": "Trials and growth"
+    },
+    {
+      "slug": "purpose-in-affliction",
+      "name": "Refining Trials",
+      "description": "Trials testing or refining faith, teaching dependence, and preparing believers for glory.",
+      "group": "Trials and growth"
+    },
+    {
+      "slug": "joy-in-salvation",
+      "name": "Joy in Salvation",
+      "description": "Rejoicing in Christ, acceptance, pardon, and the blessings of salvation.",
+      "group": "Prayer and devotion"
+    },
+    {
+      "slug": "resisting-temptation",
+      "name": "Resisting Temptation",
+      "description": "The conflict with indwelling sin or Satan and active resistance through faith and spiritual armour.",
+      "group": "Trials and growth"
+    },
+    {
+      "slug": "christs-help-in-weakness",
+      "name": "Christ's Strength",
+      "description": "Christ's strength, rest, comfort, protection, and sympathy for weak or tempted believers.",
+      "group": "Trials and growth"
+    },
+    {
+      "slug": "facing-death",
+      "name": "Facing Death",
+      "description": "Human frailty, mortality, and facing one's death, including the believer's hope and peace.",
+      "group": "Death and life to come"
+    },
+    {
+      "slug": "resurrection-of-the-body",
+      "name": "Resurrection",
+      "description": "The dead rising, bodily immortality and transformation, and reunion grounded in resurrection.",
+      "group": "Death and life to come"
+    },
+    {
+      "slug": "christs-return-and-judgment",
+      "name": "Final Judgment",
+      "description": "Christ's appearing, the world's end, judgment, acquittal, and rewards at his coming.",
+      "group": "Death and life to come"
+    },
+    {
+      "slug": "heavens-rest-and-joy",
+      "name": "Heavenly Rest",
+      "description": "The promised home, rest, freedom from sorrow, and lasting happiness beyond this life.",
+      "group": "Death and life to come"
+    },
+    {
+      "slug": "gods-presence-in-heaven",
+      "name": "God's Presence",
+      "description": "Being with God and Christ, beholding their glory, knowing fully, and living in God's light.",
+      "group": "Death and life to come"
+    },
+    {
+      "slug": "heavenly-worship-and-fellowship",
+      "name": "Heavenly Worship",
+      "description": "Heavenly worship, service, communion with the saints, and their reunion.",
+      "group": "Death and life to come"
+    },
+    {
+      "slug": "glory-and-reigning-with-christ",
+      "name": "Heavenly Glory",
+      "description": "Believers' final perfection, glory, victory, and sharing in Christ's kingdom.",
+      "group": "Death and life to come"
+    },
+    {
+      "slug": "growth-in-holiness",
+      "name": "Holiness",
+      "description": "Becoming holy, bearing righteous fruit, and final freedom from sin.",
+      "group": "Life with others"
+    }
+  ],
+  "reader_needs": [
+    {
+      "slug": "grieving-a-loss",
+      "name": "Grief",
+      "description": "For the death of someone loved and the hope of reunion."
+    },
+    {
+      "slug": "afraid-of-death",
+      "name": "Fearing Death",
+      "description": "For fear of one's own death, with passages that directly address dying and life beyond the grave."
+    },
+    {
+      "slug": "worried-about-provision",
+      "name": "Financial Worry",
+      "description": "For anxiety about material loss, daily needs, or future support."
+    },
+    {
+      "slug": "regretting-past-sins",
+      "name": "Guilt",
+      "description": "For confronting past wrongdoing and returning to God in confession and repentance."
+    },
+    {
+      "slug": "hurt-by-others",
+      "name": "Being Mistreated",
+      "description": "For mistreatment, betrayal, hostility, and the struggle to respond without retaliation."
+    },
+    {
+      "slug": "fighting-recurring-sin",
+      "name": "Recurring Sin",
+      "description": "For repeated failure, inward sinful desires, and the struggle to resist them."
+    },
+    {
+      "slug": "seeking-direction",
+      "name": "Seeking Direction",
+      "description": "For understanding God's way through his leading, Scripture, and careful reflection."
+    }
+  ]
+}

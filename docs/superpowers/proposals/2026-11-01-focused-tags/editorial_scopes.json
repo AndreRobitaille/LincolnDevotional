@@ -1,0 +1,190 @@
+{
+  "adoption-and-inheritance": {
+    "include": "Belonging to God's family and receiving a child's inheritance.",
+    "exclude": "General references to believers as children, without adoption or inheritance as a central theme."
+  },
+  "atonement-and-redemption": {
+    "include": "Christ's sacrificial death, ransom, and the freedom it purchases.",
+    "exclude": "Every passage that mentions Christ or salvation."
+  },
+  "forgiveness-and-reconciliation": {
+    "include": "God pardoning sin, removing estrangement, and restoring peace with himself.",
+    "exclude": "Forgiving another person; general peace of mind."
+  },
+  "justification-in-christ": {
+    "include": "Acceptance before God through Christ's righteousness rather than personal merit.",
+    "exclude": "Every mention of grace, faith, or righteous conduct."
+  },
+  "life-in-christ": {
+    "include": "New life, union with Christ, and sharing in his life and spiritual blessings.",
+    "exclude": "Christ as an incidental source of help in an otherwise different subject."
+  },
+  "work-of-the-holy-spirit": {
+    "include": "The Spirit's indwelling, renewal, sanctification, leading, comfort, and seal.",
+    "exclude": "Spiritual language or Christian virtues without a central connection to the Spirit."
+  },
+  "consecration-to-god": {
+    "include": "Wholehearted allegiance to God and offering one's life and actions to him.",
+    "exclude": "Every commandment or instance of good conduct."
+  },
+  "love-for-god-and-christ": {
+    "include": "Loving, treasuring, and delighting personally in God or Christ.",
+    "exclude": "God's love for us; every poem addressed to Christ."
+  },
+  "gods-love-and-mercy": {
+    "include": "God's undeserved love, patient mercy, and gift of salvation.",
+    "exclude": "Grace language that supports a different dominant theme."
+  },
+  "gods-guidance": {
+    "include": "God personally leading, teaching, and directing the believer's course.",
+    "exclude": "Any moral instruction or incidental reference to a path."
+  },
+  "refuge-in-trouble": {
+    "include": "God's presence, protection, and rescue amid danger or distress.",
+    "exclude": "Every treatment of suffering, temptation, or heavenly hope."
+  },
+  "trust-in-providence": {
+    "include": "Confidence in God's care, provision, faithfulness, and ordering of present life.",
+    "exclude": "Faith in Christ for justification; every general use of trust or hope."
+  },
+  "perseverance-in-faith": {
+    "include": "Continuing in faith and good works, and God's keeping believers to the end.",
+    "exclude": "Any isolated act of obedience or warning about sin."
+  },
+  "scripture-and-meditation": {
+    "include": "Reading, loving, keeping, and reflecting on Scripture as a source of truth and help.",
+    "exclude": "The presence of a Bible quotation in an entry."
+  },
+  "drawing-near-in-prayer": {
+    "include": "Approaching God in private or shared prayer, being heard, and seeking his help.",
+    "exclude": "A poem taking the form of a prayer without prayer itself as a central subject."
+  },
+  "intercession": {
+    "include": "Christ or the Spirit interceding, or believers praying specifically for others.",
+    "exclude": "Every prayer for one's own need."
+  },
+  "praise-and-thanksgiving": {
+    "include": "Deliberately thanking and praising God for his works and gifts.",
+    "exclude": "A closing phrase of thanks in an otherwise different subject."
+  },
+  "serving-others": {
+    "include": "Good works directed toward a neighbour's good, practical charity, and bearing others' burdens.",
+    "exclude": "Every instance of obedience, consecration, or personal holiness."
+  },
+  "church-fellowship": {
+    "include": "Belonging, gathering, worshipping, and maintaining unity within the church.",
+    "exclude": "All interactions with other people; a passing mention of saints."
+  },
+  "forgiving-and-loving-enemies": {
+    "include": "Responding to wrongs with forgiveness, forbearance, peace, and love.",
+    "exclude": "God forgiving our sins; all neighbourly kindness."
+  },
+  "gospel-witness": {
+    "include": "Confessing and defending the gospel, a public Christian example, and concern for others' salvation.",
+    "exclude": "Every mention of Christ or doing good."
+  },
+  "honesty-and-speech": {
+    "include": "Truthfulness, integrity, a clear conscience, and speech that helps rather than harms.",
+    "exclude": "General moral instruction without honesty or communication at its centre."
+  },
+  "work-and-stewardship": {
+    "include": "Using time, opportunities, possessions, work, and civic responsibilities faithfully.",
+    "exclude": "Generic good works without a specific responsibility or resource in view."
+  },
+  "humility-and-meekness": {
+    "include": "Renouncing pride, acknowledging dependence, and treating others gently.",
+    "exclude": "Every confession or instance of suffering."
+  },
+  "self-control-and-self-denial": {
+    "include": "Governing desires and passions, rejecting worldly attachment, and giving up personal advantage.",
+    "exclude": "All resistance to sin; resisting external pressure without self indulgence at issue."
+  },
+  "watchfulness": {
+    "include": "Recognising spiritual danger, avoiding occasions of sin, and guarding against drift.",
+    "exclude": "All temptation passages or general calls to holiness."
+  },
+  "repentance-and-self-examination": {
+    "include": "Recognising and confessing sin, examining one's ways, and returning to God.",
+    "exclude": "Forgiveness offered to the believer without a central call to repentance."
+  },
+  "patience-in-suffering": {
+    "include": "Enduring affliction, waiting patiently, and submitting to God amid sorrow.",
+    "exclude": "All sorrow or any mention of future comfort."
+  },
+  "purpose-in-affliction": {
+    "include": "Trials testing or refining faith, teaching dependence, and preparing believers for glory.",
+    "exclude": "Every promise of help or relief during trouble."
+  },
+  "joy-in-salvation": {
+    "include": "Rejoicing in Christ, acceptance, pardon, and the blessings of salvation.",
+    "exclude": "Every source of joy, including work, fellowship, temporal gifts, or heaven."
+  },
+  "resisting-temptation": {
+    "include": "The conflict with indwelling sin or Satan and active resistance through faith and spiritual armour.",
+    "exclude": "Every specific vice or passage promising Christ's help without emphasising the conflict."
+  },
+  "christs-help-in-weakness": {
+    "include": "Christ's strength, rest, comfort, protection, and sympathy for weak or tempted believers.",
+    "exclude": "Every reference to Christ; the distinct work of the Holy Spirit."
+  },
+  "facing-death": {
+    "include": "Human frailty, mortality, and facing one's death, including the believer's hope and peace.",
+    "exclude": "Bereavement for someone else; the resurrection body or final judgment."
+  },
+  "resurrection-of-the-body": {
+    "include": "The dead rising, bodily immortality and transformation, and reunion grounded in resurrection.",
+    "exclude": "Every passage about heaven or Christ returning as judge."
+  },
+  "christs-return-and-judgment": {
+    "include": "Christ's appearing, the world's end, judgment, acquittal, and rewards at his coming.",
+    "exclude": "Any reference to heaven or a believer's present justification."
+  },
+  "heavens-rest-and-joy": {
+    "include": "The promised home, rest, freedom from sorrow, and lasting happiness beyond this life.",
+    "exclude": "Every future hope; heavenly worship, service, or fellowship as distinct subjects."
+  },
+  "gods-presence-in-heaven": {
+    "include": "Being with God and Christ, beholding their glory, knowing fully, and living in God's light.",
+    "exclude": "Every reference to heaven, future rest, or victory."
+  },
+  "heavenly-worship-and-fellowship": {
+    "include": "Heavenly worship, service, communion with the saints, and their reunion.",
+    "exclude": "Every reference to heaven, personal glory, or rest."
+  },
+  "glory-and-reigning-with-christ": {
+    "include": "Believers' final perfection, glory, victory, and sharing in Christ's kingdom.",
+    "exclude": "Every present victory over sin or promise of heavenly rest."
+  },
+  "growth-in-holiness": {
+    "include": "Becoming holy, bearing righteous fruit, and final freedom from sin.",
+    "exclude": "Every good deed or instance of self discipline."
+  },
+  "grieving-a-loss": {
+    "include": "For the death of someone loved and the hope of reunion.",
+    "exclude": "Generic sorrow without bereavement in view."
+  },
+  "afraid-of-death": {
+    "include": "For fear of one's own death, with passages that directly address dying and life beyond the grave.",
+    "exclude": "All references to heaven, mortality, or the end of the world."
+  },
+  "worried-about-provision": {
+    "include": "For anxiety about material loss, daily needs, or future support.",
+    "exclude": "General discouragement or warnings about loving riches."
+  },
+  "regretting-past-sins": {
+    "include": "For confronting past wrongdoing and returning to God in confession and repentance.",
+    "exclude": "Every promise of pardon or general statement about sin."
+  },
+  "hurt-by-others": {
+    "include": "For mistreatment, betrayal, hostility, and the struggle to respond without retaliation.",
+    "exclude": "Generic fellowship, neighbourly love, or all moral duties."
+  },
+  "fighting-recurring-sin": {
+    "include": "For repeated failure, inward sinful desires, and the struggle to resist them.",
+    "exclude": "All trials, external persecution, or every warning about temptation."
+  },
+  "seeking-direction": {
+    "include": "For understanding God's way through his leading, Scripture, and careful reflection.",
+    "exclude": "All moral instruction or any mention of a road."
+  }
+}

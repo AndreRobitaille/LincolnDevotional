@@ -108,6 +108,9 @@ ESV_API_KEY=your_api_key_here
 
 ### Scripts
 
+- **Audit Topics**: `python3 tools/audit_topics.py`
+  Validates all 366 assignments before generation and deployment. Labels use one or two words where possible and never more than three; each topic or reader need contains at most 25 readings, including secondary membership. The taxonomy has 40 topics and 7 reader needs. See the [editorial record](docs/superpowers/proposals/2026-11-01-focused-tags/README.md) for definitions and full passage lists.
+
 - **Generate Pages and Search Index**: `python3 tools/generate_entry_pages.py`
   Rebuilds committed entry pages, the explore page, and `data/search-index.json` from local data. ESV text comes only from `data/esv_cache.json`; generation makes no API calls. Before writing, the generator expands cached reference ranges and rejects more than 500 verse occurrences or more than half of any book. Book/chapter verse totals are read from the bundled KJV SWORD module using Python's standard library. Repeated or overlapping quotations count each time; unknown or invalid references fail the check.
 
