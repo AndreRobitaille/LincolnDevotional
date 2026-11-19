@@ -3,8 +3,8 @@
 ## Deploying
 
 **Pushing to `master` deploys straight to production.** `.github/workflows/deploy.yml`
-FTPS-uploads the repo root to the live cPanel host on every push to `master`. There is no
-staging step and no manual gate. Work on a branch; merge only when the change is ready to
+FTPS-uploads the repo root to the live cPanel host on every push to `master`. The home
+page stamp uses today's date in Central time. There is no staging step and no manual gate. Work on a branch; merge only when the change is ready to
 be live. `master` is the default branch. Pull requests targeting it run validation
 without uploading. See [README.md](README.md#deployment-and-default-branch) for updating
 an existing clone after the branch rename.

@@ -1,4 +1,5 @@
-from datetime import date
+from datetime import date, datetime, timezone
+from zoneinfo import ZoneInfo
 from html.parser import HTMLParser
 import json
 from pathlib import Path
@@ -7,7 +8,7 @@ from tempfile import TemporaryDirectory
 import unittest
 
 from tools.generate_entry_pages import ROOT
-from tools.render_home_reading import apply_home_reading, build_reading, main
+from tools.render_home_reading import apply_home_reading, build_reading, central_today, main
 
 
 FIXTURE_HTML = """<!doctype html>
@@ -144,6 +145,13 @@ class RenderHomeReadingTests(unittest.TestCase):
         page.feed(stamped)
         self.assertIn("hidden", page.nodes["esvBlock"]["attrs"]["class"].split())
         self.assertEqual(page.text("entryEsv"), "")
+
+    def test_utc_after_six_pm_central_stamps_the_central_date(self):
+        now = datetime(2026, 11, 20, 0, 30, tzinfo=timezone.utc)
+        central = now.astimezone(ZoneInfo("America/Chicago"))
+        self.assertEqual(now.date(), date(2026, 11, 20))
+        self.assertEqual((central.hour, central.minute), (18, 30))
+        self.assertEqual(central_today(now), date(2026, 11, 19))
 
     def test_leap_day_uses_the_february_29_entry(self):
         entries, esv_cache, routes = fixture_data()

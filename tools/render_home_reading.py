@@ -1,16 +1,18 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from html import escape
 import json
 from pathlib import Path
 import re
 import sys
+from zoneinfo import ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parent.parent
 HOME_LOC = "https://lincolndevotional.com/"
+CENTRAL = ZoneInfo("America/Chicago")
 REQUIRED_FIELDS = ("display_date", "title", "bible_verse", "verse_ref", "poem")
 
 HOME_LASTMOD_RE = re.compile(
@@ -43,6 +45,13 @@ class HomeReading:
     href: str
     iso_date: str
     link_title: str
+
+
+def central_today(now: datetime | None = None) -> date:
+    current = now if now is not None else datetime.now(timezone.utc)
+    if current.tzinfo is None:
+        raise ValueError("now must include a timezone")
+    return current.astimezone(CENTRAL).date()
 
 
 def parse_iso_date(value: str) -> date:
@@ -209,14 +218,14 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=(
             "Write one day's reading into the home page HTML and set that "
-            "page's sitemap lastmod. The date defaults to today in the local timezone."
+            "page's sitemap lastmod. The date defaults to today in Central time."
         )
     )
-    parser.add_argument("--date", help="Calendar date as YYYY-MM-DD. Defaults to today.")
+    parser.add_argument("--date", help="Calendar date as YYYY-MM-DD. Defaults to today in Central time.")
     parser.add_argument("--root", type=Path, default=ROOT)
     args = parser.parse_args(argv)
     try:
-        when = date.today() if not args.date else parse_iso_date(args.date)
+        when = central_today() if not args.date else parse_iso_date(args.date)
         reading = render_root(args.root, when)
     except ValueError as error:
         print(f"render_home_reading: {error}", file=sys.stderr)
