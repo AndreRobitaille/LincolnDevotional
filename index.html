@@ -67,7 +67,7 @@
         </div>
       </header>
 
-      <main class="main-content" id="devotionalContent">
+      <main class="main-content" id="devotionalContent" data-entry-mmdd="1119">
         <section class="entry-controls" aria-label="Devotional navigation">
           <div class="entry-nav">
             <button id="prevDayBtn" class="nav-button" type="button">
@@ -79,10 +79,8 @@
                 id="currentDisplayDate"
                 class="current-date-display"
                 for="datePicker"
-              >
-                Loading...
-              </label>
-              <input type="date" id="datePicker" class="nav-date-input" />
+              ><!--home-slot:nav-date-->November 19<!--/home-slot:nav-date--></label>
+              <input type="date" id="datePicker" class="nav-date-input" value="2026-11-19" />
             </div>
             <button id="nextDayBtn" class="nav-button" type="button">
               Next &rarr;
@@ -95,32 +93,32 @@
             <p class="home-noscript"><a class="about-link" href="/explore/">Browse all 366 daily readings</a></p>
           </noscript>
           <header class="entry-header">
-            <p id="entryDisplayDate" class="entry-date"></p>
-            <h2 id="entryTitle" class="entry-title"></h2>
+            <p id="entryDisplayDate" class="entry-date"><!--home-slot:entry-date-->November 19<!--/home-slot:entry-date--></p>
+            <h2 id="entryTitle" class="entry-title"><!--home-slot:title-->Of Being Presented Faultless<!--/home-slot:title--></h2>
           </header>
           <section class="entry-section entry-section--scripture">
             <h3 class="entry-section-title">Scripture</h3>
             <div class="verse-columns">
               <div class="verse-block">
                 <span class="version-label">KJV</span>
-                <p id="entryDevotional" class="entry-text"></p>
+                <p id="entryDevotional" class="entry-text"><!--home-slot:kjv-->Now unto him that is able to keep you from falling, and to present you faultless before the presence of his glory with exceeding joy,<!--/home-slot:kjv--></p>
               </div>
-              <div class="verse-block hidden" id="esvBlock">
+              <div class="verse-block" id="esvBlock">
                 <span class="version-label">ESV</span>
-                <p id="entryEsv" class="entry-text"></p>
+                <p id="entryEsv" class="entry-text"><!--home-slot:esv-->Now to him who is able to keep you from stumbling and to present you blameless before the presence of his glory with great joy.<!--/home-slot:esv--></p>
               </div>
             </div>
-            <p id="entryVerseRef" class="entry-verse-ref"></p>
+            <p id="entryVerseRef" class="entry-verse-ref"><!--home-slot:verse-ref-->Jude 24<!--/home-slot:verse-ref--></p>
           </section>
           <section class="entry-section entry-poem">
             <h3 class="entry-section-title">Poem</h3>
-            <div id="entryPoem" class="entry-text"></div>
+            <div id="entryPoem" class="entry-text"><!--home-slot:poem--><div class="poem-line">What transport then shall fill my heart,</div><div class="poem-line">When thou my worthless name wilt own;</div><div class="poem-line">When I shall see thee as thou art,</div><div class="poem-line">And know as I myself am known!</div><!--/home-slot:poem--></div>
           </section>
         </article>
       </main>
 
-      <aside class="entry-permalink hidden" id="devotionLinkArea" aria-label="Share this devotion">
-        <a id="devotionLink" class="entry-permalink-link" href="#">
+      <aside class="entry-permalink" id="devotionLinkArea" aria-label="Share this devotion">
+        <a id="devotionLink" class="entry-permalink-link" href="/entries/november-19/" data-link-title="The Believer&#x27;s Daily Treasure — November 19: Of Being Presented Faultless">
           <span class="entry-permalink-flourish entry-permalink-flourish--left" aria-hidden="true">&#10086;</span>
           <span class="entry-permalink-text">Share this devotion</span>
           <span class="entry-permalink-flourish entry-permalink-flourish--right" aria-hidden="true">&#10086;</span>

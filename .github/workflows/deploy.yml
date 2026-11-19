@@ -25,8 +25,11 @@ jobs:
       - name: Validate pages, sharing images, and ESV limits
         run: |
           python3 tools/audit_topics.py
-          python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai tests.test_share_images tests.test_audit_topics
+          python3 -m unittest tests.test_generate_entry_pages tests.test_tag_entries_openai tests.test_share_images tests.test_audit_topics tests.test_render_home_reading
           python3 tools/generate_share_images.py --check
+
+      - name: Stamp the home page with the build-date reading
+        run: python3 tools/render_home_reading.py
 
       - name: Deploy via FTPS
         if: ${{ success() && github.event_name != 'pull_request' }}
