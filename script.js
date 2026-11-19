@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const datePickerWrap = document.getElementById('datePickerWrap');
     const permalinkArea = document.getElementById('devotionLinkArea');
     const permalinkLink = document.getElementById('devotionLink');
+    const pageRoot = document.getElementById('devotionalContent');
 
     let allEntries = [];
     let esvCache = {};
@@ -120,11 +121,37 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        permalinkLink.href = href;
+        if (permalinkLink.getAttribute('href') !== href) {
+            permalinkLink.href = href;
+        }
         const datePart = entry.display_date ? ` — ${entry.display_date}` : '';
         const titlePart = entry.title ? `: ${entry.title}` : '';
-        permalinkLink.dataset.linkTitle = `The Believer's Daily Treasure${datePart}${titlePart}`;
+        const linkTitle = `The Believer's Daily Treasure${datePart}${titlePart}`;
+        if (permalinkLink.dataset.linkTitle !== linkTitle) {
+            permalinkLink.dataset.linkTitle = linkTitle;
+        }
         permalinkArea.classList.remove('hidden');
+    }
+
+    function renderedMmdd() {
+        return pageRoot && pageRoot.dataset.entryMmdd ? pageRoot.dataset.entryMmdd : '';
+    }
+
+    function rememberRendered(entry) {
+        if (!pageRoot) {
+            return;
+        }
+        if (entry && entry.mmdd) {
+            pageRoot.dataset.entryMmdd = entry.mmdd;
+            return;
+        }
+        delete pageRoot.dataset.entryMmdd;
+    }
+
+    function replaceText(node, value) {
+        if (node && node.textContent !== value) {
+            node.textContent = value;
+        }
     }
 
     function getAdjacentEntry(entry, direction) {
@@ -160,14 +187,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (entry) {
-            currentDisplayDateNav.textContent = entry.display_date || formatDisplayDate(pickerDate || currentDate);
+            replaceText(currentDisplayDateNav, entry.display_date || formatDisplayDate(pickerDate || currentDate));
         } else if (pickerDate) {
-            currentDisplayDateNav.textContent = formatNavDate(pickerDate);
+            replaceText(currentDisplayDateNav, formatNavDate(pickerDate));
         } else {
-            currentDisplayDateNav.textContent = 'Select a date';
+            replaceText(currentDisplayDateNav, 'Select a date');
         }
 
-        datePicker.value = pickerDate ? pickerDate.toLocaleDateString('en-CA') : '';
+        const pickerValue = pickerDate ? pickerDate.toLocaleDateString('en-CA') : '';
+        if (datePicker.value !== pickerValue) {
+            datePicker.value = pickerValue;
+        }
     }
 
     function displayEntry(entry, pickerDate = null) {
@@ -175,6 +205,13 @@ document.addEventListener('DOMContentLoaded', () => {
         currentDate = pickerDate || currentDate;
 
         syncDatePicker(entry, pickerDate);
+
+        if (entry && renderedMmdd() === entry.mmdd) {
+            if (buildPermalinkHref(entry)) {
+                updatePermalink(entry);
+            }
+            return;
+        }
 
         if (entry) {
             const mmdd = entry.mmdd;
@@ -200,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             updatePermalink(entry);
+            rememberRendered(entry);
             return;
         }
 
@@ -210,6 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         devotionalContent.esvBlock.classList.add('hidden');
         devotionalContent.poem.textContent = '';
         updatePermalink(null);
+        rememberRendered(null);
     }
 
     // --- Display Logic ---
